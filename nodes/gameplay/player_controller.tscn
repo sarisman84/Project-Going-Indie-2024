@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ma1xn4prj1e7"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojs2i"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_c634y"]
+
+[node name="player_controller" type="CharacterBody3D"]
+script = ExtResource("1_jpyvr")
+
+[node name="collider" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ojs2i")
+
+[node name="camera_anchor" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0092113, 0, 0)
+spring_length = 7.0
+margin = 0.25
+script = ExtResource("2_hw33h")
+
+[node name="camera" type="Camera3D" parent="camera_anchor"]
+
+[node name="temp_mesh" type="CSGMesh3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 1.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_c634y")

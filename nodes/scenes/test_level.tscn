@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://clsa3y2ji2ae0"]
+
+[ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_011b5"]
+size = Vector3(27.458, 1, 29.0156)
+
+[sub_resource type="BoxMesh" id="BoxMesh_26wa1"]
+
+[node name="TestLevel" type="Node"]
+
+[node name="player_controller" parent="." instance=ExtResource("1_xom8x")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.61541, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_011b5")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D"]
+transform = Transform3D(27, 0, 0, 0, 1, 0, 0, 0, 29, 0, 0, 0)
+mesh = SubResource("BoxMesh_26wa1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.386936, 0.922106, 0, -0.922106, 0.386936, 0, 3.71197, 0)
+shadow_enabled = true
