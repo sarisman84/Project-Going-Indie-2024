@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=6 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
 [ext_resource type="Texture2D" uid="uid://box56u4y0xdk6" path="res://graphics/textures/Name_1m x 1m.png" id="2_ot6ww"]
-[ext_resource type="PackedScene" uid="uid://do44ofuqlaulo" path="res://nodes/gameplay/rail_section.tscn" id="3_ne3qf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_011b5"]
 size = Vector3(30, 1, 30)
@@ -34,5 +33,3 @@ mesh = SubResource("BoxMesh_26wa1")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.386936, 0.922106, 0, -0.922106, 0.386936, 0, 3.71197, 0)
 shadow_enabled = true
-
-[node name="rail_section" parent="." instance=ExtResource("3_ne3qf")]
