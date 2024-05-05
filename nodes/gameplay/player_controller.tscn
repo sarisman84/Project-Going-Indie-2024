@@ -1,14 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=6 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
+[ext_resource type="PackedScene" uid="uid://doh5j4al7a3cw" path="res://graphics/models/testing/sonic/unleashed/Sonic the Hedgehog.glb" id="3_pt2eb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojs2i"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_c634y"]
 
-[node name="player_controller" type="CharacterBody3D"]
+[node name="player_controller" type="CharacterBody3D" node_paths=PackedStringArray("model")]
 script = ExtResource("1_jpyvr")
+groundAcceleration = 0.5
+groundDecceleration = 0.8
+airAcceleration = 0.2
+airDecceleration = 0.0
+cameraOffset = Vector3(0, 0.5, 0)
+model = NodePath("Sonic the Hedgehog")
 
 [node name="collider" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ojs2i")
@@ -20,7 +27,12 @@ margin = 0.25
 script = ExtResource("2_hw33h")
 
 [node name="camera" type="Camera3D" parent="camera_anchor"]
+current = true
 
 [node name="temp_mesh" type="CSGMesh3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 1.5, 0, 0, 0, 0.5, 0, 0, 0)
+visible = false
 mesh = SubResource("BoxMesh_c634y")
+
+[node name="Sonic the Hedgehog" parent="." instance=ExtResource("3_pt2eb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

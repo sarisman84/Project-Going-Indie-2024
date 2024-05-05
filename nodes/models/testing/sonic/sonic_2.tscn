@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhvo8f5cjship"]
+
+[ext_resource type="PackedScene" uid="uid://bcu8vakxn4ea6" path="res://graphics/models/testing/sonic/generations/Sonic.glb" id="1_pt64a"]
+
+[node name="Sonic2" instance=ExtResource("1_pt64a")]
+
+[node name="MouthL" parent="MouthPosition/Reference/Skeleton3D" index="0"]
+visible = false

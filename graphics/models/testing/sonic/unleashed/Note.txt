@@ -1,0 +1,8 @@
+Guy who Ripped the Model: Sonic Konga
+
+Game: Sonic Unleashed
+
+Copyrights: Sonic Team and Sega
+
+Special thanks to the guys who made the Model Importer. 
+And a very special thanks to Peardian, for the help with the rigging problem and the texture paths, thank you.

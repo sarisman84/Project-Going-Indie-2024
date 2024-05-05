@@ -1,3 +1,4 @@
+class_name PlayerController
 extends CharacterBody3D
 
 
@@ -5,8 +6,10 @@ extends CharacterBody3D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var jumpFlag : bool
+@onready var defaultControls : bool = true
 
 @onready var camera = $camera_anchor
+
 @export var movementSpeed : float = 5.0
 @export var boostSpeed : float = 10.0
 @export var jumpHeight : float = 1.0
@@ -18,8 +21,16 @@ var jumpFlag : bool
 @export var airDecceleration : float = 1.0
 @export var slideDecceleration : float = 0.8
 
+@export var cameraOffset : Vector3
+@export var model : Node3D
+
+func set_default_controls(newState):
+	defaultControls = newState
 
 func _physics_process(delta):
+	if not defaultControls:
+		return
+	
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -37,8 +48,10 @@ func _physics_process(delta):
 	input_dir.x = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) 
 	input_dir.z = (Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward"))
 	
+	var dir : Vector3
+	
 	# Transform it to be local to the camera's rotation
-	var dir = input_dir.rotated(Vector3.UP, camera.rotation.y)  #(camera.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	dir = input_dir.rotated(Vector3.UP, camera.rotation.y)  #(camera.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	# By default, use ground acceleration & decceleration
 	var acceleration = groundAcceleration
@@ -61,13 +74,15 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, decceleration)
 		velocity.z = move_toward(velocity.z, 0, decceleration)
 	
-	
+	if model and dir.length() > 0.2:
+		var local_dir = Vector2(velocity.z, velocity.x)
+		model.rotation.y = local_dir.angle()
 	
 	# Apply calculations
 	move_and_slide()
 	
 func _process(delta):
-	camera.position = position
+	camera.position = position + cameraOffset
 
 func get_jump_velocity(inputHeight : float):
 	return sqrt(2.0 * gravity * inputHeight)
