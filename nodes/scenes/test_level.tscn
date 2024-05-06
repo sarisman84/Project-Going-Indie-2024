@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=17 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
 [ext_resource type="Texture2D" uid="uid://box56u4y0xdk6" path="res://graphics/textures/Name_1m x 1m.png" id="2_ot6ww"]
@@ -47,6 +47,16 @@ size = Vector3(5.33643, 0.308594, 1.18066)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s6nmw"]
 size = Vector3(1.85205, 1.12885, 7.115)
+
+[sub_resource type="Curve3D" id="Curve3D_cj3sk"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.72845, -0.623806, -1.62453, 0.945069, -0.27337, 0.137089, -0.945069, 0.27337, -0.137089, -3.25044, -0.176457, -1.60059, -2.43638, -0.0373607, 0.268657, 2.43638, 0.0373607, -0.268657, -2.19728, 2.7265, -3.51595, 1.48514, 0.137697, -0.312227, -1.48514, -0.137697, 0.312227, -1.87137, -0.424332, -5.07136, 0, 0, 0, 0, 0, 0, -7.77805, -0.63116, -4.75673),
+"tilts": PackedFloat32Array(0, 0, 1.11425, 2.17572, 2.00151)
+}
+point_count = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e3cxs"]
+size = Vector3(9.11911, 4.48032, 5.11819)
 
 [node name="TestLevel" type="Node"]
 
@@ -132,6 +142,31 @@ mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
 path_interval = 0.3
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="rail3" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("3_ne3qf")]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -4.40631, 0, -8.86003)
+curve = SubResource("Curve3D_cj3sk")
+hitbox = NodePath("hitbox")
+
+[node name="hitbox" type="Area3D" parent="rail3"]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rail3/hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04563, 1.2029, -2.69881)
+shape = SubResource("BoxShape3D_e3cxs")
+
+[node name="model" type="CSGPolygon3D" parent="rail3"]
+polygon = PackedVector2Array(-0.0347366, -0.544396, -0.0386987, -0.030472, 0.0507255, -0.0300207, 0.0486712, -0.547999)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.18
 path_simplify_angle = 0.0
 path_rotation = 2
 path_local = true

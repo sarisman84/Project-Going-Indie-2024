@@ -76,8 +76,9 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, decceleration)
 	
 	if model and velocity.length() > 0.2:
-		var local_dir = Vector2(velocity.z, velocity.x)
-		model.rotation.y = local_dir.angle()
+		#var local_dir = Vector2(velocity.z, velocity.x)
+		#model.rotation.y = local_dir.angle()
+		rotate_model_towards(dir, up_direction)
 	
 	# Apply calculations
 	move_and_slide()
@@ -103,5 +104,8 @@ func get_current_speed():
 	if Input.is_action_pressed("boost"):
 		speed = boostSpeed
 	return speed
+
+func rotate_model_towards(forwardDir : Vector3 ,upDir : Vector3 = Vector3.UP):
+	model.look_at(transform.origin - forwardDir, upDir)
 
 	

@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojs2i"]
 radius = 0.283417
-height = 1.38226
+height = 1.16125
 
 [sub_resource type="BoxMesh" id="BoxMesh_c634y"]
 
@@ -21,7 +21,7 @@ cameraOffset = Vector3(0, 0.5, 0)
 model = NodePath("Sonic the Hedgehog")
 
 [node name="collider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.414007, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.521877, 0)
 shape = SubResource("CapsuleShape3D_ojs2i")
 
 [node name="camera_anchor" type="SpringArm3D" parent="."]
@@ -39,4 +39,3 @@ visible = false
 mesh = SubResource("BoxMesh_c634y")
 
 [node name="Sonic the Hedgehog" parent="." instance=ExtResource("3_pt2eb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
