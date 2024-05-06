@@ -1,7 +1,7 @@
 class_name PlayerController
 extends CharacterBody3D
 
-
+enum State {Idle, Moving, Grinding, Airborne }
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -23,6 +23,11 @@ var jumpFlag : bool
 
 @export var cameraOffset : Vector3
 @export var model : Node3D
+
+var currentState : State
+
+func _ready():
+	currentState = State.Idle
 
 func set_default_controls(newState):
 	defaultControls = newState
@@ -62,9 +67,7 @@ func _physics_process(delta):
 		acceleration = airAcceleration
 		decceleration = airDecceleration
 		
-	var speed := movementSpeed
-	if Input.is_action_pressed("boost"):
-		speed = boostSpeed
+	var speed = get_current_speed()
 	
 	# Apply acceleration & decceleration
 	if dir:
@@ -74,17 +77,37 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, decceleration)
 		velocity.z = move_toward(velocity.z, 0, decceleration)
 	
-	if model and dir.length() > 0.2:
-		var local_dir = Vector2(velocity.z, velocity.x)
-		model.rotation.y = local_dir.angle()
+	if model and velocity.length() > 0.2:
+		rotate_model_towards(Vector2(velocity.z, velocity.x))
+		
 	
 	# Apply calculations
 	move_and_slide()
 	
 func _process(delta):
 	camera.position = position + cameraOffset
+	update_states()
 
 func get_jump_velocity(inputHeight : float):
 	return sqrt(2.0 * gravity * inputHeight)
 
+func get_current_speed():
+	var speed := movementSpeed
+	if Input.is_action_pressed("boost"):
+		speed = boostSpeed
+	return speed
+
+func rotate_model_towards(direction : Vector2):
+	var local_dir = direction
+	model.rotation.y = local_dir.angle()
+
+func update_states():
+	if is_on_floor():
+		if velocity.length() > 0.2:
+			currentState = State.Moving
+		else:
+			currentState = State.Idle
+	elif currentState != State.Grinding:
+		currentState = State.Airborne
+		
 	

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://do44ofuqlaulo"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/rail_section.gd" id="1_7qqmb"]
+
+[node name="rail" type="Path3D"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+script = ExtResource("1_7qqmb")
