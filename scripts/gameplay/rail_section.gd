@@ -22,8 +22,11 @@ func _physics_process(delta):
 	
 	var forward = pos.direction_to(curve.sample_baked(offset + playerDirection, true))
 	DebugDraw3D.draw_arrow(player.position, player.position + forward,Color.BLUE,0.15)
-	
 	var up = curve.sample_baked_up_vector(offset, true)
+	
+	if forward == Vector3.ZERO:
+		_on_hitbox_body_exited(player)
+		return
 	
 	player.velocity = forward * player.get_current_speed()
 	player.basis.y = up
@@ -34,13 +37,14 @@ func _physics_process(delta):
 func _on_hitbox_body_entered(body):
 	player = body as PlayerController
 	
-	if player.currentState == PlayerController.State.Grinding:
+	if player.currentState == PlayerController.States.Grinding:
 		return
-	player.currentState = PlayerController.State.Grinding
+	player.currentState = PlayerController.States.Grinding
 	
 	var offset = get_closest_offset(player.position)
 	var railPos = curve.sample_baked(offset, true)
-	player.position = railPos + position
+	var playerHeight = Vector3.UP * player.scale.y
+	player.position = railPos + position + playerHeight
 	
 
 	DebugDraw3D.draw_sphere(player.position,0.15,Color.CYAN,1.0)
@@ -48,7 +52,7 @@ func _on_hitbox_body_entered(body):
 	player.set_default_controls(false)
 	isPlayerDetected = true
 	
-	var endingRailPos = position + curve.get_point_position(curve.get_baked_points().size() - 1)
+	var endingRailPos = position + curve.get_point_position(get_next_closest_point_index(player.position))
 	DebugDraw3D.draw_sphere(endingRailPos, 0.15, Color.RED, 1.0)
 	
 	var dirToEnd = (endingRailPos - player.position).normalized()
@@ -58,11 +62,12 @@ func _on_hitbox_body_entered(body):
 	DebugDraw3D.draw_arrow(player.position, player.position + playerVelDir,Color.GREEN,0.15, 1,10.0)
 	DebugDraw3D.draw_arrow(player.position, player.position + dirToEnd,Color.MAGENTA,0.15, 1,10.0)
 	
-	if playerVelDir.dot(dirToEnd) > 0.0:
+	if playerVelDir.dot(dirToEnd) > 0.9:
 		playerDirection = 0.1
 	else:
 		playerDirection = -0.1
-	
+		
+
 
 # Same as above!
 func _on_hitbox_body_exited(body):
@@ -75,16 +80,18 @@ func get_closest_offset(globalPosition : Vector3):
 	var localPosition = globalPosition - position
 	return curve.get_closest_offset(localPosition)
 
-func get_closest_point(globalPosition : Vector3):
-	var localPosition = position - globalPosition
-	return curve.get_closest_point(localPosition)
-	
-func get_player_intended_direction(player : PlayerController):
-	var dir = player.velocity.normalized()
+func get_closest_point_index(globalPosition : Vector3):
+	var minDist = 1.79769e308
+	var result : int
+	for i in range(0, curve.point_count):
+		var pointPos = position + curve.get_point_position(i)
+		var dist = (pointPos - globalPosition).length()
+		if minDist > dist:
+			minDist = dist
+			result = i
+	return result
 
-	var endPoint = curve.get_point_position(curve.get_baked_points().size() - 1)
-	var dirToEndPoint = (endPoint - player.position).normalized()
-	
-	if  dir.dot(dirToEndPoint) > 0:
-		return -1
-	return 1
+func get_next_closest_point_index(globalPosition : Vector3):
+	var closestPoint  = min(get_closest_point_index(globalPosition) + 1, curve.point_count - 1)
+	return closestPoint
+

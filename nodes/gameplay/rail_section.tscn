@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://do44ofuqlaulo"]
+[gd_scene load_steps=2 format=3 uid="uid://bn30aiuttyy0d"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/rail_section.gd" id="1_7qqmb"]
 
