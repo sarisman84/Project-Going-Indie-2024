@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://clsa3y2ji2ae0"]
+
+[ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
+[ext_resource type="Texture2D" uid="uid://box56u4y0xdk6" path="res://graphics/textures/Name_1m x 1m.png" id="2_ot6ww"]
+[ext_resource type="PackedScene" uid="uid://do44ofuqlaulo" path="res://nodes/gameplay/rail_section.tscn" id="3_ne3qf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_011b5"]
+size = Vector3(30, 1, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6cwo"]
+diffuse_mode = 2
+albedo_texture = ExtResource("2_ot6ww")
+uv1_scale = Vector3(100, 70, 100)
+uv2_triplanar_sharpness = 0.933033
+grow_amount = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_26wa1"]
+
+[sub_resource type="Curve3D" id="Curve3D_2ha86"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, -0.85, -5.8, 0, 0, 0, 0, 0, 0, 0, -0.85, 5.8),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y0h60"]
+size = Vector3(0.124512, 0.216797, 10.9082)
+
+[node name="TestLevel" type="Node"]
+
+[node name="player_controller" parent="." instance=ExtResource("1_xom8x")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.61541, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_011b5")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D"]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_y6cwo")
+mesh = SubResource("BoxMesh_26wa1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.386936, 0.922106, 0, -0.922106, 0.386936, 0, 3.71197, 0)
+shadow_enabled = true
+
+[node name="rail_section" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("3_ne3qf")]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 7.1867, 0.139066, 0)
+curve = SubResource("Curve3D_2ha86")
+hitbox = NodePath("hitbox")
+
+[node name="hitbox" type="Area3D" parent="rail_section"]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rail_section/hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000850677, -0.888673, -0.00909758)
+shape = SubResource("BoxShape3D_y0h60")
+
+[node name="model" type="CSGPolygon3D" parent="rail_section"]
+polygon = PackedVector2Array(-0.05, -0.5, -0.05, 0, 0.05, 0, 0.05, -0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false

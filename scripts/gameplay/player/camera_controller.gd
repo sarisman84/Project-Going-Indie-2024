@@ -12,7 +12,7 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		input = event.relative
 
-func _process(delta):
+func _process(_delta):
 	var cameraInput : Vector2
 	var otherInput = Vector2(
 		Input.get_action_strength("look_right") - Input.get_action_strength("look_left"), 
