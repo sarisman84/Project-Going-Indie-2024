@@ -24,6 +24,7 @@ func _on_quit_button_pressed():
 
 func pause_menu():
 	if paused:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		self.hide()
 		get_tree().paused = false
 		#Engine.time_scale = 1
@@ -31,6 +32,7 @@ func pause_menu():
 		get_tree().paused = true
 		self.show()
 		$VBoxContainer/ResumeButton.grab_focus()
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		#Engine.time_scale = 0
 	
 	paused = !paused
