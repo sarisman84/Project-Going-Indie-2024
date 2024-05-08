@@ -131,7 +131,7 @@ shape = SubResource("BoxShape3D_ifatk")
 mesh = SubResource("BoxMesh_qlevy")
 
 [node name="wall" type="StaticBody3D" parent="."]
-transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -6.94753, 1.26467, 21.0013)
+transform = Transform3D(0.286675, 0, 0.958028, 0, 1, 0, -0.958028, 0, 0.286675, -6.45388, 1.26467, 20.5002)
 
 [node name="shape" type="CollisionShape3D" parent="wall"]
 shape = SubResource("BoxShape3D_ye05c")
