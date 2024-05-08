@@ -48,7 +48,6 @@ mesh = SubResource("BoxMesh_c634y")
 
 [node name="homing_attack" type="Node3D" parent="."]
 script = ExtResource("4_6iksq")
-detectionAngle = 0.5
 
 [node name="detection_area" type="Area3D" parent="homing_attack"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.541748, 0)
