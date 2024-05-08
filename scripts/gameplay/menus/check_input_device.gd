@@ -6,16 +6,17 @@ static var isMouse = true
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
-##Should probably add for a deadzone check on the JoypadMotion,
-##do to if you have stick drift, it will always detect this as true
 func _input(event: InputEvent):
 	## Checks for if the input device is mouse or joypad
-	if InputEventMouseMotion && event.as_text().left(5) == "Mouse":
+	if event is InputEventMouseMotion: 
 		isMouse = true
-		print("mouse")
-	elif (InputEventJoypadMotion or InputEventJoypadButton) && event.as_text().left(6) == "Joypad":
+	elif event is InputEventJoypadButton or (event is InputEventJoypadMotion && deadzone_check(event)):
 		isMouse = false
-		print("joypad")
+
+func deadzone_check(event : InputEvent):
+	var deadzone = 0.5
+	var joystick_vector = Vector2(Input.get_joy_axis(0, 0), -Input.get_joy_axis(0, 1)).length()
+	return deadzone < joystick_vector
 
 static func get_input_type():
 	return isMouse
