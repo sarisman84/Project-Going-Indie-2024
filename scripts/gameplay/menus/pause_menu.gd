@@ -11,16 +11,20 @@ func _process(_delta):
 		pause_menu()
 
 func _on_resume_button_pressed():
-	pass # Replace with function body.
+	pause_menu()
 
+## TODO: Add confirmation menu at later date
 func _on_restart_button_pressed():
-	pass # Replace with function body.
+	pause_menu()
+	get_tree().reload_current_scene()
 
+## TODO: Implement at later date
 func _on_settings_button_pressed():
-	pass # Replace with function body.
+	pass
 
+## TODO: Add confirmation menu at later date
 func _on_quit_button_pressed():
-	pass # Replace with function body.
+	get_tree().quit()
 
 func pause_menu():
 	if paused:
@@ -31,7 +35,6 @@ func pause_menu():
 		get_tree().paused = true
 		self.show()
 		$VBoxContainer/ResumeButton.grab_focus()
-		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
 	paused = !paused
 
