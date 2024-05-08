@@ -15,6 +15,10 @@ run/main_scene="res://nodes/scenes/main_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+InputCheck="*res://nodes/scenes/input_check.tscn"
+
 [input]
 
 ui_accept={

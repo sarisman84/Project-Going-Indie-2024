@@ -27,16 +27,19 @@ func pause_menu():
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		self.hide()
 		get_tree().paused = false
-		#Engine.time_scale = 1
 	else:
 		get_tree().paused = true
 		self.show()
 		$VBoxContainer/ResumeButton.grab_focus()
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		#Engine.time_scale = 0
+		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
 	paused = !paused
 
-##This function will disable all the inputs for in-game actions
-func disable_game_input():
-	pass
+func _input(event: InputEvent):
+	## Checks for if the input device is mouse of joypad
+	## Changes mouse visibilty accordingly
+	if paused:
+		if CheckInputDevice.get_input_type():
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
