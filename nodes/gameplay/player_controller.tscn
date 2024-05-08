@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=10 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
 [ext_resource type="PackedScene" uid="uid://doh5j4al7a3cw" path="res://graphics/models/testing/sonic/unleashed/Sonic the Hedgehog.glb" id="3_pt2eb"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/homing_attack.gd" id="4_6iksq"]
+[ext_resource type="Shader" path="res://graphics/shaders/hud/homing_indicator.gdshader" id="5_uhm43"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojs2i"]
 radius = 0.283417
@@ -13,6 +14,11 @@ height = 1.16125
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wxerh"]
 radius = 6.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nsb2v"]
+shader = ExtResource("5_uhm43")
+shader_parameter/scale = 0.5
+shader_parameter/color = Color(0, 1, 1, 1)
 
 [node name="player_controller" type="CharacterBody3D" node_paths=PackedStringArray("model")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4033.69, 0)
@@ -59,3 +65,22 @@ collision_mask = 4
 
 [node name="shape" type="CollisionShape3D" parent="homing_attack/detection_area"]
 shape = SubResource("SphereShape3D_wxerh")
+
+[node name="indicator" type="CenterContainer" parent="homing_attack"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="sprite" type="ColorRect" parent="homing_attack/indicator"]
+material = SubResource("ShaderMaterial_nsb2v")
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+color = Color(0.843137, 0.870588, 0.858824, 0)
