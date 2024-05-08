@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=12 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
 [ext_resource type="Texture2D" uid="uid://box56u4y0xdk6" path="res://graphics/textures/Name_1m x 1m.png" id="2_ot6ww"]
@@ -40,12 +40,6 @@ point_count = 5
 [sub_resource type="BoxShape3D" id="BoxShape3D_ifatk"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_qlevy"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ye05c"]
-size = Vector3(1, 5, 30)
-
-[sub_resource type="BoxMesh" id="BoxMesh_b1wsf"]
-size = Vector3(1, 5, 30)
 
 [node name="TestLevel" type="Node"]
 
@@ -109,7 +103,7 @@ shape = SubResource("BoxShape3D_ifatk")
 mesh = SubResource("BoxMesh_qlevy")
 
 [node name="test_target3" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.95987, -9.53674e-07, 11.4124)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.66945, 0, 10.4186)
 collision_layer = 4
 collision_mask = 4
 
@@ -118,23 +112,3 @@ shape = SubResource("BoxShape3D_ifatk")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="test_target3"]
 mesh = SubResource("BoxMesh_qlevy")
-
-[node name="test_target4" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.66945, 0, 24.2576)
-collision_layer = 4
-collision_mask = 4
-
-[node name="shape" type="CollisionShape3D" parent="test_target4"]
-shape = SubResource("BoxShape3D_ifatk")
-
-[node name="CSGMesh3D" type="CSGMesh3D" parent="test_target4"]
-mesh = SubResource("BoxMesh_qlevy")
-
-[node name="wall" type="StaticBody3D" parent="."]
-transform = Transform3D(0.286675, 0, 0.958028, 0, 1, 0, -0.958028, 0, 0.286675, -6.45388, 1.26467, 20.5002)
-
-[node name="shape" type="CollisionShape3D" parent="wall"]
-shape = SubResource("BoxShape3D_ye05c")
-
-[node name="CSGMesh3D" type="CSGMesh3D" parent="wall"]
-mesh = SubResource("BoxMesh_b1wsf")
