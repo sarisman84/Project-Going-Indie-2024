@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bn30aiuttyy0d"]
 
-[ext_resource type="Script" path="res://scripts/gameplay/rail_section.gd" id="1_7qqmb"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/rail_section.gd" id="1_7qqmb"]
 
 [sub_resource type="Curve3D" id="Curve3D_pt05y"]
 _data = {
@@ -9,7 +9,7 @@ _data = {
 }
 point_count = 4
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_etajn"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_6fpax"]
 
 [node name="rail" type="Path3D"]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
@@ -34,4 +34,4 @@ path_joined = false
 collision_mask = 2
 
 [node name="hitbox_collider" type="CollisionShape3D" parent="hitbox"]
-shape = SubResource("BoxShape3D_etajn")
+shape = SubResource("BoxShape3D_6fpax")

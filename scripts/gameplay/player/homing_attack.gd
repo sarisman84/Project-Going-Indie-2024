@@ -1,4 +1,5 @@
 @tool
+class_name HomingAttack
 extends Node3D
 
 @onready var camera = $"../camera_anchor/camera"
@@ -6,14 +7,20 @@ extends Node3D
 @onready var camera_anchor = $"../camera_anchor"
 @onready var player  : PlayerController = $".."
 @onready var indicator : CenterContainer = $indicator
-
+@onready var bounceOverrideState : bool = false
 
 @export var detectionAngle : float = 0.2
 @export var speed : float = 1.0
 @export var bounceHeight : float = 1.0
 
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var targetCollection : Array
 var currentHomingTarget : Node3D
+
+
+
+func set_bounce_override(newState: bool) -> void:
+	bounceOverrideState = newState
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,7 +30,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func detect_homing_targets():
 	indicator.visible = false
-	var copy = detection_area.get_overlapping_bodies()
+	var copy = detection_area.get_overlapping_bodies() as Array[Node3D]
+	copy.append_array(detection_area.get_overlapping_areas() as Array[Node3D])
 	for i in range(0, copy.size()):
 		
 		var entry = copy[i] as Node3D
@@ -43,6 +51,11 @@ func detect_homing_targets():
 
 		var space_state = get_world_3d().direct_space_state
 		var query = PhysicsRayQueryParameters3D.create(global_position, global_position + dir * 1000)
+		
+		if entry is ForceAffector:
+			var fa = entry as ForceAffector
+			query.collide_with_areas = fa.canBeAttacked
+			
 		var result = space_state.intersect_ray(query)
 		if result.is_empty():
 			continue
@@ -59,28 +72,13 @@ func detect_homing_targets():
 			
 		currentHomingTarget = col	
 		# DebugDraw3D.draw_sphere(col.global_position, 1.0, Color.RED, 2.0)
-		player.set_default_controls(false)
-		
-
-func try_attack_target():
-	if currentHomingTarget == null:
-		return
-	
-	var dir = (currentHomingTarget.global_position - global_position).normalized()
-	var dist = (currentHomingTarget.global_position - global_position).length()
-	
-	if dist <= 0.5:
-		player.set_default_controls(true)
-		player.velocity = Vector3.UP * player.get_jump_velocity(bounceHeight)
-		player.move_and_slide()
-		currentHomingTarget = null
-		return
-		
-	player.velocity = dir * speed
-	player.move_and_slide()
-
+		player.state_machine.transition_to("attacking", {
+			_target = col, 
+			_bounceHeight = bounceHeight, 
+			_speed = speed, 
+			_bounceOverrideState = bounceOverrideState
+			})
 
 func _physics_process(_delta):
 	detect_homing_targets()
-	try_attack_target()
 	

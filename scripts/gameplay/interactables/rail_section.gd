@@ -10,6 +10,8 @@ var isPlayerDetected : bool
 var playerDirection : float
 var player : PlayerController
 var hasPlayerStartedGrinding : bool
+var railInCooldown : bool
+var grindPlayerState : GrindState
 
 
 func get_global_aabb_center():
@@ -30,17 +32,24 @@ func _ready():
 	hitbox.connect("body_entered", _on_hitbox_body_entered)
 	hitbox.connect("body_exited", _on_hitbox_body_exited)
 
+func reset_cooldown():
+	railInCooldown = false
+	grindPlayerState.exitSignal.disconnect(reset_cooldown)
+	grindPlayerState = null
+
 # Starts the grind state
 func on_grind_start():
-	if player.currentState == PlayerController.States.Grinding:
-		return
-	player.currentState = PlayerController.States.Grinding
+	player.state_machine.transition_to("grinding")
+	# Get the GrindState and connect the exit signal to railCooldown reset logic
+	grindPlayerState = player.state_machine.state as GrindState
+	railInCooldown = true
+	grindPlayerState.exitSignal.connect(reset_cooldown)
+	
 	var offset = get_closest_offset(player.position)
 	var up = curve.sample_baked_up_vector(offset, true)
 	
 	set_player_pos_to_curve_offset(offset, up)
 	
-	player.set_default_controls(false)
 	isPlayerDetected = true
 	
 	var endingRailPos = position + curve.get_point_position(get_next_closest_point_index(player.position))
@@ -60,21 +69,25 @@ func on_grind_start():
 
 # Ends the grind state
 func on_grind_end():
-	player.up_direction = Vector3.UP
-	player.set_default_controls(true)
-	player.move_and_slide()
+	player.state_machine.transition_to("airborne")
 	print("Stop grinding")
-	player.currentState = PlayerController.States.StoppedGrinding
+	
 	
 func _process(_delta):
 	DebugDraw3D.draw_aabb_ab(get_global_aabb_start(), get_global_aabb_end(),Color.CYAN)
 	DebugDraw3D.draw_sphere(get_global_aabb_center(),0.15, Color.YELLOW)
 	
-	if not isPlayerDetected:
+	if grindPlayerState != null:
+		grindPlayerState.update(_delta)
+	
+	if not isPlayerDetected or railInCooldown:
 		return
-	if player.currentState == PlayerController.States.StoppedGrinding:
+	if player.state_machine.state is GrindState:
 		return
-	if is_player_close_to_curve() and player.currentState != PlayerController.States.Grinding:
+	
+	
+	
+	if is_player_close_to_curve():
 		on_grind_start()
 	
 # Checks if the player is close enough to the rail
@@ -83,13 +96,18 @@ func is_player_close_to_curve():
 	
 	var closestPosition = curve.sample_baked(offset,true) + position
 	DebugDraw3D.draw_sphere(closestPosition, 0.15, Color.CHARTREUSE)
-	var dist = (closestPosition - player.position).length()
-	return dist < player.railDetectionRadius / 2.0
+	var playerPosition = player.position + Vector3.UP * (player.collider.scale.y / 2.0)
+	
+	var dist = (closestPosition - playerPosition).length()
+	DebugDraw3D.draw_sphere(playerPosition , player.railDetectionRadius, Color.MAGENTA)
+	return dist < player.railDetectionRadius
 		
 func _physics_process(_delta):
 	if not isPlayerDetected:
 		return
-	if not player.currentState == PlayerController.States.Grinding:
+	if grindPlayerState != null and not grindPlayerState.stateStarted:
+		return
+	if not player.state_machine.state is GrindState:
 		return
 	# Get the current curve distance from the player position
 	var offset = get_closest_offset(player.position)
