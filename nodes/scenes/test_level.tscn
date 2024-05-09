@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=15 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
 [ext_resource type="Texture2D" uid="uid://box56u4y0xdk6" path="res://graphics/textures/Name_1m x 1m.png" id="2_ot6ww"]
 [ext_resource type="PackedScene" uid="uid://bn30aiuttyy0d" path="res://nodes/gameplay/rail_section.tscn" id="3_ne3qf"]
+[ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="4_ojlsg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_011b5"]
 size = Vector3(130, 1, 130)
@@ -51,6 +52,10 @@ size = Vector3(1, 5, 30)
 
 [node name="player_controller" parent="." instance=ExtResource("1_xom8x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05669, 0)
+velocity = Vector3(0, 0, 0)
+movementSpeed = 10.0
+boostSpeed = 20.0
+jumpHeight = 2.0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.61541, 0)
@@ -138,3 +143,66 @@ shape = SubResource("BoxShape3D_ye05c")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="wall"]
 mesh = SubResource("BoxMesh_b1wsf")
+
+[node name="bounce_pad" parent="." instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, -0.614692, 32.9422)
+collision_layer = 7
+collision_mask = 7
+forceDirection = Vector3(0, 1, 0)
+forceAmount = 30.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="bounce_pad"]
+
+[node name="boost_ring" parent="." instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, 4.70403, 32.9422)
+collision_layer = 7
+collision_mask = 7
+forceDirection = Vector3(0, 0, 1)
+forceAmount = 30.0
+snapToMiddle = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="boost_ring"]
+
+[node name="boost_ring2" parent="." instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, 4.70403, 38.1454)
+collision_layer = 7
+collision_mask = 7
+forceDirection = Vector3(1, 0, 1)
+forceAmount = 30.0
+snapToMiddle = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="boost_ring2"]
+
+[node name="boost_ring3" parent="." instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.41735, 4.70403, 41.8592)
+collision_layer = 7
+collision_mask = 7
+forceDirection = Vector3(1, -1, 0)
+forceAmount = 30.0
+snapToMiddle = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="boost_ring3"]
+
+[node name="boost_pad" parent="." instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0674, -0.992207, 32.9991)
+collision_layer = 7
+forceDirection = Vector3(-1, 0, 0)
+forceAmount = 30.0
+snapToMiddle = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="boost_pad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
+[node name="boost_pad2" parent="." instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7634, -0.992207, 32.9991)
+collision_layer = 7
+forceDirection = Vector3(-1, 0, 0)
+forceAmount = 30.0
+snapToMiddle = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="boost_pad2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)

@@ -1,16 +1,17 @@
-@tool
 class_name PlayerController
 extends CharacterBody3D
 
-enum States {Idle, Moving, Airborne, Grinding, StoppedGrinding }
+enum States {Idle, Moving, Airborne, Grinding, StoppedGrinding, Attacking, ExternalForce }
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var jumpFlag : bool
 
 @onready var defaultControls : bool = true
-
+@onready var homing_attack_ref : HomingAttack = $homing_attack
 @onready var camera = $camera_anchor
+@onready var state_machine := $state_machine
+@onready var collider = $collider
 
 @export_category("General Settings")
 @export var movementSpeed : float = 5.0
@@ -31,52 +32,43 @@ var jumpFlag : bool
 @export_category("Other")
 @export var cameraOffset : Vector3
 @export var model : Node3D
+@export var externalModifierCooldown : float
 
 
-var currentState : States:
-	set(new_value):
-		if new_value == States.StoppedGrinding:
-			currentCooldown = railGrindCooldownInSeconds
-		currentState = new_value
-var currentCooldown : float
+func _process(_delta):
+	camera.position = position + cameraOffset
+	
 
-func set_default_controls(newState):
-	defaultControls = newState
+static func get_jump_velocity(inputHeight : float, _gravity : float):
+	return sqrt(2.0 * _gravity * inputHeight)
+	
 
-func _physics_process(delta):
-	if not defaultControls:
+func get_current_speed():
+	var speed := movementSpeed
+	if Input.is_action_pressed("boost"):
+		speed = boostSpeed
+	return speed
+
+func rotate_model_towards(forwardDir : Vector3 ,upDir : Vector3 = Vector3.UP):
+	if is_equal_approx(forwardDir.length(), 0):
 		return
-	
-	# Apply gravity
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-	else:
-		jumpFlag = false
-		
-	# Check if the user is grounded first before jumping
-	if Input.is_action_pressed("jump") and !jumpFlag and is_on_floor():
-		jumpFlag = true
-		# Calculate the jump velocity from the jump height
-		velocity.y = get_jump_velocity(jumpHeight)
-	
-	# Get the user input
+	model.look_at(transform.origin - forwardDir, upDir)
+
+func calculate_movement(acceleration : float, decceleration : float) -> void:
 	var input_dir := Vector3.ZERO
 	input_dir.x = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) 
 	input_dir.z = (Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward"))
+	input_dir = input_dir.normalized()
 	
 	var dir : Vector3
 	
 	# Transform it to be local to the camera's rotation
 	dir = input_dir.rotated(Vector3.UP, camera.rotation.y)  #(camera.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	# By default, use ground acceleration & decceleration
-	var acceleration = groundAcceleration
-	var decceleration = groundDecceleration
-	
-	# Use air acceleration & decceleration if not on the floor
-	if not is_on_floor():
-		acceleration = airAcceleration
-		decceleration = airDecceleration
+	## Use air acceleration & decceleration if not on the floor
+	#if not is_on_floor():
+		#acceleration = airAcceleration
+		#decceleration = airDecceleration
 		
 	var speed = get_current_speed()
 	
@@ -93,42 +85,6 @@ func _physics_process(delta):
 		#model.rotation.y = local_dir.angle()
 		var horizontalVel = Vector3(velocity.x, 0, velocity.z)
 		rotate_model_towards(horizontalVel, up_direction)
-	
-	# Apply calculations
-	move_and_slide()
-	
-func _process(_delta):
-	camera.position = position + cameraOffset
-	update_states(_delta)
-	DebugDraw3D.draw_sphere(position, railDetectionRadius, Color.MAGENTA)
-
-func get_jump_velocity(inputHeight : float):
-	return sqrt(2.0 * gravity * inputHeight)
-	
-func update_states(delta):
-	if currentState == States.StoppedGrinding:
-		currentCooldown -= delta
-		if currentCooldown < 0:
-			currentState = States.Idle
-		return
-	
-	if is_on_floor():
-		if velocity.length() > 2.0:
-			currentState = States.Moving
-		else:
-			currentState = States.Idle
-	elif currentState != States.Grinding:
-		currentState = States.Airborne
-
-func get_current_speed():
-	var speed := movementSpeed
-	if Input.is_action_pressed("boost"):
-		speed = boostSpeed
-	return speed
-
-func rotate_model_towards(forwardDir : Vector3 ,upDir : Vector3 = Vector3.UP):
-	if forwardDir == Vector3.ZERO:
-		return
-	model.look_at(transform.origin - forwardDir, upDir)
+	pass
 
 	
