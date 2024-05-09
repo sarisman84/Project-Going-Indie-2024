@@ -29,6 +29,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func detect_homing_targets():
+	if player.state_machine.state is AttackState:
+		return
 	indicator.visible = false
 	var copy = detection_area.get_overlapping_bodies() as Array[Node3D]
 	copy.append_array(detection_area.get_overlapping_areas() as Array[Node3D])

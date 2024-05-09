@@ -53,6 +53,9 @@ size = Vector3(1, 5, 30)
 [node name="player_controller" parent="." instance=ExtResource("1_xom8x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05669, 0)
 velocity = Vector3(0, 0, 0)
+movementSpeed = 10.0
+boostSpeed = 20.0
+jumpHeight = 2.0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.61541, 0)
@@ -146,7 +149,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, -0.614692, 32.9422)
 collision_layer = 7
 collision_mask = 7
 forceDirection = Vector3(0, 1, 0)
-forceDistance = 5.0
+forceAmount = 30.0
 canBeAttacked = true
 snapToMiddle = true
 
@@ -157,7 +160,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, 4.70403, 32.9422)
 collision_layer = 7
 collision_mask = 7
 forceDirection = Vector3(0, 0, 1)
-forceDistance = 5.0
+forceAmount = 30.0
 snapToMiddle = true
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="boost_ring"]
@@ -167,7 +170,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, 4.70403, 38.1454)
 collision_layer = 7
 collision_mask = 7
 forceDirection = Vector3(1, 0, 1)
-forceDistance = 5.0
+forceAmount = 30.0
 snapToMiddle = true
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="boost_ring2"]
@@ -176,8 +179,8 @@ snapToMiddle = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.41735, 4.70403, 41.8592)
 collision_layer = 7
 collision_mask = 7
-forceDirection = Vector3(1, 0, 0)
-forceDistance = 5.0
+forceDirection = Vector3(1, -1, 0)
+forceAmount = 30.0
 snapToMiddle = true
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="boost_ring3"]
@@ -186,7 +189,7 @@ snapToMiddle = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0674, -0.992207, 32.9991)
 collision_layer = 7
 forceDirection = Vector3(-1, 0, 0)
-forceDistance = 5.0
+forceAmount = 30.0
 snapToMiddle = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="boost_pad"]
@@ -197,7 +200,7 @@ size = Vector3(1, 0.15, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7634, -0.992207, 32.9991)
 collision_layer = 7
 forceDirection = Vector3(-1, 0, 0)
-forceDistance = 5.0
+forceAmount = 30.0
 snapToMiddle = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="boost_pad2"]

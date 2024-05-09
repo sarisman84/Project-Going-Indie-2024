@@ -1,4 +1,3 @@
-class_name AttackState
 extends PlayerState
 
 var bounceOverrideState : bool

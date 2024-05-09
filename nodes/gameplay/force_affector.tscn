@@ -8,6 +8,7 @@
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_05qmw")
+forceAmount = null
 snapToMiddle = null
 
 [node name="shape" type="CollisionShape3D" parent="."]

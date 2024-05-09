@@ -3,7 +3,7 @@ class_name ForceAffector
 extends Area3D
 
 @export var forceDirection : Vector3
-@export var forceDistance : float
+@export var forceAmount : float
 @export var canBeAttacked : bool
 @export var snapToMiddle: bool
 
@@ -15,7 +15,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	DebugDraw3D.draw_arrow_ray(global_position, forceDirection.normalized(),forceDistance, Color.BLUE_VIOLET,0.05,false)
+	DebugDraw3D.draw_arrow_ray(global_position, forceDirection.normalized(), 1.0, Color.SKY_BLUE,0.15,true)
 	pass
 
 
@@ -35,8 +35,7 @@ func reset_player(player: PlayerController):
 	ha.set_bounce_override(false)
 
 func push_player(player : PlayerController):
-	var force = PlayerController.get_jump_velocity(forceDistance, _gravity)
-	player.state_machine.transition_to("moved_by_external_force", {external_velocity = forceDirection.normalized() * force, snapPos = global_position + forceDirection.normalized(), canSnap = snapToMiddle})
+	player.state_machine.transition_to("moved_by_external_force", {external_velocity = forceDirection.normalized() * forceAmount, snapPos = global_position + forceDirection.normalized(), canSnap = snapToMiddle})
 
 func _on_body_exited(body):
 	reset_player(body as PlayerController)
