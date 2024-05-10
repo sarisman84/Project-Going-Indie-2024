@@ -1,3 +1,4 @@
+class_name AttackingState
 extends PlayerState
 
 var bounceOverrideState : bool
@@ -6,17 +7,13 @@ var bounceHeight : float
 var speed : float
 
 func enter(msg := {}) -> void:
-#_target
-#_bounceHeight
-#_speed
-#_bounceOverrideState
 	currentHomingTarget = msg["_target"]
 	bounceOverrideState = msg["_bounceOverrideState"]
 	speed = msg["_speed"]
 	bounceHeight = msg["_bounceHeight"]
 	pass
 	
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	if bounceOverrideState:
 		player.state_machine.transition_to("airborne")
 		return

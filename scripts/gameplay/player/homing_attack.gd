@@ -8,6 +8,7 @@ extends Node3D
 @onready var player  : PlayerController = $".."
 @onready var indicator : CenterContainer = $indicator
 @onready var bounceOverrideState : bool = false
+@onready var player_state_machine : StateMachine = player.state_machine
 
 @export var detectionAngle : float = 0.2
 @export var speed : float = 1.0
@@ -29,9 +30,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func detect_homing_targets():
-	if player.state_machine.state is AttackState:
+	if Engine.is_editor_hint():
 		return
 	indicator.visible = false
+	if player_state_machine != null and player_state_machine.state is AttackingState:
+		return
+	
 	var copy = detection_area.get_overlapping_bodies() as Array[Node3D]
 	copy.append_array(detection_area.get_overlapping_areas() as Array[Node3D])
 	for i in range(0, copy.size()):
@@ -80,6 +84,7 @@ func detect_homing_targets():
 			_speed = speed, 
 			_bounceOverrideState = bounceOverrideState
 			})
+		player_state_machine = player.state_machine
 
 func _physics_process(_delta):
 	detect_homing_targets()

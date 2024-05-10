@@ -115,9 +115,9 @@ func _physics_process(_delta):
 	var pos = curve.sample_baked(offset, true)
 	
 	var _playerDir = player.velocity.normalized()
-	
+	var nextPos = curve.sample_baked(offset + playerDirection, true)
 	# Get the forward direction from a sample with the user's intented direction
-	var forward = pos.direction_to(curve.sample_baked(offset + playerDirection, true))
+	var forward = pos.direction_to(nextPos)
 	# Sample the normal of the curve
 	var up = curve.sample_baked_up_vector(offset, true)
 	
@@ -126,10 +126,10 @@ func _physics_process(_delta):
 		on_grind_end()
 		return
 	
-	# Apply some physics velocity and rotation based on the above calculations
+	# Apply some physics velocity, position and rotation based on the above calculations
 	player.velocity = forward * player.get_current_speed()
-	player.move_and_slide()
 	player.rotate_model_towards(forward, up)
+	player.global_position = (position + pos) + (forward * player.get_current_speed() * _delta)
 
 	# Draw the calculated info
 	DebugDraw3D.draw_sphere(pos + position, 0.15, Color.YELLOW)
@@ -147,6 +147,7 @@ func _on_hitbox_body_entered(body):
 func _on_hitbox_body_exited(body):
 	isPlayerDetected = false
 	DebugDraw3D.draw_sphere(body.position, 0.15, Color.RED, 10)
+	on_grind_end()
 	pass
 
 func get_closest_offset(globalPosition : Vector3):

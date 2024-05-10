@@ -16,10 +16,12 @@ func enter(msg := {}) -> void:
 			var col = player.collider as Node3D
 			player.global_position = msg["snapPos"] - ( Vector3.UP * col.scale.y / 2.0)
 	
+	player.rotate_model_towards(externalVelocity, player.up_direction)
+	
 	
 		
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	player.velocity = externalVelocity
 	player.move_and_slide()
 
