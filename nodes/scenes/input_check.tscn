@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bftoemyok4p10"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/menus/check_input_device.gd" id="1_bjgek"]
+
+[node name="InputCheck" type="Node"]
+script = ExtResource("1_bjgek")
