@@ -9,9 +9,7 @@ func _on_start_button_pressed():
 
 ##You'll need to program a seperate options menu before implemnting this function
 func _on_settings_button_pressed():
-	## Example code on how to call Settings Menu
-	var options = load("res://nodes/scenes/options_menu.tscn").instance()
-	get_tree().current_scene.add_child(options)
+	$SettingsMenu.show()
 
 func _on_quit_button_pressed():
 	get_tree().quit()

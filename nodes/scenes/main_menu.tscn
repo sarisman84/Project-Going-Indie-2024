@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bau1s3rxh1wrl"]
+[gd_scene load_steps=3 format=3 uid="uid://bau1s3rxh1wrl"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/menus/main_menu.gd" id="1_esf80"]
+[ext_resource type="PackedScene" uid="uid://caepb8w1s640o" path="res://nodes/scenes/settings_menu.tscn" id="2_va88m"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -12,6 +13,10 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 script = ExtResource("1_esf80")
+
+[node name="SettingsMenu" parent="." instance=ExtResource("2_va88m")]
+visible = false
+layout_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

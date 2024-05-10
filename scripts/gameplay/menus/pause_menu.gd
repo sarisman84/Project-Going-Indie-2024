@@ -20,7 +20,7 @@ func _on_restart_button_pressed():
 
 ## TODO: Implement at later date
 func _on_settings_button_pressed():
-	pass
+	$SettingsMenu.show()
 
 ## TODO: Add confirmation menu at later date
 func _on_quit_button_pressed():

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7jthsh36ssaw"]
+[gd_scene load_steps=5 format=3 uid="uid://b7jthsh36ssaw"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/menus/pause_menu.gd" id="1_nfnk0"]
+[ext_resource type="PackedScene" uid="uid://caepb8w1s640o" path="res://nodes/scenes/settings_menu.tscn" id="2_abfv7"]
 [ext_resource type="Shader" path="res://graphics/menus/pause_menu_blur.gdshader" id="2_otyw8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4tr1g"]
@@ -15,6 +16,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nfnk0")
+
+[node name="SettingsMenu" parent="." instance=ExtResource("2_abfv7")]
+visible = false
+layout_mode = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_4tr1g")
