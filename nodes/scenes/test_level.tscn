@@ -1,7 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=18 format=3 uid="uid://clsa3y2ji2ae0"]
 
-
-[ext_resource type="PackedScene" uid="uid://b7jthsh36ssaw" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
+[ext_resource type="PackedScene" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
 [ext_resource type="Shader" path="res://graphics/shaders/world/infinite_grid.gdshader" id="2_jp83v"]
 [ext_resource type="Script" path="res://scripts/utility/other/grid_drawer.gd" id="3_frm2x"]
@@ -142,6 +141,16 @@ forceAmount = 30.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
 size = Vector3(1, 0.15, 1)
 
+[node name="boost_pad3" parent="external_affectors" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7916, -0.992206, -8.99173)
+collision_layer = 7
+forceDirection = Vector3(-1, 0, 0)
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost_pad3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
 [node name="test_target" type="StaticBody3D" parent="external_affectors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73958, 0, 12.9643)
 collision_layer = 4
@@ -227,7 +236,7 @@ shape = SubResource("BoxShape3D_ye05c")
 mesh = SubResource("BoxMesh_b1wsf")
 
 [node name="block" type="StaticBody3D" parent="geometry"]
-transform = Transform3D(24.3733, 0, 14.0719, 0, 28.1438, 0, -14.0719, 0, 24.3733, 75.0684, 1.90735e-06, 79.8375)
+transform = Transform3D(24.3733, 0, 14.0719, 0, 28.1438, 0, -14.0719, 0, 24.3733, 75.0684, 11.0812, 79.8375)
 
 [node name="shape" type="CollisionShape3D" parent="geometry/block"]
 shape = SubResource("BoxShape3D_0efcr")

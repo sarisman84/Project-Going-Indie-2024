@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bau1s3rxh1wrl"]
+[gd_scene load_steps=2 format=3 uid="uid://c6cek41cqfpjy"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/menus/main_menu.gd" id="1_esf80"]
 

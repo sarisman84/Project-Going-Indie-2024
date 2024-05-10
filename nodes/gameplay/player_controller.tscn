@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=18 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/grinding_state.gd" id="10_dcgnw"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/attack_state.gd" id="11_ldmrb"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/external_modifier_state.gd" id="12_vaiqd"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/other/debug_printer.gd" id="14_1e1w2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojs2i"]
 radius = 0.283417
@@ -118,3 +119,6 @@ script = ExtResource("11_ldmrb")
 
 [node name="moved_by_external_force" type="Node" parent="state_machine"]
 script = ExtResource("12_vaiqd")
+
+[node name="debug_printer" type="Node" parent="."]
+script = ExtResource("14_1e1w2")

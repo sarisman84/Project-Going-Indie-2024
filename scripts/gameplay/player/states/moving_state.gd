@@ -17,7 +17,7 @@ func physics_update(delta: float) -> void:
 		
 	move_player(delta)
 	
-	if Input.is_action_pressed("jump") and player.currentJumpCount > 0:
+	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0:
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif is_equal_approx(player.velocity.length(), 0):
 		state_machine.transition_to("idle")
