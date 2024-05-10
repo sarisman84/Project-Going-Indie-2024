@@ -17,4 +17,7 @@ func update(delta: float) -> void:
 		# to tell the next state that we want to jump.
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif directionalInput.length() > 0:
-		state_machine.transition_to("moving")
+		if Input.is_action_pressed("boost"):
+			state_machine.transition_to("boosting")
+		else:
+			state_machine.transition_to("moving")
