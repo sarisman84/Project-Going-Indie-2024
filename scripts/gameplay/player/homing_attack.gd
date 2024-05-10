@@ -1,4 +1,3 @@
-@tool
 class_name HomingAttack
 extends Node3D
 

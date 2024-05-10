@@ -1,4 +1,4 @@
-@tool
+class_name Rail
 extends Path3D
 
 @export var hitboxAABB : AABB
@@ -74,9 +74,6 @@ func on_grind_end():
 	
 	
 func _process(_delta):
-	DebugDraw3D.draw_aabb_ab(get_global_aabb_start(), get_global_aabb_end(),Color.CYAN)
-	DebugDraw3D.draw_sphere(get_global_aabb_center(),0.15, Color.YELLOW)
-	
 	if grindPlayerState != null:
 		grindPlayerState.update(_delta)
 	
@@ -84,8 +81,6 @@ func _process(_delta):
 		return
 	if player.state_machine.state is GrindState:
 		return
-	
-	
 	
 	if is_player_close_to_curve():
 		on_grind_start()

@@ -48,6 +48,11 @@ func _process(_delta):
 	camera.position = position + cameraOffset
 	
 
+func calculate_dynamic_gravity(delta : float) -> float:
+	if velocity.y > 0:
+		return gravity * delta
+	return gravity * (fallMultiplier - 1) * delta
+
 static func get_jump_velocity(inputHeight : float, _gravity : float):
 	return sqrt(2.0 * _gravity * inputHeight)
 	

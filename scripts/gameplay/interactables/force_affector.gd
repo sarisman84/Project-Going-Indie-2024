@@ -1,4 +1,3 @@
-@tool
 class_name ForceAffector
 extends Area3D
 
@@ -10,13 +9,6 @@ extends Area3D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	DebugDraw3D.draw_arrow_ray(global_position, forceDirection.normalized(), 1.0, Color.SKY_BLUE,0.15,true)
-	pass
-
 
 # Assumes that the incoming body is the Player
 func _on_body_entered(body):

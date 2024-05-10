@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqb2amsr3xfjt"]
+[gd_scene load_steps=4 format=3 uid="uid://cqb2amsr3xfjt"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/force_affector.gd" id="1_05qmw"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/force_affector_debug.gd" id="2_vwrmo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8qkbe"]
 
@@ -11,6 +12,9 @@ script = ExtResource("1_05qmw")
 
 [node name="shape" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_8qkbe")
+
+[node name="debug" type="Node" parent="."]
+script = ExtResource("2_vwrmo")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
