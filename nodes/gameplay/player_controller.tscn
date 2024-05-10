@@ -1,27 +1,56 @@
-[gd_scene load_steps=6 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=17 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
 [ext_resource type="PackedScene" uid="uid://doh5j4al7a3cw" path="res://graphics/models/testing/sonic/unleashed/Sonic the Hedgehog.glb" id="3_pt2eb"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/homing_attack.gd" id="4_6iksq"]
+[ext_resource type="Shader" path="res://graphics/shaders/hud/homing_indicator.gdshader" id="5_uhm43"]
+[ext_resource type="Script" path="res://scripts/utility/states/state_machine.gd" id="6_fb0co"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/states/idle_state.gd" id="7_cpnvc"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/states/boosting_state.gd" id="8_04cd8"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/states/moving_state.gd" id="8_bqaay"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/states/airborne_state.gd" id="9_de7y0"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/states/grinding_state.gd" id="10_dcgnw"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/states/attack_state.gd" id="11_ldmrb"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/states/external_modifier_state.gd" id="12_vaiqd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojs2i"]
+radius = 0.283417
+height = 1.16125
 
-[sub_resource type="BoxMesh" id="BoxMesh_c634y"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_wxerh"]
+radius = 12.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nsb2v"]
+shader = ExtResource("5_uhm43")
+shader_parameter/scale = 0.5
+shader_parameter/color = Color(0, 1, 1, 1)
 
 [node name="player_controller" type="CharacterBody3D" node_paths=PackedStringArray("model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
+collision_layer = 2
+velocity = Vector3(0, -729.596, 0)
+floor_stop_on_slope = false
 script = ExtResource("1_jpyvr")
-groundAcceleration = 0.5
-groundDecceleration = 0.8
-airAcceleration = 0.2
-airDecceleration = 0.0
+movementSpeed = 2536.0
+jumpHeight = 3.0
+turningSpeed = 0.0
+boostSpeed = 5072.0
+stompSpeed = 500.0
+groundDelta = Vector2(0.5, 0.8)
+airDelta = Vector2(0, 0.8)
+boostAcceleration = 0.2
+railDetectionRadius = 0.7
 cameraOffset = Vector3(0, 0.5, 0)
 model = NodePath("Sonic the Hedgehog")
 
 [node name="collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.521877, 0)
 shape = SubResource("CapsuleShape3D_ojs2i")
 
 [node name="camera_anchor" type="SpringArm3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0092113, 0, 0)
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27164.9, 0)
 spring_length = 7.0
 margin = 0.25
 script = ExtResource("2_hw33h")
@@ -29,10 +58,63 @@ script = ExtResource("2_hw33h")
 [node name="camera" type="Camera3D" parent="camera_anchor"]
 current = true
 
-[node name="temp_mesh" type="CSGMesh3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 1.5, 0, 0, 0, 0.5, 0, 0, 0)
-visible = false
-mesh = SubResource("BoxMesh_c634y")
-
 [node name="Sonic the Hedgehog" parent="." instance=ExtResource("3_pt2eb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="homing_attack" type="Node3D" parent="."]
+script = ExtResource("4_6iksq")
+detectionAngle = 0.5
+speed = 50.0
+bounceHeight = 3.0
+
+[node name="detection_area" type="Area3D" parent="homing_attack"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.541748, 0)
+collision_layer = 4
+collision_mask = 4
+
+[node name="shape" type="CollisionShape3D" parent="homing_attack/detection_area"]
+shape = SubResource("SphereShape3D_wxerh")
+
+[node name="indicator" type="CenterContainer" parent="homing_attack"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="sprite" type="ColorRect" parent="homing_attack/indicator"]
+material = SubResource("ShaderMaterial_nsb2v")
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+color = Color(0.843137, 0.870588, 0.858824, 0)
+
+[node name="state_machine" type="Node" parent="."]
+script = ExtResource("6_fb0co")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="state_machine"]
+script = ExtResource("7_cpnvc")
+
+[node name="boosting" type="Node" parent="state_machine"]
+script = ExtResource("8_04cd8")
+
+[node name="moving" type="Node" parent="state_machine"]
+script = ExtResource("8_bqaay")
+
+[node name="airborne" type="Node" parent="state_machine"]
+script = ExtResource("9_de7y0")
+
+[node name="grinding" type="Node" parent="state_machine"]
+script = ExtResource("10_dcgnw")
+
+[node name="attacking" type="Node" parent="state_machine"]
+script = ExtResource("11_ldmrb")
+
+[node name="moved_by_external_force" type="Node" parent="state_machine"]
+script = ExtResource("12_vaiqd")
