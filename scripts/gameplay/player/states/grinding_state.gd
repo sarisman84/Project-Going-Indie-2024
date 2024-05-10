@@ -7,7 +7,7 @@ var stateStarted : bool
 
 signal exitSignal
 
-func enter(msg := {}) -> void:
+func enter(_msg := {}) -> void:
 	stateStarted = true
 
 func update(delta: float) -> void:

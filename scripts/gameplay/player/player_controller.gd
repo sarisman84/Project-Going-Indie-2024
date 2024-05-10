@@ -13,15 +13,15 @@ var jumpFlag : bool
 @onready var state_machine := $state_machine
 @onready var collider = $collider
 
-@export_category("General Settings")
 @export var movementSpeed : float = 5.0
-@export var boostSpeed : float = 10.0
+@export_category("Jump Settings")
 @export var jumpHeight : float = 1.0
+@export var jumpCount : int = 2
 @export_category("Boost Settings")
-@export var steeringAmountInDegrees : float = 30.0
 @export var turningSpeed : float = 1.0
 @export var sideStepCooldown : float = 0.1
 @export var sideStepDistance : float = 10.0
+@export var boostSpeed : float = 10.0
 @export_category("Fall Settings")
 @export var fallMultiplier : float = 1.0
 @export var lowJumpFallMultiplier : float = 1.2
@@ -40,6 +40,10 @@ var jumpFlag : bool
 @export var externalModifierCooldown : float
 
 
+var currentJumpCount : int = 0
+var canAirBoost : bool = true
+
+
 func _process(_delta):
 	camera.position = position + cameraOffset
 	
@@ -55,11 +59,11 @@ func get_current_speed():
 	return speed
 
 func rotate_model_towards(forwardDir : Vector3 ,upDir : Vector3 = Vector3.UP):
-	if is_equal_approx(forwardDir.length(), 0):
+	if is_equal_approx(forwardDir.length(), 0) or -forwardDir == upDir:
 		return
 	model.look_at(transform.origin - forwardDir, upDir)
 
-static func calculate_boost_movement(player : PlayerController, speed : float, acceleration : float, turnSpeed : float,  steeringAmountInDegrees : float, delta : float) -> void:
+static func calculate_boost_movement(player : PlayerController, speed : float, turnSpeed : float, delta : float) -> void:
 	if not player.model:
 		return
 		

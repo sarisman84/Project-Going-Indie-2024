@@ -7,7 +7,9 @@ var isStomping : bool
 func enter(msg: = {}) -> void:
 	if msg.has("do_jump"):
 		player.velocity.y = PlayerController.get_jump_velocity(player.jumpHeight, player.gravity)
+		player.currentJumpCount -= 1
 	isStomping = false
+	
 		
 func physics_update(delta: float) -> void:
 	# Apply gravity
@@ -21,6 +23,12 @@ func physics_update(delta: float) -> void:
 				state_machine.transition_to("moving")
 		else:
 			state_machine.transition_to("idle")
+	elif !isStomping:
+		if Input.is_action_just_pressed("boost") and player.canAirBoost:
+			player.velocity = player.model.transform.basis.z * player.boostSpeed
+			player.canAirBoost = false
+		elif Input.is_action_just_pressed("jump") and player.currentJumpCount > 0:
+			state_machine.transition_to("airborne", {do_jump = true})
 	
 	if Input.is_action_just_pressed("slide"):
 		isStomping = true

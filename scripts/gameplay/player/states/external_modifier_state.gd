@@ -21,7 +21,7 @@ func enter(msg := {}) -> void:
 	
 		
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	player.velocity = externalVelocity
 	player.move_and_slide()
 

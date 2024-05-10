@@ -3,9 +3,11 @@ extends PlayerState
 # Upon entering the state, we set the Player node's velocity to zero.
 func enter(_msg:= {}) -> void:
 	player.velocity = Vector3.ZERO
+	player.canAirBoost = true
+	player.currentJumpCount = player.jumpCount
 	pass
 
-func update(delta: float) -> void:
+func update(_delta: float) -> void:
 	# If you have platforms that break when standing on them, you need that check for 
 	# the character to fall.
 	if not player.is_on_floor():

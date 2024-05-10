@@ -4,9 +4,11 @@ var left_step : bool
 var right_step : bool
 var countdown : float
 
-func enter(msg := {}) -> void:
+func enter(_msg := {}) -> void:
 	player.rotate_model_towards(player.velocity.normalized(), player.up_direction)
 	countdown = 0
+	player.canAirBoost = true
+	player.currentJumpCount = player.jumpCount
 
 func update(_delta : float) -> void:
 	left_step = Input.is_action_pressed("left_step")
@@ -45,14 +47,14 @@ func physics_update(delta : float) -> void:
 	
 	move_player(delta)
 	
-	if Input.is_action_pressed("jump"):
+	if Input.is_action_pressed("jump") and player.currentJumpCount > 0:
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif is_equal_approx(player.velocity.length(), 0):
 		state_machine.transition_to("idle")
 
 func move_player(delta : float) -> void:
 	# Calculate movement
-	PlayerController.calculate_boost_movement(player, player.boostSpeed, player.boostAcceleration,player.turningSpeed,player.steeringAmountInDegrees, delta)
+	PlayerController.calculate_boost_movement(player, player.boostSpeed,player.turningSpeed, delta)
 	# Apply calculations
 	player.move_and_slide()
 
