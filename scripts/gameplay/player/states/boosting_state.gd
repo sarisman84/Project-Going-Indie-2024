@@ -5,7 +5,7 @@ var right_step : bool
 var countdown : float
 
 func enter(_msg := {}) -> void:
-	player.rotate_model_towards(player.velocity.normalized(), player.up_direction)
+	player.rotate_model_towards_adv(player.velocity.normalized(), Vector3.UP)
 	countdown = 0
 	player.canAirBoost = true
 	player.currentJumpCount = player.jumpCount
@@ -35,11 +35,11 @@ func physics_update(delta : float) -> void:
 	if can_step:
 		var direction : float
 		if left_step:
-			direction = -1.0
-		else:
 			direction = 1.0
+		else:
+			direction = -1.0
 		
-		var globalRight = Vector3.RIGHT.rotated(Vector3.UP, player.camera.rotation.y)
+		var globalRight = player.model.transform.basis.x
 		var stepDir = globalRight.normalized() * direction * player.sideStepDistance
 		player.global_position += stepDir
 		countdown = player.sideStepCooldown

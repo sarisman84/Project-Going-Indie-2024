@@ -1,3 +1,4 @@
+class_name MoveState
 extends PlayerState
 
 func enter(_msg := {}) -> void:
@@ -25,6 +26,6 @@ func physics_update(delta: float) -> void:
 	
 func move_player(_delta : float) -> void:
 	# Calculate movement
-	PlayerController.calculate_movement(player, player.movementSpeed,player.groundDelta.y, player.groundDelta.x)
+	PlayerController.calculate_movement(player, player.movementSpeed,player.groundDelta.y, player.groundDelta.x, _delta)
 	# Apply calculations
 	player.move_and_slide()

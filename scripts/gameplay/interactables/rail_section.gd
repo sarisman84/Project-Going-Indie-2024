@@ -14,17 +14,8 @@ var railInCooldown : bool
 var grindPlayerState : GrindState
 
 
-func get_global_aabb_center():
-	return hitboxAABB.get_center() + position - (hitboxAABB.size / 2.0)
-
-func get_global_aabb_start():
-	return hitboxAABB.position + position - (hitboxAABB.size / 2.0)
-	
-func get_global_aabb_end():
-	return hitboxAABB.end + position - (hitboxAABB.size / 2.0)
-
 func _ready():
-	hitbox_collider.global_position = get_global_aabb_center()
+	hitbox_collider.global_position = ExtendedUtilities.get_global_aabb_center(hitboxAABB, self)
 	var box_shape := BoxShape3D.new()
 	box_shape.size = hitboxAABB.size
 	hitbox_collider.shape = box_shape
@@ -45,7 +36,7 @@ func on_grind_start():
 	railInCooldown = true
 	grindPlayerState.exitSignal.connect(reset_cooldown)
 	
-	var offset = get_closest_offset(player.position)
+	var offset = ExtendedUtilities.get_closest_offset(player.position, self)
 	var up = curve.sample_baked_up_vector(offset, true)
 	
 	set_player_pos_to_curve_offset(offset, up)
@@ -69,6 +60,7 @@ func on_grind_start():
 
 # Ends the grind state
 func on_grind_end():
+	player.up_direction = Vector3.UP
 	player.state_machine.transition_to("airborne")
 	print("Stop grinding")
 	
@@ -87,11 +79,12 @@ func _process(_delta):
 	
 # Checks if the player is close enough to the rail
 func is_player_close_to_curve():
-	var offset = get_closest_offset(player.position)
+	var offset = ExtendedUtilities.get_closest_offset(player.position, self)
 	
+	var closestUp = curve.sample_baked_up_vector(offset, true)
 	var closestPosition = curve.sample_baked(offset,true) + position
 	DebugDraw3D.draw_sphere(closestPosition, 0.15, Color.CHARTREUSE)
-	var playerPosition = player.position + Vector3.UP * (player.collider.scale.y / 2.0)
+	var playerPosition = player.position + closestUp * player.collider.shape.radius
 	
 	var dist = (closestPosition - playerPosition).length()
 	DebugDraw3D.draw_sphere(playerPosition , player.railDetectionRadius, Color.MAGENTA)
@@ -105,7 +98,7 @@ func _physics_process(_delta):
 	if not player.state_machine.state is GrindState:
 		return
 	# Get the current curve distance from the player position
-	var offset = get_closest_offset(player.position)
+	var offset = ExtendedUtilities.get_closest_offset(player.position, self)
 	# Sample a position based off the distance
 	var pos = curve.sample_baked(offset, true)
 	
@@ -122,9 +115,10 @@ func _physics_process(_delta):
 		return
 	
 	# Apply some physics velocity, position and rotation based on the above calculations
+	player.up_direction = up
 	player.velocity = forward * player.get_current_speed()
-	player.rotate_model_towards(forward, up)
-	player.global_position = (position + pos) + (forward * player.get_current_speed() * _delta)
+	player.rotate_model_towards_adv(forward, up)
+	player.global_position = (position + pos + (player.up_direction * player.collider.shape.radius)) + (forward * player.get_current_speed() * _delta)
 
 	# Draw the calculated info
 	DebugDraw3D.draw_sphere(pos + position, 0.15, Color.YELLOW)
@@ -144,10 +138,6 @@ func _on_hitbox_body_exited(body):
 	DebugDraw3D.draw_sphere(body.position, 0.15, Color.RED, 10)
 	on_grind_end()
 	pass
-
-func get_closest_offset(globalPosition : Vector3):
-	var localPosition = globalPosition - position
-	return curve.get_closest_offset(localPosition)
 
 func get_closest_point_index(globalPosition : Vector3):
 	var minDist = 1.79769e308

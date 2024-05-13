@@ -21,7 +21,7 @@ func update(delta : float) -> void:
 		
 func physics_update(delta: float) -> void:
 	# Apply gravity
-	player.velocity.y -= player.calculate_dynamic_gravity(delta)
+	player.velocity += player.calculate_dynamic_gravity(delta)
 	if countdown <= 0:
 		if player.is_on_floor():
 			if player.velocity.length() > 0:
@@ -44,7 +44,7 @@ func physics_update(delta: float) -> void:
 	
 	if !isStomping:	
 		# Calculate Movement
-		PlayerController.calculate_movement(player, player.movementSpeed, player.airDelta.y, player.airDelta.x)
+		PlayerController.calculate_movement(player, player.movementSpeed, player.airDelta.y, player.airDelta.x, delta)
 	else:
 		player.velocity -= Vector3.UP * player.stompSpeed * delta
 	

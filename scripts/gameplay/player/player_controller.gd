@@ -12,6 +12,7 @@ var jumpFlag : bool
 @onready var camera = $camera_anchor
 @onready var state_machine := $state_machine
 @onready var collider = $collider
+@onready var magnet = $magnet
 
 @export var movementSpeed : float = 5.0
 @export_category("Jump Settings")
@@ -38,20 +39,25 @@ var jumpFlag : bool
 @export var cameraOffset : Vector3
 @export var model : Node3D
 @export var externalModifierCooldown : float
+@export var curvedTerrainSnapDistance : float = 5.0
 
 
 var currentJumpCount : int = 0
 var canAirBoost : bool = true
-
+var forwardDirection : Vector3 = Vector3.ZERO
+var useCameraForward : bool = true
 
 func _process(_delta):
 	camera.position = position + cameraOffset
 	
 
-func calculate_dynamic_gravity(delta : float) -> float:
+func calculate_dynamic_gravity(delta : float) -> Vector3:
+	var finalForce : float
 	if velocity.y > 0:
-		return gravity * delta
-	return gravity * (fallMultiplier - 1) * delta
+		finalForce =  gravity * delta
+	else:
+		finalForce = gravity * (fallMultiplier - 1) * delta
+	return -up_direction * finalForce
 
 static func get_jump_velocity(inputHeight : float, _gravity : float):
 	return sqrt(2.0 * _gravity * inputHeight)
@@ -63,27 +69,66 @@ func get_current_speed():
 		speed = boostSpeed
 	return speed
 
-func rotate_model_towards(forwardDir : Vector3 ,upDir : Vector3 = Vector3.UP):
-	if is_equal_approx(forwardDir.length(), 0) or -forwardDir == upDir:
+func rotate_model_towards(forwardDir : Vector3):
+	if is_equal_approx(forwardDir.length(), 0):
 		return
-	model.look_at(transform.origin - forwardDir, upDir)
+	model.look_at(model.transform.origin - forwardDir, up_direction)
+	collider.look_at(collider.transform.origin - forwardDir, up_direction)
+
+func rotate_model_towards_adv(forwardDir : Vector3, up_dir : Vector3):
+	if is_equal_approx(forwardDir.length(), 0) or is_equal_approx(up_dir.length(), 0):
+		return
+	model.look_at(transform.origin - forwardDir, up_dir)
+	collider.look_at(transform.origin - forwardDir, up_dir)
+
+func try_get_ground() -> Dictionary:
+	var state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(position,position - up_direction)
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	query.exclude = [self]
+	
+	return state.intersect_ray(query)
+
+func get_directional_input() -> Vector3:
+	var localInputDir : Vector3
+	# Get the user's input in all 4 directions.
+	localInputDir.x = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) 
+	localInputDir.z = (Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward"))
+	localInputDir.y = 0
+	localInputDir = localInputDir.normalized()
+	
+	var right = camera.transform.basis.x
+	var forward : Vector3 = Vector3.ZERO
+	
+	if useCameraForward:
+		forward = camera.transform.basis.z
+		forward.y = 0
+	
+	if forwardDirection.length() > 0:
+		forward += forwardDirection
+	forward = forward.normalized()
+	
+	return right * localInputDir.x + forward * localInputDir.z
+
+func try_rotate_model_towards_forward_direction() -> void:
+	pass
+
+static func calculate_auto_movement(player : PlayerController, speed : float, targetDirection : Vector3, _delta : float) -> void:
+	if not player.model:
+		return
+	# Apply the target direction.
+	
+	player.velocity = targetDirection * speed
+	player.rotate_model_towards_adv(targetDirection, player.up_direction)
 
 static func calculate_boost_movement(player : PlayerController, speed : float, turnSpeed : float, delta : float) -> void:
 	if not player.model:
 		return
 		
-	var localInputDir := Vector3.ZERO
-	# Get the user's input in all 4 directions.
-	localInputDir.x = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) 
-	localInputDir.z = (Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward"))
-	localInputDir = localInputDir.normalized()
+	var inputDir = player.get_directional_input()
 	
-	var inputDir = localInputDir.rotated(Vector3.UP, player.camera.rotation.y)
-	
-	
-	# Get the user's left/right input as turn input
-	# var turn_input = (Input.get_action_strength("move_left") - Input.get_action_strength("move_right")) * deg_to_rad(steeringAmountInDegrees)
-	
+	var vy = player.velocity.y
 	# Apply the model's forward direction.
 	player.velocity = player.model.global_transform.basis.z * speed
 	
@@ -91,32 +136,30 @@ static func calculate_boost_movement(player : PlayerController, speed : float, t
 	# If the model exists, rotate it based of the turn input
 	if player.velocity.length() > 0.2:
 		var newDir = player.model.global_transform.basis.z.slerp(inputDir, turnSpeed * delta)
-		player.rotate_model_towards(newDir, player.up_direction)
+		player.rotate_model_towards_adv(newDir, Vector3.UP)
+	
+	player.velocity.y = vy
 	
 
-static func calculate_movement(player : PlayerController,speed : float, acceleration : float, decceleration : float) -> void:
-	var input_dir := Vector3.ZERO
-	# Get the user's input in all 4 directions.
-	input_dir.x = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) 
-	input_dir.z = (Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward"))
-	input_dir = input_dir.normalized()
+static func calculate_movement(player : PlayerController,speed : float, acceleration : float, decceleration : float, delta : float) -> void:
+	var dir = player.get_directional_input()
 	
-	var dir : Vector3
 	
-	# Transform it to be local to the camera's rotation
-	dir = input_dir.rotated(Vector3.UP, player.camera.rotation.y)  #(camera.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
+	var vy = player.velocity.y
 	# Apply acceleration & decceleration
 	if dir:
-		player.velocity.x = move_toward(player.velocity.x, dir.x * speed, acceleration)
-		player.velocity.z = move_toward(player.velocity.z, dir.z * speed, acceleration)
+		player.velocity = lerp(player.velocity, dir * speed, acceleration * delta)
 	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, decceleration)
-		player.velocity.z = move_toward(player.velocity.z, 0, decceleration)
+		player.velocity = lerp(player.velocity, Vector3.ZERO, decceleration * delta)
+	
+	player.velocity.y = vy
+	
+	
 	
 	# If the model exists and the velocity is high enough, rotate it towards the velocity
-	if player.model and player.velocity.length() > 0.2:
-		var horizontalVel = Vector3(player.velocity.x, 0, player.velocity.z)
-		player.rotate_model_towards(horizontalVel, player.up_direction)
-
+	if player.model and dir.length() > 0.2:
+		var newDir = player.model.basis.z.slerp(dir.normalized(), 4.0 * delta)
+		player.rotate_model_towards_adv(newDir, Vector3.UP)
+		
+		
 	
