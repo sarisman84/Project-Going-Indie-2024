@@ -14,8 +14,8 @@ func draw_debug() -> void:
 	if not player_controller.is_on_floor():
 		DebugDraw3D.draw_sphere(player_controller.global_position,0.15, Color.AQUA,0.5)
 	
-	if not Engine.is_editor_hint():
-		DebugDraw3D.draw_sphere(player_controller.position, collider.shape.radius, Color.AQUA)
+	#if not Engine.is_editor_hint():
+		#DebugDraw3D.draw_sphere(player_controller.position, collider.shape.radius, Color.AQUA)
 	
 	if player_controller.is_on_floor():
 		cachedYPos = player_controller.global_position.y

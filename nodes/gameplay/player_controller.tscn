@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
-[ext_resource type="PackedScene" uid="uid://doh5j4al7a3cw" path="res://graphics/models/testing/sonic/unleashed/Sonic the Hedgehog.glb" id="3_pt2eb"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/homing_attack.gd" id="4_6iksq"]
 [ext_resource type="Shader" path="res://graphics/shaders/hud/homing_indicator.gdshader" id="5_uhm43"]
 [ext_resource type="Script" path="res://scripts/utility/states/state_machine.gd" id="6_fb0co"]
@@ -15,6 +14,7 @@
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/external_modifier_state.gd" id="12_vaiqd"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/other/debug_printer.gd" id="14_1e1w2"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/auto_move_state.gd" id="14_r254s"]
+[ext_resource type="PackedScene" uid="uid://b20jd6nyae4di" path="res://graphics/models/gameplay/player/maincharacter_model.glb" id="15_uwkto"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ax2wc"]
 radius = 0.55
@@ -134,8 +134,8 @@ shape = SubResource("SphereShape3D_a2oux")
 
 [node name="model_anchor" type="Node3D" parent="."]
 
-[node name="Sonic the Hedgehog" parent="model_anchor" instance=ExtResource("3_pt2eb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+[node name="maincharacter_model" parent="model_anchor" instance=ExtResource("15_uwkto")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.548828, 0)
 
 [connection signal="body_entered" from="magnet" to="." method="_magnet_on_body_entered"]
 [connection signal="body_exited" from="magnet" to="." method="_magnet_on_body_exited"]
