@@ -1,5 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://clsa3y2ji2ae0"]
-
+[gd_scene load_steps=20 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://b7jthsh36ssaw" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
@@ -7,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/utility/other/grid_drawer.gd" id="3_frm2x"]
 [ext_resource type="PackedScene" uid="uid://bn30aiuttyy0d" path="res://nodes/gameplay/rail_section.tscn" id="3_ne3qf"]
 [ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="4_ojlsg"]
+[ext_resource type="PackedScene" uid="uid://0rohomqoalx5" path="res://nodes/gameplay/curved_road.tscn" id="5_236ag"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ifatk"]
 
@@ -32,6 +32,14 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 1.1, 1.6, 1.6)
 }
 point_count = 5
+
+[sub_resource type="Curve3D" id="Curve3D_0n76q"]
+bake_interval = 2.69
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 22.2579, -1.26611, 9.85694, 0, 0, 0, 0, 0, 0, 17.082, -0.894775, 9.85694, 6.78608, 0.117599, 0.259789, -6.78608, -0.117599, -0.259789, 7.95964, -0.878852, 9.71115, -13.6133, 0.296996, 2.30392, 13.6133, -0.296996, -2.30392, 11.9791, 13.4992, -1.46938, 7.24103, 0, 0.0987549, -7.24103, 0, -0.0987549, 15.9886, -0.66272, -6.83695, 0, 0, 0, 0, 0, 0, -1.50722, -1.26611, -7.05564),
+"tilts": PackedFloat32Array(0, 0, 0, 1.345, 1.98, 1.985)
+}
+point_count = 6
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_011b5"]
 size = Vector3(10000, 1, 10000)
@@ -68,10 +76,9 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05669, 0)
 velocity = Vector3(0, 0, 0)
 movementSpeed = 15.0
-turningSpeed = 0.5
-sideStepCooldown = 0.5
-boostSpeed = 30.0
-groundDelta = Vector2(0.2, 0.8)
+turningSpeed = 1.5
+fallMultiplier = 3.7
+groundDelta = Vector2(0.8, 1.8)
 airDelta = Vector2(0, 0.1)
 boostAcceleration = 0.5
 
@@ -132,6 +139,26 @@ forceAmount = 30.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
 size = Vector3(1, 0.15, 1)
 
+[node name="boost_pad4" parent="external_affectors" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.6156, -0.948879, -7.95889)
+collision_layer = 7
+forceDirection = Vector3(-0.9, 0, -0.06)
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost_pad4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
+[node name="boost_pad5" parent="external_affectors" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.158, -0.886486, 21.3927)
+collision_layer = 7
+forceDirection = Vector3(0.4, 0, 0.6)
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost_pad5"]
+transform = Transform3D(0.844861, 0, 0.534987, 0, 1, 0, -0.534987, 0, 0.844861, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
 [node name="boost_pad2" parent="external_affectors" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7634, -0.992207, 32.9991)
 collision_layer = 7
@@ -139,6 +166,16 @@ forceDirection = Vector3(-1, 0, 0)
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost_pad2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
+[node name="boost_pad3" parent="external_affectors" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7916, -0.992206, -8.99173)
+collision_layer = 7
+forceDirection = Vector3(-1, 0, 0)
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost_pad3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
 size = Vector3(1, 0.15, 1)
 
@@ -205,6 +242,15 @@ hitboxAABB = AABB(-3.255, 0, -3.195, 11.99, 9.835, 5.4)
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 5.12271, 0.402444, -8.9626)
 hitboxAABB = AABB(0, 2.385, 0, 10.155, 7.66, 2.525)
 
+[node name="curved_road" parent="external_affectors" instance=ExtResource("5_236ag")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.961, -4.76837e-07, 45.1329)
+hitboxAABB = AABB(0, 11.745, 0, 42.335, 30.41, 44.84)
+
+[node name="curved_road2" parent="external_affectors" instance=ExtResource("5_236ag")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.608, 0, -18.2591)
+curve = SubResource("Curve3D_0n76q")
+hitboxAABB = AABB(11.07, 6, 1.16, 24.245, 16.475, 25.985)
+
 [node name="geometry" type="Node" parent="."]
 
 [node name="floor" type="StaticBody3D" parent="geometry"]
@@ -227,7 +273,7 @@ shape = SubResource("BoxShape3D_ye05c")
 mesh = SubResource("BoxMesh_b1wsf")
 
 [node name="block" type="StaticBody3D" parent="geometry"]
-transform = Transform3D(24.3733, 0, 14.0719, 0, 28.1438, 0, -14.0719, 0, 24.3733, 75.0684, 1.90735e-06, 79.8375)
+transform = Transform3D(24.3733, 0, 14.0719, 0, 28.1438, 0, -14.0719, 0, 24.3733, 75.0684, 11.0812, 79.8375)
 
 [node name="shape" type="CollisionShape3D" parent="geometry/block"]
 shape = SubResource("BoxShape3D_0efcr")

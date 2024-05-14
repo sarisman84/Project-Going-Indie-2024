@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://0rohomqoalx5"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/curved_road.gd" id="1_ugbpu"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/curved_road_debug.gd" id="2_nlrhs"]
+
+[sub_resource type="Curve3D" id="Curve3D_5ldkc"]
+_data = {
+"points": PackedVector3Array(-15.1071, 2.61731, -21.3089, 15.1071, -2.61731, 21.3089, -11.8377, -1.34222, -19.8376, -13.1048, -0.936819, -17.8548, 13.1048, 0.936819, 17.8548, 16.8612, 25.2004, 19.5273),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xq3lh"]
+
+[node name="curved_road" type="Path3D"]
+curve = SubResource("Curve3D_5ldkc")
+script = ExtResource("1_ugbpu")
+
+[node name="model" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0203487, 0)
+use_collision = true
+collision_layer = 9
+polygon = PackedVector2Array(4, -0.1, 4, 0, -4, 0, -4, -0.1)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.35
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="debug" type="Node" parent="."]
+script = ExtResource("2_nlrhs")
+
+[node name="hitbox" type="Area3D" parent="."]
+collision_mask = 2
+
+[node name="collider" type="CollisionShape3D" parent="hitbox"]
+shape = SubResource("BoxShape3D_xq3lh")

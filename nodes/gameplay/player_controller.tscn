@@ -1,8 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=20 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
-[ext_resource type="PackedScene" uid="uid://doh5j4al7a3cw" path="res://graphics/models/testing/sonic/unleashed/Sonic the Hedgehog.glb" id="3_pt2eb"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/homing_attack.gd" id="4_6iksq"]
 [ext_resource type="Shader" path="res://graphics/shaders/hud/homing_indicator.gdshader" id="5_uhm43"]
 [ext_resource type="Script" path="res://scripts/utility/states/state_machine.gd" id="6_fb0co"]
@@ -13,10 +12,12 @@
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/grinding_state.gd" id="10_dcgnw"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/attack_state.gd" id="11_ldmrb"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/external_modifier_state.gd" id="12_vaiqd"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/other/debug_printer.gd" id="14_1e1w2"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/states/auto_move_state.gd" id="14_r254s"]
+[ext_resource type="PackedScene" uid="uid://b20jd6nyae4di" path="res://graphics/models/gameplay/player/maincharacter_model.glb" id="15_uwkto"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojs2i"]
-radius = 0.283417
-height = 1.16125
+[sub_resource type="SphereShape3D" id="SphereShape3D_ax2wc"]
+radius = 0.55
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wxerh"]
 radius = 12.0
@@ -26,6 +27,9 @@ shader = ExtResource("5_uhm43")
 shader_parameter/scale = 0.5
 shader_parameter/color = Color(0, 1, 1, 1)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_a2oux"]
+radius = 1.99137
+
 [node name="player_controller" type="CharacterBody3D" node_paths=PackedStringArray("model")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
 collision_layer = 2
@@ -34,19 +38,19 @@ floor_stop_on_slope = false
 script = ExtResource("1_jpyvr")
 movementSpeed = 2536.0
 jumpHeight = 3.0
-turningSpeed = 0.0
-boostSpeed = 5072.0
+turningSpeed = 0.5
+sideStepCooldown = 0.5
+boostSpeed = 30.0
 stompSpeed = 500.0
 groundDelta = Vector2(0.5, 0.8)
 airDelta = Vector2(0, 0.8)
 boostAcceleration = 0.2
 railDetectionRadius = 0.7
 cameraOffset = Vector3(0, 0.5, 0)
-model = NodePath("Sonic the Hedgehog")
+model = NodePath("model_anchor")
 
 [node name="collider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.521877, 0)
-shape = SubResource("CapsuleShape3D_ojs2i")
+shape = SubResource("SphereShape3D_ax2wc")
 
 [node name="camera_anchor" type="SpringArm3D" parent="."]
 unique_name_in_owner = true
@@ -57,8 +61,6 @@ script = ExtResource("2_hw33h")
 
 [node name="camera" type="Camera3D" parent="camera_anchor"]
 current = true
-
-[node name="Sonic the Hedgehog" parent="." instance=ExtResource("3_pt2eb")]
 
 [node name="homing_attack" type="Node3D" parent="."]
 script = ExtResource("4_6iksq")
@@ -118,3 +120,22 @@ script = ExtResource("11_ldmrb")
 
 [node name="moved_by_external_force" type="Node" parent="state_machine"]
 script = ExtResource("12_vaiqd")
+
+[node name="auto_move" type="Node" parent="state_machine"]
+script = ExtResource("14_r254s")
+
+[node name="debug_printer" type="Node" parent="."]
+script = ExtResource("14_1e1w2")
+
+[node name="magnet" type="Area3D" parent="."]
+
+[node name="collider" type="CollisionShape3D" parent="magnet"]
+shape = SubResource("SphereShape3D_a2oux")
+
+[node name="model_anchor" type="Node3D" parent="."]
+
+[node name="maincharacter_model" parent="model_anchor" instance=ExtResource("15_uwkto")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.548828, 0)
+
+[connection signal="body_entered" from="magnet" to="." method="_magnet_on_body_entered"]
+[connection signal="body_exited" from="magnet" to="." method="_magnet_on_body_exited"]

@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 InputCheck="*res://nodes/scenes/input_check.tscn"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/filesystem_drawer/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+
 [input]
 
 ui_accept={

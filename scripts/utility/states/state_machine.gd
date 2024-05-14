@@ -11,9 +11,15 @@ signal transitioned(state_name)
 @export var initial_state := NodePath()
 
 # The current active state. At the start of the game, we get the `initial_state`.
-@onready var state: State = get_node(initial_state)
+var state: State = null
+
+	
 
 func _ready() -> void:
+	if has_node(initial_state):
+		state = get_node(initial_state)
+	else:
+		state = get_children()[0]
 	await("ready")
 	# The state machine assigns itself to the State objects' state_machine property.
 	for child in get_children():

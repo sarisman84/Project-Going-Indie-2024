@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bn30aiuttyy0d"]
+[gd_scene load_steps=5 format=3 uid="uid://bn30aiuttyy0d"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/rail_section.gd" id="1_7qqmb"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/rail_section_debug.gd" id="2_add08"]
 
 [sub_resource type="Curve3D" id="Curve3D_pt05y"]
 _data = {
@@ -9,7 +10,7 @@ _data = {
 }
 point_count = 4
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_jx4ff"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_36t3v"]
 
 [node name="rail" type="Path3D"]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
@@ -34,4 +35,7 @@ path_joined = false
 collision_mask = 2
 
 [node name="hitbox_collider" type="CollisionShape3D" parent="hitbox"]
-shape = SubResource("BoxShape3D_jx4ff")
+shape = SubResource("BoxShape3D_36t3v")
+
+[node name="debug" type="Node" parent="."]
+script = ExtResource("2_add08")
