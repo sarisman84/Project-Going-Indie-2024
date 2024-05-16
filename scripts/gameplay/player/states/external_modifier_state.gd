@@ -15,7 +15,8 @@ func enter(msg := {}) -> void:
 		if msg.has("snapPos") and msg["canSnap"]:
 			var col = player.collider as Node3D
 			player.global_position = msg["snapPos"]
-	
+	if msg.has("duration"):
+		exitDelayInSeconds = msg["duration"]
 	player.rotate_model_towards_adv(externalVelocity, Vector3.UP)
 	
 	

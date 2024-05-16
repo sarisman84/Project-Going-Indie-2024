@@ -25,8 +25,8 @@ var jumpFlag : bool
 @export var boostSpeed : float = 10.0
 @export_category("Fall Settings")
 @export var fallMultiplier : float = 1.0
-@export var lowJumpFallMultiplier : float = 1.2
 @export var stompSpeed : float = 5.0
+@export var fallThreshold : float = 0.0
 @export_category("Acceleration Settings")
 @export var groundDelta : Vector2 = Vector2.ONE
 @export var airDelta : Vector2 = Vector2.ONE
@@ -48,12 +48,13 @@ var forwardDirection : Vector3 = Vector3.ZERO
 var useCameraForward : bool = true
 
 func _process(_delta):
-	camera.position = position + cameraOffset
+	pass
+	# camera.position = position + cameraOffset
 	
 
 func calculate_dynamic_gravity(delta : float) -> Vector3:
 	var finalForce : float
-	if velocity.y > 0:
+	if velocity.y > fallThreshold:
 		finalForce =  gravity * delta
 	else:
 		finalForce = gravity * (fallMultiplier - 1) * delta

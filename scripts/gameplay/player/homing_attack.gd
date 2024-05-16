@@ -1,7 +1,7 @@
 class_name HomingAttack
 extends Node3D
 
-@onready var camera = $"../camera_anchor/camera"
+@onready var camera = $"../camera_anchor/arm/camera"
 @onready var detection_area = $detection_area
 @onready var camera_anchor = $"../camera_anchor"
 @onready var player  : PlayerController = $".."

@@ -1,19 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://0rohomqoalx5"]
+[gd_scene load_steps=4 format=3 uid="uid://0rohomqoalx5"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/curved_road.gd" id="1_ugbpu"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/curved_road_debug.gd" id="2_nlrhs"]
 
-[sub_resource type="Curve3D" id="Curve3D_5ldkc"]
-_data = {
-"points": PackedVector3Array(-15.1071, 2.61731, -21.3089, 15.1071, -2.61731, 21.3089, -11.8377, -1.34222, -19.8376, -13.1048, -0.936819, -17.8548, 13.1048, 0.936819, 17.8548, 16.8612, 25.2004, 19.5273),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_xq3lh"]
 
 [node name="curved_road" type="Path3D"]
-curve = SubResource("Curve3D_5ldkc")
 script = ExtResource("1_ugbpu")
 
 [node name="model" type="CSGPolygon3D" parent="."]
@@ -31,6 +23,7 @@ path_local = true
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
+smooth_faces = true
 
 [node name="debug" type="Node" parent="."]
 script = ExtResource("2_nlrhs")
