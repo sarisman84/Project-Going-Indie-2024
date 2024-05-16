@@ -1,20 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bn30aiuttyy0d"]
+[gd_scene load_steps=4 format=3 uid="uid://bn30aiuttyy0d"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/rail_section.gd" id="1_7qqmb"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/rail_section_debug.gd" id="2_add08"]
-
-[sub_resource type="Curve3D" id="Curve3D_pt05y"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 3.44111, -0.573956, -4.76837e-05, 2.0933, -0.300912, 0, -2.0933, 0.300912, 0, -1.54357, -0.626289, -4.76837e-05, -3.36237, -0.222414, 0, 3.36237, 0.222414, 0, -1.80524, 4.69855, -4.76837e-05, 0, 0, 0, 0, 0, 0, 3.19253, 4.98638, -4.76837e-05),
-"tilts": PackedFloat32Array(0, 0, 0, 0)
-}
-point_count = 4
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_36t3v"]
 
 [node name="rail" type="Path3D"]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
-curve = SubResource("Curve3D_pt05y")
 script = ExtResource("1_7qqmb")
 hitboxAABB = AABB(0, 0, 0, 1, 1, 1)
 

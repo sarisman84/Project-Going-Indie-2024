@@ -12,7 +12,9 @@ static func get_global_aabb_end(aabb : AABB, owner : Node3D) -> Vector3:
 	return aabb.end + owner.position - (aabb.size / 2.0)
 
 static func get_closest_offset(globalPosition : Vector3, owner : Path3D) -> float:
-	var localPosition = globalPosition - owner.position
+	var localPosition = owner.basis.get_rotation_quaternion().inverse() * (globalPosition - owner.position)
+	if not owner.curve:
+		return 0
 	return owner.curve.get_closest_offset(localPosition)
 
 static func get_closest_point_index(globalPosition : Vector3, owner : Path3D):

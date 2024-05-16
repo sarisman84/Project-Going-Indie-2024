@@ -60,5 +60,5 @@ func is_player_on_road() -> bool:
 	DebugDraw3D.draw_sphere(pos, 0.15, Color.AQUAMARINE, dur)
 	DebugDraw3D.draw_sphere(player.position, 0.15, Color.AQUAMARINE,dur)
 	DebugDraw3D.draw_lines([pos, player.position],Color.AQUAMARINE,dur)
-	return dist <= 1.5
+	return dist <= 1
 	

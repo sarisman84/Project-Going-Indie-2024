@@ -36,15 +36,16 @@ collision_layer = 2
 velocity = Vector3(0, -729.596, 0)
 floor_stop_on_slope = false
 script = ExtResource("1_jpyvr")
-movementSpeed = 2536.0
+movementSpeed = 15.0
 jumpHeight = 3.0
-turningSpeed = 0.5
+turningSpeed = 1.5
 sideStepCooldown = 0.5
 boostSpeed = 30.0
+fallMultiplier = 3.7
 stompSpeed = 500.0
-groundDelta = Vector2(0.5, 0.8)
-airDelta = Vector2(0, 0.8)
-boostAcceleration = 0.2
+groundDelta = Vector2(0.8, 1.8)
+airDelta = Vector2(0, 0.1)
+boostAcceleration = 0.5
 railDetectionRadius = 0.7
 cameraOffset = Vector3(0, 0.5, 0)
 model = NodePath("model_anchor")
@@ -52,14 +53,14 @@ model = NodePath("model_anchor")
 [node name="collider" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_ax2wc")
 
-[node name="camera_anchor" type="SpringArm3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27164.9, 0)
-spring_length = 7.0
-margin = 0.25
+[node name="camera_anchor" type="Node3D" parent="."]
 script = ExtResource("2_hw33h")
+camera_smoothing = 5.0
 
-[node name="camera" type="Camera3D" parent="camera_anchor"]
+[node name="arm" type="SpringArm3D" parent="camera_anchor"]
+
+[node name="camera" type="Camera3D" parent="camera_anchor/arm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27164.9, 0)
 current = true
 
 [node name="homing_attack" type="Node3D" parent="."]

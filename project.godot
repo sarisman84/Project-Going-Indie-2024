@@ -21,7 +21,7 @@ InputCheck="*res://nodes/scenes/input_check.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/filesystem_drawer/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/filesystem_drawer/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/spiral_creator/plugin.cfg")
 
 [input]
 
