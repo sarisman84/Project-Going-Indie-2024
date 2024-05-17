@@ -12,8 +12,8 @@
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/destroyable_object.gd" id="9_gnfuo"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/goal.gd" id="10_5dde0"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/killbox.gd" id="10_c6lfv"]
-[ext_resource type="PackedScene" uid="uid://clsa3y2ji2ae0" path="res://nodes/scenes/test_level.tscn" id="11_443l6"]
-[ext_resource type="Environment" uid="uid://o2vcq2mgwaoy" path="res://settings/default_pp_we.tres" id="14_w2smx"]
+[ext_resource type="PackedScene" uid="uid://dw0jpsnjan0sq" path="res://nodes/levels/hub.tscn" id="12_7vaeu"]
+[ext_resource type="AudioStream" uid="uid://bnu28yxuxhh60" path="res://audio/music/AnimaAndZoeLoop.mp3" id="14_folcu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4hlv2"]
 
@@ -353,7 +353,7 @@ shape = SubResource("WorldBoundaryShape3D_0npv0")
 transform = Transform3D(0.61823, 0, -0.785997, 0, 1, 0, 0.785997, 0, 0.61823, -153.332, 29.5348, -423.523)
 collision_mask = 2
 script = ExtResource("10_5dde0")
-target_scene = ExtResource("11_443l6")
+target_scene = ExtResource("12_7vaeu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="affectors/goal"]
 transform = Transform3D(0.993329, 0, -0.115318, 0, 1, 0, 0.115318, 0, 0.993329, -0.331696, 1.24849, -0.108124)
@@ -448,8 +448,13 @@ size = Vector3(6.865, 8.58301, 31.7902)
 transform = Transform3D(1, 0, 0, 0, -0.592379, 0.80566, 0, -0.80566, -0.592379, 0, 8.42758, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="enviroment"]
-environment = ExtResource("14_w2smx")
+[node name="audio" type="Node" parent="."]
+
+[node name="music" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("14_folcu")
+volume_db = -25.0
+autoplay = true
+bus = &"Music"
 
 [editable path="player_controller"]
 [editable path="player_controller/model_anchor/skater_mc"]

@@ -1,7 +1,4 @@
 extends Node3D
-
-@export var highlight_material: StandardMaterial3D
-
 #@onready var door_meshinstance: MeshInstance3D = $MeshInstance3D
 #@onready var door_material: StandardMaterial3D = door_meshinstance.mesh.surface_get_material(0)
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=33 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
+[ext_resource type="Environment" uid="uid://o2vcq2mgwaoy" path="res://settings/default_pp_we.tres" id="3_r5ncu"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/homing_attack.gd" id="4_6iksq"]
 [ext_resource type="Shader" path="res://graphics/shaders/hud/homing_indicator.gdshader" id="5_uhm43"]
 [ext_resource type="Script" path="res://scripts/utility/states/state_machine.gd" id="6_fb0co"]
@@ -15,6 +16,18 @@
 [ext_resource type="Script" path="res://scripts/gameplay/player/other/debug_printer.gd" id="14_1e1w2"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/auto_move_state.gd" id="14_r254s"]
 [ext_resource type="PackedScene" uid="uid://cp008vqjuky3e" path="res://graphics/models/gameplay/player/current/main_character.tscn" id="15_sm5xg"]
+[ext_resource type="Script" path="res://scripts/audio/audio_player.gd" id="16_ko7an"]
+[ext_resource type="AudioStream" uid="uid://cfoe3p06b4ps0" path="res://audio/sfx/player/moving/Rolling steps 1.wav" id="17_8shmh"]
+[ext_resource type="AudioStream" uid="uid://cx2a2wy6qo4e8" path="res://audio/sfx/player/Boost.wav" id="17_mgwu2"]
+[ext_resource type="AudioStream" uid="uid://cmltbxvkxvdi6" path="res://audio/sfx/player/moving/Rolling steps 2.wav" id="18_exkgj"]
+[ext_resource type="AudioStream" uid="uid://cn63s0xv0uoap" path="res://audio/sfx/player/wind.wav" id="18_safyh"]
+[ext_resource type="AudioStream" uid="uid://cg0u3kluf55yy" path="res://audio/sfx/player/moving/Rolling steps 3.wav" id="19_qdvv1"]
+[ext_resource type="AudioStream" uid="uid://c4e0p2s5eqbd" path="res://audio/sfx/player/Metal Grinding.wav" id="19_vnor1"]
+[ext_resource type="AudioStream" uid="uid://bm8hytyq2a2tr" path="res://audio/sfx/player/Metal click.wav" id="20_smy0f"]
+[ext_resource type="AudioStream" uid="uid://b3us03ec4y0j3" path="res://audio/sfx/player/moving/Rolling steps 4.wav" id="20_xbgaf"]
+[ext_resource type="AudioStream" uid="uid://7bwgf7g4b7yi" path="res://audio/sfx/player/moving/Rolling steps 6.wav" id="21_vqp1t"]
+[ext_resource type="AudioStream" uid="uid://bsuobaq7yobru" path="res://audio/sfx/player/moving/Rolling steps 7.wav" id="22_6ao5c"]
+[ext_resource type="AudioStream" uid="uid://8dh7moh61sm2" path="res://audio/sfx/player/moving/Rolling steps 8.wav" id="23_qppke"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ax2wc"]
 radius = 0.55
@@ -61,11 +74,12 @@ camera_smoothing = 5.0
 
 [node name="camera" type="Camera3D" parent="camera_anchor/arm"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27164.9, 0)
+environment = ExtResource("3_r5ncu")
 current = true
 
 [node name="homing_attack" type="Node3D" parent="."]
 script = ExtResource("4_6iksq")
-detectionAngle = 0.5
+detectionAngle = 0.7
 speed = 50.0
 bounceHeight = 3.0
 
@@ -170,6 +184,59 @@ bones/20/rotation = Quaternion(-0.101887, 0.551125, 0.72448, 0.401258)
 bones/21/rotation = Quaternion(-0.185518, 0.0596257, -0.0306772, 0.98035)
 bones/22/rotation = Quaternion(0.00772711, 0.347799, -0.0491206, 0.93625)
 bones/23/rotation = Quaternion(0.398504, 0.0601761, -0.0182743, 0.915008)
+
+[node name="sfx" type="Node" parent="."]
+
+[node name="move_sfx" type="AudioStreamPlayer3D" parent="sfx"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
+attenuation_model = 3
+max_polyphony = 10
+bus = &"SFX"
+script = ExtResource("16_ko7an")
+playmode = 1
+clipPlaylist = Array[AudioStreamWAV]([ExtResource("17_8shmh"), ExtResource("18_exkgj"), ExtResource("19_qdvv1"), ExtResource("20_xbgaf"), ExtResource("21_vqp1t"), ExtResource("22_6ao5c"), ExtResource("23_qppke")])
+
+[node name="jump_sfx" type="AudioStreamPlayer3D" parent="sfx"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
+stream = ExtResource("20_smy0f")
+attenuation_model = 3
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="boost" type="Node" parent="sfx"]
+
+[node name="boost_sfx" type="AudioStreamPlayer3D" parent="sfx/boost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
+stream = ExtResource("17_mgwu2")
+attenuation_model = 3
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="wind_sfx" type="AudioStreamPlayer3D" parent="sfx/boost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
+stream = ExtResource("18_safyh")
+attenuation_model = 3
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="grind" type="Node" parent="sfx"]
+
+[node name="grind_sfx" type="AudioStreamPlayer3D" parent="sfx/grind"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0570585, -27166, 0)
+stream = ExtResource("19_vnor1")
+attenuation_model = 3
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="grind_start_sfx" type="AudioStreamPlayer3D" parent="sfx/grind"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0684871, -27166, 0)
+stream = ExtResource("20_smy0f")
+attenuation_model = 3
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+current = true
 
 [connection signal="body_entered" from="magnet" to="." method="_magnet_on_body_entered"]
 [connection signal="body_exited" from="magnet" to="." method="_magnet_on_body_exited"]

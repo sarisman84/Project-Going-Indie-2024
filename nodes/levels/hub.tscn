@@ -1,0 +1,413 @@
+[gd_scene load_steps=46 format=3 uid="uid://dw0jpsnjan0sq"]
+
+[ext_resource type="PackedScene" uid="uid://b4tws824n037u" path="res://graphics/models/kenney/furniture/floorHalf.glb" id="1_i7tss"]
+[ext_resource type="Script" path="res://scripts/gameplay/menus/hub.gd" id="1_mk2ea"]
+[ext_resource type="Script" path="res://scripts/utility/states/state.gd" id="2_4tqaw"]
+[ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="2_iajwj"]
+[ext_resource type="PackedScene" uid="uid://dwrin1kiw7gjo" path="res://nodes/scenes/level_select_menu.tscn" id="3_54ei2"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/camera_modifier.gd" id="3_itl85"]
+[ext_resource type="PackedScene" uid="uid://colyarv2d5sxb" path="res://graphics/models/kenney/furniture/desk.glb" id="3_iyuqn"]
+[ext_resource type="PackedScene" uid="uid://x1oo363265vh" path="res://nodes/gameplay/player_interactor.tscn" id="3_nloh5"]
+[ext_resource type="PackedScene" uid="uid://bv841bys2domq" path="res://graphics/models/kenney/furniture/laptop.glb" id="4_cy6an"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/utility/align_node.gd" id="4_rcula"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/laptop.gd" id="6_lw1yg"]
+[ext_resource type="PackedScene" uid="uid://bd76cv5bp7i8i" path="res://graphics/models/kenney/furniture/doorwayFront.glb" id="6_ypiao"]
+[ext_resource type="PackedScene" uid="uid://bvts8fua72hjo" path="res://graphics/models/kenney/furniture/wall.glb" id="7_1bn0q"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/doorway_front.gd" id="7_lrtba"]
+[ext_resource type="PackedScene" path="res://nodes/gameplay/Interactable.tscn" id="7_rbxf8"]
+[ext_resource type="PackedScene" uid="uid://bgugknv3w4h3w" path="res://graphics/models/kenney/furniture/wallCorner.glb" id="8_ooti1"]
+[ext_resource type="PackedScene" uid="uid://duc1dnjk8ixwv" path="res://graphics/models/kenney/furniture/chairDesk.glb" id="12_jo0by"]
+[ext_resource type="Script" path="res://scripts/ui/3d_control.gd" id="13_5ut86"]
+[ext_resource type="PackedScene" uid="uid://cm0ig2qbfcal1" path="res://graphics/models/kenney/furniture/bedSingle.glb" id="16_4uyjr"]
+[ext_resource type="PackedScene" uid="uid://wwxqc6mh1fwm" path="res://graphics/models/kenney/furniture/cabinetTelevision.glb" id="17_ncijx"]
+[ext_resource type="PackedScene" uid="uid://cex34hla1l0wq" path="res://graphics/models/kenney/furniture/televisionModern.glb" id="19_eyba8"]
+[ext_resource type="PackedScene" uid="uid://cwi8n8ltflg1o" path="res://graphics/models/kenney/furniture/kitchenFridgeBuiltIn.glb" id="20_eiuq2"]
+[ext_resource type="PackedScene" uid="uid://vi4v3kub6yr5" path="res://graphics/models/kenney/furniture/sideTable.glb" id="21_igexr"]
+[ext_resource type="PackedScene" uid="uid://cxgp02i74av4k" path="res://graphics/models/kenney/furniture/kitchenMicrowave.glb" id="22_8bv2k"]
+[ext_resource type="PackedScene" uid="uid://c3xc1txglgdy" path="res://graphics/models/kenney/furniture/kitchenCoffeeMachine.glb" id="23_v1trb"]
+[ext_resource type="PackedScene" uid="uid://cfmd74cf4tkqj" path="res://graphics/models/kenney/furniture/cabinetBedDrawerTable.glb" id="24_xu7jh"]
+[ext_resource type="PackedScene" uid="uid://bclf7inblwsmy" path="res://graphics/models/kenney/furniture/lampRoundTable.glb" id="25_j52is"]
+[ext_resource type="PackedScene" uid="uid://k46iepkwadlp" path="res://graphics/models/kenney/furniture/tableCloth.glb" id="26_rq07h"]
+[ext_resource type="PackedScene" uid="uid://gfw8t2swr8ur" path="res://graphics/models/kenney/furniture/plantSmall3.glb" id="27_srffa"]
+[ext_resource type="PackedScene" uid="uid://gp1vaq3782if" path="res://graphics/models/kenney/furniture/rugRectangle.glb" id="28_ngc16"]
+[ext_resource type="PackedScene" uid="uid://dakw8w6kw78rk" path="res://graphics/models/kenney/furniture/loungeDesignSofaCorner.glb" id="29_3yeq8"]
+[ext_resource type="PackedScene" uid="uid://kacam5a2t2o" path="res://graphics/models/kenney/furniture/tableGlass.glb" id="30_o2qjm"]
+[ext_resource type="AudioStream" uid="uid://c7knsxkdulegg" path="res://audio/music/HubWorldDemo.mp3" id="33_6twun"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xfajn"]
+size = Vector3(1, 1.46631, 1.6588)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6oguj"]
+size = Vector3(13.8936, 12.469, 18.4854)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_18x1f"]
+size = Vector3(0.503, 0.23, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o4w6h"]
+size = Vector3(1.535, 0.781167, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mo8yy"]
+size = Vector3(0.654297, 0.45607, 0.466858)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_660vl"]
+size = Vector3(0.545898, 1.03885, 0.11792)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mlrd4"]
+size = Vector3(0.487183, 1.2661, 0.0977783)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0fbxb"]
+size = Vector3(1.1485, 1.46133, 0.133522)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kbr6i"]
+size = Vector3(1.15209, 1.2804, 0.0819092)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2hrkr"]
+size = Vector3(9.5437, 3.25012, 0.654297)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pi00i"]
+size = Vector3(4.21149, 3.25012, 3.4325)
+
+[sub_resource type="Environment" id="Environment_6sxbc"]
+background_mode = 1
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+
+[node name="Hub" type="Node"]
+script = ExtResource("1_mk2ea")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.77125, 3.43212, -11.582)
+shadow_enabled = true
+omni_range = 13.2985
+
+[node name="player_controller" parent="." instance=ExtResource("2_iajwj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.22073, 0.714134, -9.56393)
+canJump = false
+canBoost = false
+
+[node name="camera" parent="player_controller/camera_anchor/arm" index="0"]
+environment = null
+
+[node name="PlayerInteractor" parent="player_controller" node_paths=PackedStringArray("player") instance=ExtResource("3_nloh5")]
+player = NodePath("..")
+
+[node name="CollisionShape3D" parent="player_controller/PlayerInteractor" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.233154, 0.838391)
+shape = SubResource("BoxShape3D_xfajn")
+
+[node name="hub_cam" type="Area3D" parent="." node_paths=PackedStringArray("childNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.54077, 3.14685, -8.56683)
+collision_mask = 2
+script = ExtResource("3_itl85")
+trackMode = 3
+childNode = NodePath("pos")
+newProjection = 1
+newSize = 15.0
+
+[node name="shape" type="CollisionShape3D" parent="hub_cam"]
+shape = SubResource("BoxShape3D_6oguj")
+
+[node name="pos" type="Node3D" parent="hub_cam"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 4.83833, 5.74809, 1.16137)
+script = ExtResource("4_rcula")
+show_debug = false
+
+[node name="geometry" type="Node" parent="."]
+script = ExtResource("2_4tqaw")
+
+[node name="Roof" parent="geometry" instance=ExtResource("1_i7tss")]
+transform = Transform3D(245.811, 0, 0, 0, 1, 0, 0, 0, 255.432, -87.8061, 23.8683, 94.7369)
+visible = false
+
+[node name="floorHalf" parent="geometry" instance=ExtResource("1_i7tss")]
+transform = Transform3D(16.8303, 0, 0, 0, 1, 0, 0, 0, 9.72213, 0.0208706, 0, -6.30942)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/floorHalf"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/floorHalf/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24859, -0.0385641, -0.499958)
+shape = SubResource("BoxShape3D_18x1f")
+
+[node name="desk" parent="geometry" instance=ExtResource("3_iyuqn")]
+transform = Transform3D(0.00400721, 0, 2.783, 0, 2, 0, -2.296, 0, 0.00485717, 1.32907, 0.0599862, -9.85502)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/desk"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/desk/StaticBody3D"]
+transform = Transform3D(0.5, 0, -1.16415e-10, 0, 0.5, 0, 5.82077e-11, 0, 0.5, 0.35471, 0.197018, -0.211091)
+shape = SubResource("BoxShape3D_o4w6h")
+
+[node name="laptop" parent="geometry/desk" instance=ExtResource("4_cy6an")]
+transform = Transform3D(1.30649, 0, -0.0181292, 0, 1.5, 0, 0.0149568, 0, 1.07787, 0.299498, 0.390195, -0.0337608)
+script = ExtResource("6_lw1yg")
+
+[node name="Node3D" type="Node3D" parent="geometry/desk/laptop"]
+transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 1.86265e-09, 0, 1, 0.0582504, 0.362753, -0.157951)
+
+[node name="Control3D" type="Control" parent="geometry/desk/laptop/Node3D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("13_5ut86")
+
+[node name="Label" type="Label" parent="geometry/desk/laptop/Node3D/Control3D"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.079
+anchor_bottom = 0.035
+offset_right = 87.84
+offset_bottom = 21.6
+text = "Level Select"
+
+[node name="UIText" type="Control" parent="geometry/desk/laptop"]
+visible = false
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+
+[node name="ColorRect" type="ColorRect" parent="geometry/desk/laptop/UIText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.552941, 0.192157, 1)
+
+[node name="Label" type="Label" parent="geometry/desk/laptop/UIText"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level Select"
+horizontal_alignment = 1
+
+[node name="LevelSelectMenu" parent="geometry/desk/laptop" instance=ExtResource("3_54ei2")]
+visible = false
+
+[node name="Interactable" parent="geometry/desk/laptop" instance=ExtResource("7_rbxf8")]
+
+[node name="CollisionShape3D" parent="geometry/desk/laptop/Interactable" index="0"]
+transform = Transform3D(0.999962, 0, 3.1013e-07, 0, 1, 0, -3.1013e-07, 0, 0.999962, 0.146924, -0.0408789, -0.0742771)
+shape = SubResource("BoxShape3D_mo8yy")
+
+[node name="chairDesk" parent="geometry/desk" instance=ExtResource("12_jo0by")]
+transform = Transform3D(-0.254617, 0, 0.307529, 0, 0.5, 0, -0.253542, 0, -0.308416, 0.295146, 0, 0.196339)
+
+[node name="doorwayFront" parent="geometry" instance=ExtResource("6_ypiao")]
+transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 5.13657, 0.0499692, -16.0623)
+script = ExtResource("7_lrtba")
+
+[node name="Node3D" type="Node3D" parent="geometry/doorwayFront"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.291016, 1.00699, 0.0726471)
+
+[node name="Control3D" type="Control" parent="geometry/doorwayFront/Node3D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("13_5ut86")
+
+[node name="Label" type="Label" parent="geometry/doorwayFront/Node3D/Control3D"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.035
+offset_right = 32.6
+offset_bottom = 21.6
+text = "Quit"
+
+[node name="UIText" type="Control" parent="geometry/doorwayFront"]
+visible = false
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+
+[node name="ColorRect" type="ColorRect" parent="geometry/doorwayFront/UIText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.552941, 0.192157, 1)
+
+[node name="Label" type="Label" parent="geometry/doorwayFront/UIText"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Quit"
+horizontal_alignment = 1
+
+[node name="Interactable" parent="geometry/doorwayFront" instance=ExtResource("7_rbxf8")]
+
+[node name="CollisionShape3D" parent="geometry/doorwayFront/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.227052, 0.512375, -0.038208)
+shape = SubResource("BoxShape3D_660vl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/doorwayFront"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/doorwayFront/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243348, 0.622551, -0.0445523)
+shape = SubResource("BoxShape3D_mlrd4")
+
+[node name="walls" type="Node" parent="geometry"]
+
+[node name="wall" parent="geometry/walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(-3.78079e-07, 0, -2, 0, 1.98545, 0, 8.64947, 0, -8.74227e-08, -0.0633546, 0.0181201, -14.9915)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/walls/wall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/walls/wall/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 1.9952e-11, 0, 1, 0.493838, 0.650986, -0.0591623)
+shape = SubResource("BoxShape3D_0fbxb")
+
+[node name="wall3" parent="geometry/walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(-3.07835, 0, -1.74845e-07, 0, 1.98545, 0, 2.69118e-07, 0, -2, 4.11253, 0.0181201, -16.0864)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/walls/wall3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/walls/wall3/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.999974, 0, -1.13118e-11, 0, 1, 0.548299, 0.651854, -0.0317993)
+shape = SubResource("BoxShape3D_kbr6i")
+
+[node name="wall4" parent="geometry/walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(-3.26008, 0, -1.74845e-07, 0, 1.98545, 0, 2.85005e-07, 0, -2, 8.39497, 0.0181201, -16.0864)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/walls/wall4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/walls/wall4/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.999974, 0, -1.13118e-11, 0, 1, 0.548299, 0.651854, -0.0317993)
+shape = SubResource("BoxShape3D_kbr6i")
+
+[node name="wall5" parent="geometry/walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(-3.07835, 0, -1.74845e-07, 0, 0.406825, 0, 2.69118e-07, 0, -2, 5.94753, 2.06312, -16.0864)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/walls/wall5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/walls/wall5/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.999974, 0, -1.13118e-11, 0, 1, 0.548299, 0.651854, -0.0317993)
+shape = SubResource("BoxShape3D_kbr6i")
+
+[node name="wallCorner" parent="geometry/walls" instance=ExtResource("8_ooti1")]
+transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 1.02973, 0, -16.0873)
+
+[node name="invis_wall" type="StaticBody3D" parent="geometry/walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16471, 0, -6.28097)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/walls/invis_wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08215, 1.12506, 0.172852)
+shape = SubResource("BoxShape3D_2hrkr")
+
+[node name="invis_wall2" type="StaticBody3D" parent="geometry/walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8.43488, 0, -7.75344)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/walls/invis_wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08215, 1.12506, 0.172852)
+shape = SubResource("BoxShape3D_2hrkr")
+
+[node name="invis_wall3" type="StaticBody3D" parent="geometry/walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.43488, 0, -7.75344)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/walls/invis_wall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.416046, 1.12506, 1.56195)
+shape = SubResource("BoxShape3D_pi00i")
+
+[node name="invis_wall4" type="StaticBody3D" parent="geometry/walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.72988, 0, -15.8734)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/walls/invis_wall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.416046, 1.12506, 1.56195)
+shape = SubResource("BoxShape3D_pi00i")
+
+[node name="invis_wall5" type="StaticBody3D" parent="geometry/walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.2528, 0, -13.8813)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/walls/invis_wall5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.416046, 1.12506, 1.56195)
+shape = SubResource("BoxShape3D_pi00i")
+
+[node name="decorations" type="Node" parent="geometry"]
+
+[node name="bedSingle" parent="geometry/decorations" instance=ExtResource("16_4uyjr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.559608, -1.90735e-06, -13.6301)
+
+[node name="cabinetTelevision" parent="geometry/decorations" instance=ExtResource("17_ncijx")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.67286, 0.0246522, -12.704)
+
+[node name="televisionModern" parent="geometry/decorations" instance=ExtResource("19_eyba8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.853618, 0.652666, -12.4392)
+
+[node name="kitchenFridgeBuiltIn" parent="geometry/decorations" instance=ExtResource("20_eiuq2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.46512, 0.0773745, -15.3605)
+
+[node name="sideTable" parent="geometry/decorations" instance=ExtResource("21_igexr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.32095, 0, -15.568)
+
+[node name="kitchenMicrowave" parent="geometry/decorations/sideTable" instance=ExtResource("22_8bv2k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0593281, 0.770179, -0.0184002)
+
+[node name="kitchenCoffeeMachine" parent="geometry/decorations/sideTable" instance=ExtResource("23_v1trb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.655987, 0.764674, -0.0883331)
+
+[node name="cabinetBedDrawerTable" parent="geometry/decorations" instance=ExtResource("24_xu7jh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.36656, 0, -15.5694)
+
+[node name="lampRoundTable" parent="geometry/decorations/cabinetBedDrawerTable" instance=ExtResource("25_j52is")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0957421, 0.52961, -0.105836)
+
+[node name="tableCloth" parent="geometry/decorations" instance=ExtResource("26_rq07h")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7.41503, 0.0590321, -15.9753)
+
+[node name="plantSmall3" parent="geometry/decorations" instance=ExtResource("27_srffa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.532218, 0.851002, -10.0416)
+
+[node name="rugRectangle" parent="geometry/decorations" instance=ExtResource("28_ngc16")]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 4.93032, 0.0730853, -9.27011)
+
+[node name="loungeDesignSofaCorner" parent="geometry/decorations" instance=ExtResource("29_3yeq8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.28533, 0, -9.70877)
+
+[node name="tableGlass" parent="geometry/decorations/loungeDesignSofaCorner" instance=ExtResource("30_o2qjm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.215412, 0, -0.573678)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6sxbc")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("33_6twun")
+volume_db = -25.0
+autoplay = true
+bus = &"Music"
+
+[connection signal="focused" from="geometry/desk/laptop/Interactable" to="geometry/desk/laptop" method="_on_interactable_focused"]
+[connection signal="interacted" from="geometry/desk/laptop/Interactable" to="geometry/desk/laptop" method="_on_interactable_interacted"]
+[connection signal="unfocused" from="geometry/desk/laptop/Interactable" to="geometry/desk/laptop" method="_on_interactable_unfocused"]
+[connection signal="focused" from="geometry/doorwayFront/Interactable" to="geometry/doorwayFront" method="_on_interactable_focused"]
+[connection signal="interacted" from="geometry/doorwayFront/Interactable" to="geometry/doorwayFront" method="_on_interactable_interacted"]
+[connection signal="unfocused" from="geometry/doorwayFront/Interactable" to="geometry/doorwayFront" method="_on_interactable_unfocused"]
+
+[editable path="player_controller"]
+[editable path="player_controller/model_anchor/skater_mc"]
+[editable path="player_controller/PlayerInteractor"]
+[editable path="geometry/desk/laptop/Interactable"]
+[editable path="geometry/doorwayFront/Interactable"]

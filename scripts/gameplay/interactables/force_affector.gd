@@ -6,6 +6,8 @@ extends Area3D
 @export var snapToMiddle: bool
 @export var durationInSeconds : float = 1.0
 
+@onready var affector_sfx : AudioStreamPlayer3D = $affector_sfx
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -15,6 +17,7 @@ func _on_body_entered(body):
 	var p = body as PlayerController
 	prep_player(p)
 	push_player(p)
+	affector_sfx.play()
 	
 
 func prep_player(player : PlayerController):

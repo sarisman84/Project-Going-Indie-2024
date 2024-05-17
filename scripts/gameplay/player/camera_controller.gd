@@ -3,8 +3,9 @@ extends Node3D
 
 @onready var player_controller = $".."
 @onready var arm = $arm
+@onready var physical_camera : Camera3D = $arm/camera
 
-enum CameraMode {Follow, TrackLook , Look, Manual }
+enum CameraMode {Follow, TrackLook , Look, Static, Manual }
 
 @export var camera_sensitivity := 0.5
 @export var camera_smoothing := 0.5
@@ -41,8 +42,10 @@ func _process(_delta):
 	arm.rotation_degrees.x = 0
 	arm.rotation_degrees.y = 0	
 	arm.position = Vector3.ZERO
-
-	if trackMode == CameraMode.Follow and target:
+	if trackMode == CameraMode.Static:
+		go_to_target()
+		transition_to_target_dir(_delta, trackerForwardDirection)
+	elif trackMode == CameraMode.Follow and target:
 		follow_target(_delta)
 		transition_to_target_dir(_delta, trackerForwardDirection)
 	elif trackMode == CameraMode.Look:

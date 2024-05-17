@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://e651jk8giruo"
+path="res://.godot/imported/meow 3.wav-bef1053f5d91604d20a35dbeb47def1c.sample"
+
+[deps]
+
+source_file="res://audio/sfx/meow 3.wav"
+dest_files=["res://.godot/imported/meow 3.wav-bef1053f5d91604d20a35dbeb47def1c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

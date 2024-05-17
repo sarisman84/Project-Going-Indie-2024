@@ -69,9 +69,7 @@ func _process(_delta):
 	if grindPlayerState != null:
 		grindPlayerState.update(_delta)
 	
-	if not isPlayerDetected or railInCooldown:
-		return
-	if player.state_machine.state is GrindState:
+	if not isPlayerDetected or railInCooldown or player.state_machine.state is GrindState or not curve:
 		return
 	
 	if is_player_close_to_curve():
