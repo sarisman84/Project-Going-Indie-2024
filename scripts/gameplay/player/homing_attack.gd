@@ -46,8 +46,8 @@ func detect_homing_targets():
 		
 		var dot = dir.dot(forwardDir)
 		
-		# DebugDraw3D.draw_arrow_ray(global_position, dir,1.0, Color.BLUE,0.15)
-		# DebugDraw3D.draw_arrow_ray(global_position,forwardDir,1.0, Color.CYAN,0.15)
+		DebugDraw3D.draw_arrow_ray(global_position, dir,1.0, Color.BLUE,0.15)
+		DebugDraw3D.draw_arrow_ray(global_position,forwardDir,1.0, Color.CYAN,0.15)
 		
 		if dot < detectionAngle:
 			continue
@@ -60,7 +60,8 @@ func detect_homing_targets():
 		if entry is ForceAffector:
 			var fa = entry as ForceAffector
 			query.collide_with_areas = fa.canBeAttacked
-			
+		else:
+			query.collide_with_areas = true
 		var result = space_state.intersect_ray(query)
 		if result.is_empty():
 			continue

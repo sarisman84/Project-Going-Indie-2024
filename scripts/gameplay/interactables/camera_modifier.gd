@@ -4,8 +4,8 @@ extends Area3D
 
 
 @export var trackMode : CameraController.CameraMode
-@export var cameraFollowOffset : Vector3
 @export var childNode : Node3D
+@export var trackPath : Path3D
 
 # @onready var mod = $mod
 
@@ -30,8 +30,8 @@ func apply_cam_settings(camera : CameraController, player : PlayerController) ->
 	camera.target = player
 	camera.targetFollowOffset = childNode.position
 	camera.trackMode = trackMode
-	camera.trackTarget = player
 	camera.trackPivot = childNode.global_position
+	camera.trackPath = trackPath
 	
 	DebugDraw3D.draw_arrow_ray(player.global_position, camera.trackerForwardDirection	, 1.0, Color.BLUE, 0.15, false, 10.0)
 
