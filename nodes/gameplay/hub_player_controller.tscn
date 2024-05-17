@@ -6,14 +6,14 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_l64bl"]
 radius = 0.55
 
-[node name="hub_player_controller" type="CharacterBody3D"]
+[node name="hub_player_controller" type="CharacterBody3D" node_paths=PackedStringArray("model")]
 script = ExtResource("1_gkli1")
+model = NodePath("model_anchor/maincharacter_model")
 
 [node name="collider" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_l64bl")
 
 [node name="model_anchor" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="maincharacter_model" parent="model_anchor" instance=ExtResource("2_tiprf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.548828, 0)

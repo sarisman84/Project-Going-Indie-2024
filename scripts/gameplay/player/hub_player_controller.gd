@@ -13,8 +13,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func rotate_model_towards(forwardDir : Vector3):
 	if is_equal_approx(forwardDir.length(), 0):
 		return
-	model.look_at(model.transform.origin - forwardDir, up_direction)
-	collider.look_at(collider.transform.origin - forwardDir, up_direction)
+	model.look_at(forwardDir)
+	collider.look_at(forwardDir)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -31,5 +31,9 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+
+	#rotation was too low so I just multiplied it by a high number to get this working
+	#direciton needs to be negative since the model is backwards for some reason normally
+	rotate_model_towards(-direction * 999)
 
 	move_and_slide()
