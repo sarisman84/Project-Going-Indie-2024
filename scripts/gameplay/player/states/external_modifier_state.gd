@@ -18,6 +18,7 @@ func enter(msg := {}) -> void:
 	if msg.has("duration"):
 		exitDelayInSeconds = msg["duration"]
 	player.rotate_model_towards_adv(externalVelocity, Vector3.UP)
+	player.animation_player.play("fly")
 	
 	
 		

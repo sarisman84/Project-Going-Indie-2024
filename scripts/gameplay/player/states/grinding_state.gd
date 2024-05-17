@@ -9,6 +9,7 @@ signal exitSignal
 
 func enter(_msg := {}) -> void:
 	stateStarted = true
+	player.animation_player.play("grind")
 
 func update(delta: float) -> void:
 	if not stateStarted:

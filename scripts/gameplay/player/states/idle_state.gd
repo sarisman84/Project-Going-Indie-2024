@@ -5,6 +5,8 @@ func enter(_msg:= {}) -> void:
 	player.velocity = Vector3.ZERO
 	player.canAirBoost = true
 	player.currentJumpCount = player.jumpCount
+	var animation_player = $"../../model_anchor/skater_mc/AnimationPlayer"
+	animation_player.play("idle_v2")
 	pass
 
 func update(_delta: float) -> void:

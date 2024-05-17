@@ -13,6 +13,7 @@ var jumpFlag : bool
 @onready var state_machine := $state_machine
 @onready var collider = $collider
 @onready var magnet = $magnet
+@onready var animation_player = $model_anchor/skater_mc/AnimationPlayer
 
 @export var movementSpeed : float = 5.0
 @export_category("Jump Settings")

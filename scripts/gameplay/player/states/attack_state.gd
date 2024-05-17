@@ -11,6 +11,8 @@ func enter(msg := {}) -> void:
 	bounceOverrideState = msg["_bounceOverrideState"]
 	speed = msg["_speed"]
 	bounceHeight = msg["_bounceHeight"]
+	player.animation_player.play("fly")
+	player.rotate_model_towards_adv((currentHomingTarget.global_position - player.global_position).normalized(), player.up_direction)
 	pass
 	
 func physics_update(_delta: float) -> void:
@@ -27,6 +29,7 @@ func physics_update(_delta: float) -> void:
 	
 	if dist <= 0.5:
 		player.state_machine.transition_to("airborne")
+		player.rotate_model_towards_adv(Vector3.UP, player.up_direction)
 		player.velocity = Vector3.UP * PlayerController.get_jump_velocity(bounceHeight, player.gravity)
 		player.move_and_slide()
 		currentHomingTarget = null

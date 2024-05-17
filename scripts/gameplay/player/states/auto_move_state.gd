@@ -15,6 +15,7 @@ func enter(_msg:={}) -> void:
 		var pos = (currentRoad.basis.get_rotation_quaternion() * currentRoad.curve.sample_baked(offset, true)) + currentRoad.position
 		
 		playerPositionOffset = player.position - pos
+		player.animation_player.play("run")
 		
 		
 

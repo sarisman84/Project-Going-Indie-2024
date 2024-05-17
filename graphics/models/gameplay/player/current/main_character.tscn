@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp008vqjuky3e"]
+
+[ext_resource type="PackedScene" uid="uid://ceopb44heofu5" path="res://graphics/models/gameplay/player/current/skater_mc.glb" id="1_rndob"]
+
+[node name="skater_mc" instance=ExtResource("1_rndob")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/1/rotation = Quaternion(-0.0459823, 0, 0, 0.998942)
+bones/1/scale = Vector3(1, 1, 1)
+bones/4/rotation = Quaternion(0.0459823, 0, 0, 0.998942)
+bones/4/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(-0.572365, -0.408157, 0.590841, -0.39587)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(0.0218031, -0.000507598, -0.0232671, 0.999491)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(0.0255206, 0.000243836, 0.00955134, 0.999629)
+bones/10/rotation = Quaternion(2.22964e-07, 1.1595e-07, 5.58793e-08, 1)
+bones/11/rotation = Quaternion(0.570036, -0.409784, 0.592822, 0.394586)
+bones/11/scale = Vector3(1, 1, 1)
+bones/12/rotation = Quaternion(0.0221436, 0.000428609, 0.0193455, 0.999568)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(0.025746, -0.000294138, -0.0114216, 0.999603)
+bones/13/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(-0.000415996, -0.0158101, 0.99953, -0.0262483)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(-0.0316448, -0.000194547, 0.00612623, 0.99948)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(0.373637, -0.0475014, 0.0191633, 0.92616)
+bones/19/rotation = Quaternion(-6.36428e-08, 2.57904e-07, -2.10392e-07, 1)
+bones/20/rotation = Quaternion(0.000483215, -0.0183391, 0.999487, 0.0262426)
+bones/20/scale = Vector3(1, 1, 1)
+bones/21/rotation = Quaternion(-0.0329389, 0.000199803, -0.00611129, 0.999439)
+bones/21/scale = Vector3(1, 1, 1)
+bones/22/scale = Vector3(1, 1, 1)
+bones/23/rotation = Quaternion(0.370505, 0.0515843, -0.0206135, 0.927168)
+bones/23/scale = Vector3(1, 1, 1)

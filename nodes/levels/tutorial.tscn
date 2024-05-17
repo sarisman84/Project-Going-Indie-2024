@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://uofgpycygd4w"]
+[gd_scene load_steps=27 format=3 uid="uid://uofgpycygd4w"]
 
 [ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="1_3ukm0"]
 [ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="2_1tknf"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/goal.gd" id="10_5dde0"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/killbox.gd" id="10_c6lfv"]
 [ext_resource type="PackedScene" uid="uid://clsa3y2ji2ae0" path="res://nodes/scenes/test_level.tscn" id="11_443l6"]
+[ext_resource type="Environment" uid="uid://o2vcq2mgwaoy" path="res://settings/default_pp_we.tres" id="14_w2smx"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4hlv2"]
 
@@ -70,6 +71,43 @@ railDetectionRadius = 1.0
 
 [node name="homing_attack" parent="player_controller" index="2"]
 detectionAngle = 0.0
+
+[node name="Skeleton3D" parent="player_controller/model_anchor/skater_mc/Armature" index="0"]
+bones/0/position = Vector3(-0.293118, 2.60825, -63.94)
+bones/0/rotation = Quaternion(-0.700009, -0.160618, 0.184666, 0.670886)
+bones/1/rotation = Quaternion(-0.0239029, 0.0469932, 0.011232, 0.998546)
+bones/2/position = Vector3(-3.8743e-07, 5.23286, 5.73695e-07)
+bones/2/rotation = Quaternion(0.046275, 0.104002, -0.0152903, 0.993382)
+bones/3/position = Vector3(0, 5.9804, 7.15256e-07)
+bones/3/rotation = Quaternion(0.045747, 0.104314, -0.0151438, 0.993376)
+bones/4/position = Vector3(0, 6.72797, 0)
+bones/4/rotation = Quaternion(0.0673507, -0.0021447, -0.00203458, 0.997725)
+bones/5/rotation = Quaternion(-0.20145, -0.016602, 0.0162221, 0.979224)
+bones/6/position = Vector3(-1.00583e-07, 52.0013, 2.05592)
+bones/7/rotation = Quaternion(-0.553412, -0.401967, 0.646739, -0.337471)
+bones/8/position = Vector3(1.03744e-07, 7.56272, 1.30882e-05)
+bones/8/rotation = Quaternion(0.637206, -0.131803, -0.0593224, 0.757019)
+bones/9/position = Vector3(-5.96046e-07, 16.4503, 3.62098e-06)
+bones/9/rotation = Quaternion(0.0616788, 0.00579698, 0.165498, 0.984263)
+bones/10/position = Vector3(7.15256e-07, 16.7898, 1.20699e-06)
+bones/10/rotation = Quaternion(0.0972582, 0.0565866, -0.0603468, 0.991815)
+bones/11/rotation = Quaternion(0.607893, -0.363705, 0.617493, 0.341887)
+bones/12/position = Vector3(-1.8969e-08, 7.56272, -1.66033e-06)
+bones/12/rotation = Quaternion(0.59928, 0.0836759, 0.0892131, 0.79114)
+bones/13/position = Vector3(-2.38419e-07, 16.4496, 4.41074e-06)
+bones/13/rotation = Quaternion(0.0587333, -0.00533636, -0.145596, 0.987585)
+bones/14/position = Vector3(5.0664e-07, 16.7888, -9.98378e-07)
+bones/14/rotation = Quaternion(0.125009, -0.0200009, 0.0993409, 0.986967)
+bones/15/rotation = Quaternion(0.0975722, -0.00782656, 0.994317, -0.04185)
+bones/16/position = Vector3(-4.51707e-07, 24.0521, -5.37699e-08)
+bones/16/rotation = Quaternion(-0.200689, -0.00880287, 0.00786932, 0.979584)
+bones/17/rotation = Quaternion(0.483302, -0.118467, 0.0630092, 0.865109)
+bones/18/position = Vector3(-3.03984e-06, 9.23005, 6.07967e-06)
+bones/18/rotation = Quaternion(0.425656, -0.0657855, 0.00708685, 0.902463)
+bones/20/rotation = Quaternion(-0.054702, 0.114321, 0.988588, 0.0814377)
+bones/21/rotation = Quaternion(-0.257671, 0.0024961, -0.00758817, 0.9662)
+bones/22/rotation = Quaternion(0.471739, 0.114439, -0.0541398, 0.872602)
+bones/23/rotation = Quaternion(0.370935, 0.051737, -0.0205245, 0.926989)
 
 [node name="affectors" type="Node" parent="."]
 
@@ -408,5 +446,10 @@ size = Vector3(6.865, 8.58301, 31.7902)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="enviroment"]
 transform = Transform3D(1, 0, 0, 0, -0.592379, 0.80566, 0, -0.80566, -0.592379, 0, 8.42758, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="enviroment"]
+environment = ExtResource("14_w2smx")
 
 [editable path="player_controller"]
+[editable path="player_controller/model_anchor/skater_mc"]

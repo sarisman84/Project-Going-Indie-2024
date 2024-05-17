@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnmpyh0hfx10r"
-path.s3tc="res://.godot/imported/maincharacter_model_skatercharacter_texture_v3.png-ee1a65220076ed57dcaf1a14751192e2.s3tc.ctex"
+uid="uid://cssd5deaukdi"
+path.s3tc="res://.godot/imported/skater_mc_skatercharacter_texture_v3.png-3a7e65c92c3d990fa0176bf16ec061fd.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://graphics/models/gameplay/player/maincharacter_model_skatercharacter_texture_v3.png"
-dest_files=["res://.godot/imported/maincharacter_model_skatercharacter_texture_v3.png-ee1a65220076ed57dcaf1a14751192e2.s3tc.ctex"]
+source_file="res://graphics/models/gameplay/player/current/skater_mc_skatercharacter_texture_v3.png"
+dest_files=["res://.godot/imported/skater_mc_skatercharacter_texture_v3.png-3a7e65c92c3d990fa0176bf16ec061fd.s3tc.ctex"]
 
 [params]
 

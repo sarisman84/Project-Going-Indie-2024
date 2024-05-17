@@ -14,7 +14,7 @@
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/external_modifier_state.gd" id="12_vaiqd"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/other/debug_printer.gd" id="14_1e1w2"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/auto_move_state.gd" id="14_r254s"]
-[ext_resource type="PackedScene" uid="uid://b20jd6nyae4di" path="res://graphics/models/gameplay/player/maincharacter_model.glb" id="15_uwkto"]
+[ext_resource type="PackedScene" uid="uid://cp008vqjuky3e" path="res://graphics/models/gameplay/player/current/main_character.tscn" id="15_sm5xg"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ax2wc"]
 radius = 0.55
@@ -135,8 +135,43 @@ shape = SubResource("SphereShape3D_a2oux")
 
 [node name="model_anchor" type="Node3D" parent="."]
 
-[node name="maincharacter_model" parent="model_anchor" instance=ExtResource("15_uwkto")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.548828, 0)
+[node name="skater_mc" parent="model_anchor" instance=ExtResource("15_sm5xg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.599609, 0)
+
+[node name="Skeleton3D" parent="model_anchor/skater_mc/Armature" index="0"]
+bones/0/position = Vector3(0.439177, -0.438134, -51.6165)
+bones/0/rotation = Quaternion(-0.371518, 0.378883, -0.38255, 0.756358)
+bones/1/rotation = Quaternion(0.100776, -0.0515923, -0.0770732, 0.990577)
+bones/2/rotation = Quaternion(-0.0379005, 0.00455496, -0.0356231, 0.998636)
+bones/3/position = Vector3(7.15256e-07, 5.98041, -3.75509e-06)
+bones/3/rotation = Quaternion(0.0144612, -0.000277067, -0.0374349, 0.999194)
+bones/4/position = Vector3(9.83477e-07, 6.72797, 4.46993e-07)
+bones/4/rotation = Quaternion(-0.0802399, -0.0869433, 0.0182621, 0.992809)
+bones/5/rotation = Quaternion(-0.0630065, -0.398462, 0.14702, 0.90313)
+bones/7/rotation = Quaternion(-0.538086, -0.475073, 0.633761, -0.288299)
+bones/8/position = Vector3(-6.0385e-07, 7.56272, 3.76163e-06)
+bones/8/rotation = Quaternion(0.206904, 0.479221, 0.0540341, 0.851245)
+bones/9/position = Vector3(-7.14775e-07, 16.4503, -2.32546e-06)
+bones/9/rotation = Quaternion(0.0335063, 0.042734, 0.334785, 0.940728)
+bones/10/position = Vector3(-3.15905e-06, 16.7898, -2.23517e-07)
+bones/10/rotation = Quaternion(2.22964e-07, 1.1595e-07, 5.58794e-08, 1)
+bones/11/rotation = Quaternion(0.657841, -0.367191, 0.522291, 0.399535)
+bones/12/position = Vector3(-9.71405e-06, 7.56272, -7.95912e-06)
+bones/12/rotation = Quaternion(0.16608, 0.477769, -0.130658, 0.852692)
+bones/13/position = Vector3(-8.06191e-08, 16.4496, 4.78817e-06)
+bones/13/rotation = Quaternion(0.040526, -0.0503772, -0.394568, 0.916589)
+bones/14/position = Vector3(-3.09944e-06, 16.7888, 1.04308e-07)
+bones/15/rotation = Quaternion(0.1491, 0.55336, 0.812208, 0.108996)
+bones/16/rotation = Quaternion(-0.651712, -0.0447664, 0.0516565, 0.75538)
+bones/17/rotation = Quaternion(0.56686, -0.310933, 0.00746868, 0.762846)
+bones/18/position = Vector3(-1.41744e-06, 9.23005, -9.51512e-07)
+bones/18/rotation = Quaternion(0.394785, -0.0540488, 0.0173958, 0.917018)
+bones/20/rotation = Quaternion(-0.101887, 0.551125, 0.72448, 0.401258)
+bones/21/rotation = Quaternion(-0.185518, 0.0596257, -0.0306772, 0.98035)
+bones/22/rotation = Quaternion(0.00772711, 0.347799, -0.0491206, 0.93625)
+bones/23/rotation = Quaternion(0.398504, 0.0601761, -0.0182743, 0.915008)
 
 [connection signal="body_entered" from="magnet" to="." method="_magnet_on_body_entered"]
 [connection signal="body_exited" from="magnet" to="." method="_magnet_on_body_exited"]
+
+[editable path="model_anchor/skater_mc"]

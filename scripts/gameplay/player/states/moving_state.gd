@@ -4,6 +4,7 @@ extends PlayerState
 func enter(_msg := {}) -> void:
 	player.canAirBoost = true
 	player.currentJumpCount = player.jumpCount
+	player.animation_player.play("run")
 
 func physics_update(delta: float) -> void:
 	# Notice how we have some code duplication between states. That's inherent to the pattern,
@@ -20,7 +21,7 @@ func physics_update(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0:
 		state_machine.transition_to("airborne", {do_jump = true})
-	elif is_equal_approx(player.velocity.length(), 0):
+	elif player.velocity.length() <= 0.1:
 		state_machine.transition_to("idle")
 	
 	
