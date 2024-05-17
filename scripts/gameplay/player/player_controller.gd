@@ -13,16 +13,19 @@ var jumpFlag : bool
 @onready var state_machine := $state_machine
 @onready var collider = $collider
 @onready var magnet = $magnet
+@onready var animation_player = $model_anchor/skater_mc/AnimationPlayer
 
 @export var movementSpeed : float = 5.0
 @export_category("Jump Settings")
 @export var jumpHeight : float = 1.0
 @export var jumpCount : int = 2
+@export var canJump : bool = true
 @export_category("Boost Settings")
 @export var turningSpeed : float = 1.0
 @export var sideStepCooldown : float = 0.1
 @export var sideStepDistance : float = 10.0
 @export var boostSpeed : float = 10.0
+@export var canBoost : bool = true
 @export_category("Fall Settings")
 @export var fallMultiplier : float = 1.0
 @export var stompSpeed : float = 5.0

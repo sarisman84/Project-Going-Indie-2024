@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://uofgpycygd4w"]
+[gd_scene load_steps=27 format=3 uid="uid://uofgpycygd4w"]
 
 [ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="1_3ukm0"]
 [ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="2_1tknf"]
@@ -10,6 +10,10 @@
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/utility/align_node.gd" id="7_7tclj"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="8_6imtj"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/destroyable_object.gd" id="9_gnfuo"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/goal.gd" id="10_5dde0"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/killbox.gd" id="10_c6lfv"]
+[ext_resource type="PackedScene" uid="uid://dw0jpsnjan0sq" path="res://nodes/levels/hub.tscn" id="12_7vaeu"]
+[ext_resource type="AudioStream" uid="uid://bnu28yxuxhh60" path="res://audio/music/AnimaAndZoeLoop.mp3" id="14_folcu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4hlv2"]
 
@@ -20,11 +24,21 @@ size = Vector3(20.7188, 14.0781, 122.407)
 size = Vector3(16.1955, 13.0869, 67.6504)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dphn7"]
-size = Vector3(16.5547, 49.3318, 107.854)
+size = Vector3(16.5547, 20.863, 83.3952)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xlb2r"]
+size = Vector3(29.7227, 24.5206, 83.3952)
+
+[sub_resource type="Curve3D" id="Curve3D_o80ws"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.0366287, 4.08113, 0.226501, 0, 0, 0, 0, 0, 0, -63.4812, 4.13812, -99.6592),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [sub_resource type="Curve3D" id="Curve3D_idj1k"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -1.87347, -7.24792e-05, -7.5704, 0, 0, 0, 0, 0, 0, -30.3649, -0.000139236, -47.6487),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4.42064, -0.000139236, -8.86876, 0, 0, 0, 0, 0, 0, -27.0663, -0.000139236, -52.9989),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -40,6 +54,11 @@ point_count = 3
 
 [sub_resource type="SphereMesh" id="SphereMesh_cyq00"]
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_0npv0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_op8nd"]
+size = Vector3(6.60547, 3.44238, 6.84241)
+
 [node name="Tutorial" type="Node"]
 
 [node name="player_controller" parent="." instance=ExtResource("8_6imtj")]
@@ -48,6 +67,47 @@ jumpHeight = 2.0
 fallMultiplier = 6.7
 stompSpeed = 250.0
 fallThreshold = -0.2
+railDetectionRadius = 1.0
+
+[node name="homing_attack" parent="player_controller" index="2"]
+detectionAngle = 0.0
+
+[node name="Skeleton3D" parent="player_controller/model_anchor/skater_mc/Armature" index="0"]
+bones/0/position = Vector3(-0.293118, 2.60825, -63.94)
+bones/0/rotation = Quaternion(-0.700009, -0.160618, 0.184666, 0.670886)
+bones/1/rotation = Quaternion(-0.0239029, 0.0469932, 0.011232, 0.998546)
+bones/2/position = Vector3(-3.8743e-07, 5.23286, 5.73695e-07)
+bones/2/rotation = Quaternion(0.046275, 0.104002, -0.0152903, 0.993382)
+bones/3/position = Vector3(0, 5.9804, 7.15256e-07)
+bones/3/rotation = Quaternion(0.045747, 0.104314, -0.0151438, 0.993376)
+bones/4/position = Vector3(0, 6.72797, 0)
+bones/4/rotation = Quaternion(0.0673507, -0.0021447, -0.00203458, 0.997725)
+bones/5/rotation = Quaternion(-0.20145, -0.016602, 0.0162221, 0.979224)
+bones/6/position = Vector3(-1.00583e-07, 52.0013, 2.05592)
+bones/7/rotation = Quaternion(-0.553412, -0.401967, 0.646739, -0.337471)
+bones/8/position = Vector3(1.03744e-07, 7.56272, 1.30882e-05)
+bones/8/rotation = Quaternion(0.637206, -0.131803, -0.0593224, 0.757019)
+bones/9/position = Vector3(-5.96046e-07, 16.4503, 3.62098e-06)
+bones/9/rotation = Quaternion(0.0616788, 0.00579698, 0.165498, 0.984263)
+bones/10/position = Vector3(7.15256e-07, 16.7898, 1.20699e-06)
+bones/10/rotation = Quaternion(0.0972582, 0.0565866, -0.0603468, 0.991815)
+bones/11/rotation = Quaternion(0.607893, -0.363705, 0.617493, 0.341887)
+bones/12/position = Vector3(-1.8969e-08, 7.56272, -1.66033e-06)
+bones/12/rotation = Quaternion(0.59928, 0.0836759, 0.0892131, 0.79114)
+bones/13/position = Vector3(-2.38419e-07, 16.4496, 4.41074e-06)
+bones/13/rotation = Quaternion(0.0587333, -0.00533636, -0.145596, 0.987585)
+bones/14/position = Vector3(5.0664e-07, 16.7888, -9.98378e-07)
+bones/14/rotation = Quaternion(0.125009, -0.0200009, 0.0993409, 0.986967)
+bones/15/rotation = Quaternion(0.0975722, -0.00782656, 0.994317, -0.04185)
+bones/16/position = Vector3(-4.51707e-07, 24.0521, -5.37699e-08)
+bones/16/rotation = Quaternion(-0.200689, -0.00880287, 0.00786932, 0.979584)
+bones/17/rotation = Quaternion(0.483302, -0.118467, 0.0630092, 0.865109)
+bones/18/position = Vector3(-3.03984e-06, 9.23005, 6.07967e-06)
+bones/18/rotation = Quaternion(0.425656, -0.0657855, 0.00708685, 0.902463)
+bones/20/rotation = Quaternion(-0.054702, 0.114321, 0.988588, 0.0814377)
+bones/21/rotation = Quaternion(-0.257671, 0.0024961, -0.00758817, 0.9662)
+bones/22/rotation = Quaternion(0.471739, 0.114439, -0.0541398, 0.872602)
+bones/23/rotation = Quaternion(0.370935, 0.051737, -0.0205245, 0.926989)
 
 [node name="affectors" type="Node" parent="."]
 
@@ -152,12 +212,31 @@ script = ExtResource("6_dua2h")
 childNode = NodePath("cam_transform")
 
 [node name="shape2" type="CollisionShape3D" parent="affectors/cam mods/cam_mod2"]
-transform = Transform3D(0.858906, 0, 0.512133, 0, 1, 0, -0.512133, 0, 0.858906, -22.5853, 23.9275, -46.587)
+transform = Transform3D(0.845951, 0, 0.53326, 0, 1, 0, -0.53326, 0, 0.845951, -22.3569, 38.1619, -44.6744)
 shape = SubResource("BoxShape3D_dphn7")
 
 [node name="cam_transform" type="Node3D" parent="affectors/cam mods/cam_mod2"]
 transform = Transform3D(0.86654, 0, 0.499108, 0, 1, 0, -0.499108, 0, 0.86654, 2.58525, 2.15596, 4.66124)
 script = ExtResource("7_7tclj")
+
+[node name="cam_mod3" type="Area3D" parent="affectors/cam mods" node_paths=PackedStringArray("childNode", "trackPath")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.4542, 30.948, -286.278)
+collision_mask = 2
+script = ExtResource("6_dua2h")
+trackMode = 1
+childNode = NodePath("cam_transform")
+trackPath = NodePath("path")
+
+[node name="shape2" type="CollisionShape3D" parent="affectors/cam mods/cam_mod3"]
+transform = Transform3D(0.845951, 0, 0.53326, 0, 1, 0, -0.53326, 0, 0.845951, -22.7288, 8.24536, -44.44)
+shape = SubResource("BoxShape3D_xlb2r")
+
+[node name="cam_transform" type="Node3D" parent="affectors/cam mods/cam_mod3"]
+transform = Transform3D(0.86654, 0, 0.499108, 0, 1, 0, -0.499108, 0, 0.86654, 2.58525, 2.15596, 4.66125)
+script = ExtResource("7_7tclj")
+
+[node name="path" type="Path3D" parent="affectors/cam mods/cam_mod3"]
+curve = SubResource("Curve3D_o80ws")
 
 [node name="rails" type="Node" parent="affectors"]
 
@@ -176,7 +255,7 @@ hitboxAABB = AABB(4.72, 0, 2.18, 23.69, 5, 28.335)
 [node name="hitable" type="Node" parent="affectors/hazards"]
 
 [node name="ghost" type="Area3D" parent="affectors/hazards/hitable"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.7188, 32.6774, -208.789)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.2084, 32.6774, -230.989)
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("9_gnfuo")
@@ -218,7 +297,7 @@ mesh = SubResource("SphereMesh_cyq00")
 skeleton = NodePath("")
 
 [node name="ghost4" type="Area3D" parent="affectors/hazards/hitable"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.1696, 36.2072, -237.494)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.1696, 33.8116, -238.951)
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("9_gnfuo")
@@ -232,7 +311,7 @@ mesh = SubResource("SphereMesh_cyq00")
 skeleton = NodePath("")
 
 [node name="ghost5" type="Area3D" parent="affectors/hazards/hitable"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.3064, 35.249, -244.396)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.0124, 32.9212, -243.506)
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("9_gnfuo")
@@ -246,7 +325,7 @@ mesh = SubResource("SphereMesh_cyq00")
 skeleton = NodePath("")
 
 [node name="ghost6" type="Area3D" parent="affectors/hazards/hitable"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.31317, 4.95512, 50.2594)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.31317, 6.68038, 45.4829)
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("9_gnfuo")
@@ -258,6 +337,27 @@ shape = SubResource("SphereShape3D_k4yoq")
 material_override = ExtResource("3_3w6bd")
 mesh = SubResource("SphereMesh_cyq00")
 skeleton = NodePath("")
+
+[node name="death zones" type="Node" parent="affectors/hazards"]
+
+[node name="out_of_bounds" type="Area3D" parent="affectors/hazards/death zones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.07589, -1.52588e-05, -215.041)
+collision_mask = 2
+script = ExtResource("10_c6lfv")
+
+[node name="shape" type="CollisionShape3D" parent="affectors/hazards/death zones/out_of_bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.23241, -13.7369, 10.4687)
+shape = SubResource("WorldBoundaryShape3D_0npv0")
+
+[node name="goal" type="Area3D" parent="affectors"]
+transform = Transform3D(0.61823, 0, -0.785997, 0, 1, 0, 0.785997, 0, 0.61823, -153.332, 29.5348, -423.523)
+collision_mask = 2
+script = ExtResource("10_5dde0")
+target_scene = ExtResource("12_7vaeu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="affectors/goal"]
+transform = Transform3D(0.993329, 0, -0.115318, 0, 1, 0, 0.115318, 0, 0.993329, -0.331696, 1.24849, -0.108124)
+shape = SubResource("BoxShape3D_op8nd")
 
 [node name="layout" type="Node" parent="."]
 
@@ -346,3 +446,15 @@ size = Vector3(6.865, 8.58301, 31.7902)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="enviroment"]
 transform = Transform3D(1, 0, 0, 0, -0.592379, 0.80566, 0, -0.80566, -0.592379, 0, 8.42758, 0)
+shadow_enabled = true
+
+[node name="audio" type="Node" parent="."]
+
+[node name="music" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("14_folcu")
+volume_db = -25.0
+autoplay = true
+bus = &"Music"
+
+[editable path="player_controller"]
+[editable path="player_controller/model_anchor/skater_mc"]

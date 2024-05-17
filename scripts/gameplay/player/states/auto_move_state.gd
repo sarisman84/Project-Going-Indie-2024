@@ -1,6 +1,8 @@
 class_name AutoMoveState
 extends PlayerState
 
+@onready var move_sfx : AudioPlayer = $"../../sfx/move_sfx"
+
 var currentRoad : CurvedRoad
 var initMaxAngle : float
 var playerPositionOffset : Vector3
@@ -15,6 +17,7 @@ func enter(_msg:={}) -> void:
 		var pos = (currentRoad.basis.get_rotation_quaternion() * currentRoad.curve.sample_baked(offset, true)) + currentRoad.position
 		
 		playerPositionOffset = player.position - pos
+		player.animation_player.play("run")
 		
 		
 
@@ -31,6 +34,7 @@ func exit() -> void:
 	currentRoad = null
 	player.up_direction = Vector3.UP
 	player.floor_max_angle = initMaxAngle
+	move_sfx.stop()
 	pass
 	
 func update(_delta : float) -> void:
@@ -41,7 +45,7 @@ func update(_delta : float) -> void:
 	var targetIndx = ExtendedUtilities.get_next_closest_point_index(player.global_position, currentRoad)
 	var targetPos = (currentRoad.basis.get_rotation_quaternion() * curve.get_point_position(targetIndx)) + currentRoad.global_position
 	DebugDraw3D.draw_sphere(targetPos, 0.15, Color.RED)
-
+	move_sfx.adv_play()
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
 func physics_update(_delta: float) -> void:

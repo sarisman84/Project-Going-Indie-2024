@@ -1,9 +1,11 @@
 class_name AttackState
 extends PlayerState
 
+@onready var jump_sfx : AudioStreamPlayer3D = $"../../sfx/jump_sfx"
+@onready var wind_sfx : AudioStreamPlayer3D = $"../../sfx/boost/wind_sfx"
+
 var isStomping : bool
 var onJumpTransitionDelay : float = 0.1
-
 var countdown : float
 
 
@@ -12,7 +14,12 @@ func enter(msg: = {}) -> void:
 		player.velocity.y = PlayerController.get_jump_velocity(player.jumpHeight, player.gravity)
 		player.currentJumpCount -= 1
 		countdown = onJumpTransitionDelay
+		jump_sfx.play()
 	isStomping = false
+	wind_sfx.play()
+
+func exit() -> void:
+	wind_sfx.stop()
 
 func update(delta : float) -> void:
 	countdown -= delta

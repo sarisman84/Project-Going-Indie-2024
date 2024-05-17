@@ -3,26 +3,28 @@ extends Node3D
 
 @onready var player_controller = $".."
 @onready var arm = $arm
+@onready var physical_camera : Camera3D = $arm/camera
 
-enum CameraMode {Follow, Look, Manual }
+enum CameraMode {Follow, TrackLook , Look, Static, Manual }
 
 @export var camera_sensitivity := 0.5
 @export var camera_smoothing := 0.5
+
 var input : Vector2
-
-
+var localTarget : Node3D
 
 var trackerForwardDirection : Vector3
 var target : Node3D
 var targetFollowOffset : Vector3
 var trackMode : CameraMode
-var trackTarget : Node3D
 var trackPivot : Vector3
+var trackPath : Path3D
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_as_top_level(true)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	trackTarget = player_controller
+	target = player_controller
 	follow_target()
 	
 
@@ -40,19 +42,35 @@ func _process(_delta):
 	arm.rotation_degrees.x = 0
 	arm.rotation_degrees.y = 0	
 	arm.position = Vector3.ZERO
-
-	if trackMode == CameraMode.Follow and trackTarget:
-		follow_target()
+	if trackMode == CameraMode.Static:
+		go_to_target()
+		transition_to_target_dir(_delta, trackerForwardDirection)
+	elif trackMode == CameraMode.Follow and target:
+		follow_target(_delta)
 		transition_to_target_dir(_delta, trackerForwardDirection)
 	elif trackMode == CameraMode.Look:
 		go_to_target()
 		transition_to_target_dir(_delta, (trackPivot - target.global_position).normalized())
+	elif trackMode == CameraMode.TrackLook and trackPath != null:
+		track_target(_delta)
+		
 
+func track_target(_delta : float ) -> void:
+	var offset = ExtendedUtilities.get_closest_offset(target.global_position, trackPath)
+	DebugDraw2D.set_text("offset ", offset,0, Color.YELLOW)
+	DebugDraw2D.set_text("target global pos ", target.global_position,0, Color.YELLOW)
+	var pos = (trackPath.basis.get_rotation_quaternion() * trackPath.curve.sample_baked(offset, true)) + trackPath.global_position
+	pos += targetFollowOffset
+	var dir = (pos - target.global_position)
+	global_position = pos
+	
+	transition_to_target_dir(_delta, dir.normalized())
+	
 func go_to_target():
 	position = trackPivot
 
-func follow_target():
-	position = trackTarget.position + targetFollowOffset
+func follow_target(_delta : float = 1.0) -> void:
+	position = lerp(position, target.position + targetFollowOffset, _delta * camera_smoothing) 
 
 func transition_to_target_dir(_delta : float, direction : Vector3) -> void:
 	var newDir = basis.z.slerp(direction, camera_smoothing * _delta)

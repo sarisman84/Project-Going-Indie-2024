@@ -1,5 +1,10 @@
 extends PlayerState
 
+@onready var move_sfx : AudioPlayer = $"../../sfx/move_sfx"
+@onready var boost_sfx : AudioStreamPlayer3D = $"../../sfx/boost/boost_sfx"
+@onready var wind_sfx : AudioStreamPlayer3D = $"../../sfx/boost/wind_sfx"
+
+
 var left_step : bool
 var right_step : bool
 var countdown : float
@@ -14,7 +19,8 @@ func update(_delta : float) -> void:
 	left_step = Input.is_action_pressed("left_step")
 	right_step = Input.is_action_pressed("right_step")
 	countdown -= _delta
-	
+	move_sfx.adv_play()
+
 
 func physics_update(delta : float) -> void:
 	# Notice how we have some code duplication between states. That's inherent to the pattern,
@@ -59,4 +65,4 @@ func move_player(delta : float) -> void:
 	player.move_and_slide()
 
 func exit() -> void:
-	pass
+	move_sfx.stop()

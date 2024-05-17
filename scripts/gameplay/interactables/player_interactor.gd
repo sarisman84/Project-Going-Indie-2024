@@ -1,11 +1,17 @@
 extends Interactor
 
-@export var player: CharacterBody3D
+@export var player: PlayerController
 
 var cached_closest: Interactable
 
 func _ready():
 	controller = player
+
+func _process(_delta):
+	rotate_towards(player.model.basis.z)
+
+func rotate_towards(direction : Vector3) -> void:
+	self.look_at(transform.origin - direction)
 
 func _physics_process(_delta):
 	var new_closest: Interactable = get_closest_interactable()

@@ -2,10 +2,15 @@ class_name CameraModifier
 extends Area3D
 
 
-
+@export_category("General")
 @export var trackMode : CameraController.CameraMode
-@export var cameraFollowOffset : Vector3
 @export var childNode : Node3D
+@export var trackPath : Path3D
+@export var newProjection : Camera3D.ProjectionType = Camera3D.PROJECTION_PERSPECTIVE
+@export_subgroup("Perspective Settings")
+@export var newFieldOfView : float = 75
+@export_subgroup("Orthographic Settings")
+@export var newSize : float = 1
 
 # @onready var mod = $mod
 
@@ -30,8 +35,11 @@ func apply_cam_settings(camera : CameraController, player : PlayerController) ->
 	camera.target = player
 	camera.targetFollowOffset = childNode.position
 	camera.trackMode = trackMode
-	camera.trackTarget = player
 	camera.trackPivot = childNode.global_position
+	camera.trackPath = trackPath
+	camera.physical_camera.projection = newProjection
+	camera.physical_camera.fov = newFieldOfView
+	camera.physical_camera.size = newSize
 	
 	DebugDraw3D.draw_arrow_ray(player.global_position, camera.trackerForwardDirection	, 1.0, Color.BLUE, 0.15, false, 10.0)
 

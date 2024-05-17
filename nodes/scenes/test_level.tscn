@@ -264,7 +264,6 @@ hitboxAABB = AABB(0, 2.385, 0, 10.155, 7.66, 2.525)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.255, 0, 24.08)
 collision_mask = 2
 script = ExtResource("6_ktxpf")
-cameraFollowOffset = Vector3(0, 1, -10)
 childNode = NodePath("mod")
 
 [node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier"]
@@ -280,7 +279,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4707, -1.90735e-06, -25.12
 collision_mask = 2
 script = ExtResource("6_ktxpf")
 trackMode = 1
-cameraFollowOffset = Vector3(0, 1, -10)
 childNode = NodePath("mod")
 
 [node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier2"]
@@ -295,7 +293,6 @@ script = ExtResource("7_7v0nc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5789, -5.72205e-06, -82.3356)
 collision_mask = 2
 script = ExtResource("6_ktxpf")
-cameraFollowOffset = Vector3(0, 1, -10)
 childNode = NodePath("mod")
 
 [node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier4"]
@@ -310,7 +307,6 @@ script = ExtResource("7_7v0nc")
 collision_mask = 2
 script = ExtResource("6_ktxpf")
 trackMode = 1
-cameraFollowOffset = Vector3(0, 1, -10)
 childNode = NodePath("mod")
 
 [node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier3"]

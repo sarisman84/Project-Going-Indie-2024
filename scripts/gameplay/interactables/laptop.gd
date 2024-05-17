@@ -1,5 +1,5 @@
 extends Node3D
-
+	
 func _on_interactable_focused(interactor):
 	get_node("UIText").show()
 
