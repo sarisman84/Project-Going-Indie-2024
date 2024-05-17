@@ -88,6 +88,37 @@ shape = SubResource("BoxShape3D_o4w6h")
 transform = Transform3D(0.0468601, 0, 2.99963, 0, 3, 0, -2.99963, 0, 0.0468601, 1.34355, 0.847116, -8.08605)
 script = ExtResource("6_lw1yg")
 
+[node name="UIText" type="Control" parent="Geometry/laptop"]
+visible = false
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+
+[node name="ColorRect" type="ColorRect" parent="Geometry/laptop/UIText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.552941, 0.192157, 1)
+
+[node name="Label" type="Label" parent="Geometry/laptop/UIText"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level Select"
+horizontal_alignment = 1
+
 [node name="LevelSelectMenu" parent="Geometry/laptop" instance=ExtResource("3_54ei2")]
 visible = false
 
@@ -101,6 +132,37 @@ shape = SubResource("BoxShape3D_mo8yy")
 transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 8.5499, 0.0499692, -7.95604)
 script = ExtResource("7_lrtba")
 highlight_material = SubResource("StandardMaterial3D_0ty27")
+
+[node name="UIText" type="Control" parent="Geometry/doorwayFront"]
+visible = false
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+
+[node name="ColorRect" type="ColorRect" parent="Geometry/doorwayFront/UIText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.552941, 0.192157, 1)
+
+[node name="Label" type="Label" parent="Geometry/doorwayFront/UIText"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Quit"
+horizontal_alignment = 1
 
 [node name="Interactable" parent="Geometry/doorwayFront" instance=ExtResource("7_rbxf8")]
 

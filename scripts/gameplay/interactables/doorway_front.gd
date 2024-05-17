@@ -16,11 +16,11 @@ func remove_highlight():
 
 func _on_interactable_focused(interactor):
 #	add_highlight()
-	pass
+	get_node("UIText").show()
 
 func _on_interactable_interacted(interactor):
 	get_tree().quit()
 
 func _on_interactable_unfocused(interactor):
 #	remove_highlight()
-	pass
+	get_node("UIText").hide()

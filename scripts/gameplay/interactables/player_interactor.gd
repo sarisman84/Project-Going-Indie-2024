@@ -16,7 +16,6 @@ func _physics_process(_delta):
 			focus(new_closest)
 			
 			cached_closest = new_closest
-			print("new cache acquired")
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("interact"):
