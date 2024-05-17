@@ -1,31 +1,57 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw0jpsnjan0sq"]
+[gd_scene load_steps=9 format=3 uid="uid://dw0jpsnjan0sq"]
 
+[ext_resource type="PackedScene" uid="uid://obeioy5h55j1" path="res://nodes/gameplay/hub_player_controller.tscn" id="1_gdrjm"]
 [ext_resource type="PackedScene" uid="uid://b4tws824n037u" path="res://graphics/models/kenney/furniture/floorHalf.glb" id="1_i7tss"]
-[ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="2_7vn36"]
+[ext_resource type="Script" path="res://scripts/utility/states/state.gd" id="2_4tqaw"]
 [ext_resource type="PackedScene" uid="uid://colyarv2d5sxb" path="res://graphics/models/kenney/furniture/desk.glb" id="3_iyuqn"]
 [ext_resource type="PackedScene" uid="uid://bv841bys2domq" path="res://graphics/models/kenney/furniture/laptop.glb" id="4_cy6an"]
+[ext_resource type="PackedScene" uid="uid://bd76cv5bp7i8i" path="res://graphics/models/kenney/furniture/doorwayFront.glb" id="6_ypiao"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_18x1f"]
+size = Vector3(0.503, 0.23, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o4w6h"]
+size = Vector3(1.535, 0.781167, 1)
 
 [node name="Hub" type="Node"]
 
-[node name="floorHalf2" parent="." instance=ExtResource("1_i7tss")]
-transform = Transform3D(245.811, 0, 0, 0, 1, 0, 0, 0, 255.432, -87.8061, 23.8683, 94.7369)
+[node name="Node3D" parent="." instance=ExtResource("1_gdrjm")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 1, -8)
 
-[node name="floorHalf" parent="." instance=ExtResource("1_i7tss")]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.00181, 4.46672, -8.47672)
+shadow_enabled = true
+
+[node name="Geometry" type="Node" parent="."]
+script = ExtResource("2_4tqaw")
+
+[node name="Roof" parent="Geometry" instance=ExtResource("1_i7tss")]
+transform = Transform3D(245.811, 0, 0, 0, 1, 0, 0, 0, 255.432, -87.8061, 23.8683, 94.7369)
+visible = false
+
+[node name="floorHalf" parent="Geometry" instance=ExtResource("1_i7tss")]
 transform = Transform3D(16.8303, 0, 0, 0, 1, 0, 0, 0, 15.9822, 0.0208706, 0, -0.00555354)
 
-[node name="player_controller" parent="." node_paths=PackedStringArray("model") instance=ExtResource("2_7vn36")]
-transform = Transform3D(-0.0273285, 0, -0.999627, 0, 1, 0, 0.999627, 0, -0.0273285, 4.40596, 0.788627, -8.4269)
-velocity = Vector3(0, 0, 0)
-movementSpeed = 15.0
-turningSpeed = 1.5
-fallMultiplier = 3.7
-groundDelta = Vector2(0.8, 1.8)
-airDelta = Vector2(0, 0.1)
-boostAcceleration = 0.5
-model = NodePath("")
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/floorHalf"]
 
-[node name="desk" parent="." instance=ExtResource("3_iyuqn")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/floorHalf/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24859, -0.0385641, -0.499958)
+shape = SubResource("BoxShape3D_18x1f")
+
+[node name="desk" parent="Geometry" instance=ExtResource("3_iyuqn")]
 transform = Transform3D(0.00400721, 0, 2.783, 0, 2, 0, -2.296, 0, 0.00485717, 1.70812, 0.0687716, -7.71483)
 
-[node name="laptop" parent="." instance=ExtResource("4_cy6an")]
-transform = Transform3D(0.0468601, 0, 2.99963, 0, 3, 0, -2.99963, 0, 0.0468601, 1.34355, 0.864129, -8.08605)
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/desk"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/desk/StaticBody3D"]
+transform = Transform3D(0.5, 0, -2.32831e-10, 0, 0.5, 0, 1.16415e-10, 0, 0.5, 0.35471, 0.197018, -0.211091)
+shape = SubResource("BoxShape3D_o4w6h")
+
+[node name="laptop" parent="Geometry" instance=ExtResource("4_cy6an")]
+transform = Transform3D(0.0468601, 0, 2.99963, 0, 3, 0, -2.99963, 0, 0.0468601, 1.34355, 0.847116, -8.08605)
+
+[node name="doorwayFront" parent="Geometry" instance=ExtResource("6_ypiao")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 8.43448, 0.0499692, -7.95604)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.00259082, -0.576493, 0.817098, 0, 0.817101, 0.576495, -0.999997, 0.00149359, -0.00211696, 10.9988, 6.81803, -8.04908)
