@@ -1,8 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://dw0jpsnjan0sq"]
+[gd_scene load_steps=25 format=3 uid="uid://dw0jpsnjan0sq"]
 
 [ext_resource type="PackedScene" uid="uid://obeioy5h55j1" path="res://nodes/gameplay/hub_player_controller.tscn" id="1_gdrjm"]
 [ext_resource type="PackedScene" uid="uid://b4tws824n037u" path="res://graphics/models/kenney/furniture/floorHalf.glb" id="1_i7tss"]
+[ext_resource type="Script" path="res://scripts/gameplay/menus/hub.gd" id="1_mk2ea"]
 [ext_resource type="Script" path="res://scripts/utility/states/state.gd" id="2_4tqaw"]
+[ext_resource type="PackedScene" uid="uid://drj1h676k5ev3" path="res://nodes/scenes/level_select_menu.tscn" id="3_54ei2"]
 [ext_resource type="PackedScene" uid="uid://colyarv2d5sxb" path="res://graphics/models/kenney/furniture/desk.glb" id="3_iyuqn"]
 [ext_resource type="PackedScene" uid="uid://bv841bys2domq" path="res://graphics/models/kenney/furniture/laptop.glb" id="4_cy6an"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/laptop.gd" id="6_lw1yg"]
@@ -45,6 +47,7 @@ size = Vector3(1.15137, 3.33199, 0.100052)
 size = Vector3(1.15533, 3.34796, 0.0958862)
 
 [node name="Hub" type="Node"]
+script = ExtResource("1_mk2ea")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.00181, 4.46672, -8.47672)
@@ -61,6 +64,7 @@ script = ExtResource("2_4tqaw")
 
 [node name="Roof" parent="Geometry" instance=ExtResource("1_i7tss")]
 transform = Transform3D(245.811, 0, 0, 0, 1, 0, 0, 0, 255.432, -87.8061, 23.8683, 94.7369)
+visible = false
 
 [node name="floorHalf" parent="Geometry" instance=ExtResource("1_i7tss")]
 transform = Transform3D(16.8303, 0, 0, 0, 1, 0, 0, 0, 15.9822, 0.0208706, 0, -0.00555354)
@@ -84,6 +88,9 @@ shape = SubResource("BoxShape3D_o4w6h")
 transform = Transform3D(0.0468601, 0, 2.99963, 0, 3, 0, -2.99963, 0, 0.0468601, 1.34355, 0.847116, -8.08605)
 script = ExtResource("6_lw1yg")
 
+[node name="LevelSelectMenu" parent="Geometry/laptop" instance=ExtResource("3_54ei2")]
+visible = false
+
 [node name="Interactable" parent="Geometry/laptop" instance=ExtResource("7_rbxf8")]
 
 [node name="CollisionShape3D" parent="Geometry/laptop/Interactable" index="0"]
@@ -106,8 +113,6 @@ shape = SubResource("BoxShape3D_660vl")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/doorwayFront/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243348, 0.622551, -0.0445523)
 shape = SubResource("BoxShape3D_mlrd4")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/doorwayFront"]
 
 [node name="Walls" type="Node" parent="Geometry"]
 
