@@ -27,5 +27,5 @@ func get_closest_interactable() -> Interactable:
 		if distance < closest_distance:
 			closest = interactable as Interactable
 			closest_distance = distance
-
+	
 	return closest

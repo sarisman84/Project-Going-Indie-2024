@@ -8,4 +8,4 @@ func _on_interactable_interacted(interactor):
 	get_node("LevelSelectMenu").pause_menu()
 
 func _on_interactable_unfocused(interactor):
-	pass # Replace with function body.
+	pass

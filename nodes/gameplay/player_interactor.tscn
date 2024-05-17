@@ -5,3 +5,5 @@
 
 [node name="PlayerInteractor" instance=ExtResource("1_06sbe")]
 script = ExtResource("2_gwa45")
+
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
