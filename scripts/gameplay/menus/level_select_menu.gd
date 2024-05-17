@@ -6,7 +6,8 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _on_back_button_pressed():
-	pause_menu()
+	if paused == true:
+		pause_menu()
 
 func pause_menu():
 	if paused:
