@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dw0jpsnjan0sq"]
+[gd_scene load_steps=10 format=3 uid="uid://dw0jpsnjan0sq"]
 
 [ext_resource type="PackedScene" uid="uid://obeioy5h55j1" path="res://nodes/gameplay/hub_player_controller.tscn" id="1_gdrjm"]
 [ext_resource type="PackedScene" uid="uid://b4tws824n037u" path="res://graphics/models/kenney/furniture/floorHalf.glb" id="1_i7tss"]
@@ -13,14 +13,20 @@ size = Vector3(0.503, 0.23, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_o4w6h"]
 size = Vector3(1.535, 0.781167, 1)
 
-[node name="Hub" type="Node"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_mlrd4"]
+size = Vector3(0.487183, 1.02362, 0.0977783)
 
-[node name="Node3D" parent="." instance=ExtResource("1_gdrjm")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 1, -8)
+[node name="Hub" type="Node"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.00181, 4.46672, -8.47672)
 shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.00259082, -0.576493, 0.817098, 0, 0.817101, 0.576495, -0.999997, 0.00149359, -0.00211696, 10.9988, 6.81803, -8.04908)
+
+[node name="Node3D" parent="." instance=ExtResource("1_gdrjm")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 1, -8)
 
 [node name="Geometry" type="Node" parent="."]
 script = ExtResource("2_4tqaw")
@@ -53,5 +59,8 @@ transform = Transform3D(0.0468601, 0, 2.99963, 0, 3, 0, -2.99963, 0, 0.0468601, 
 [node name="doorwayFront" parent="Geometry" instance=ExtResource("6_ypiao")]
 transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 8.43448, 0.0499692, -7.95604)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.00259082, -0.576493, 0.817098, 0, 0.817101, 0.576495, -0.999997, 0.00149359, -0.00211696, 10.9988, 6.81803, -8.04908)
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/doorwayFront"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/doorwayFront/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243348, 0.501312, -0.0445523)
+shape = SubResource("BoxShape3D_mlrd4")
