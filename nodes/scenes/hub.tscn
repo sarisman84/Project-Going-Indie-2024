@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dw0jpsnjan0sq"]
+
+[ext_resource type="PackedScene" uid="uid://b4tws824n037u" path="res://graphics/models/kenney/furniture/floorHalf.glb" id="1_i7tss"]
+[ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="2_7vn36"]
+[ext_resource type="PackedScene" uid="uid://colyarv2d5sxb" path="res://graphics/models/kenney/furniture/desk.glb" id="3_iyuqn"]
+[ext_resource type="PackedScene" uid="uid://bv841bys2domq" path="res://graphics/models/kenney/furniture/laptop.glb" id="4_cy6an"]
+
+[node name="Hub" type="Node"]
+
+[node name="floorHalf2" parent="." instance=ExtResource("1_i7tss")]
+transform = Transform3D(245.811, 0, 0, 0, 1, 0, 0, 0, 255.432, -87.8061, 23.8683, 94.7369)
+
+[node name="floorHalf" parent="." instance=ExtResource("1_i7tss")]
+transform = Transform3D(16.8303, 0, 0, 0, 1, 0, 0, 0, 15.9822, 0.0208706, 0, -0.00555354)
+
+[node name="player_controller" parent="." node_paths=PackedStringArray("model") instance=ExtResource("2_7vn36")]
+transform = Transform3D(-0.0273285, 0, -0.999627, 0, 1, 0, 0.999627, 0, -0.0273285, 4.40596, 0.788627, -8.4269)
+velocity = Vector3(0, 0, 0)
+movementSpeed = 15.0
+turningSpeed = 1.5
+fallMultiplier = 3.7
+groundDelta = Vector2(0.8, 1.8)
+airDelta = Vector2(0, 0.1)
+boostAcceleration = 0.5
+model = NodePath("")
+
+[node name="desk" parent="." instance=ExtResource("3_iyuqn")]
+transform = Transform3D(0.00400721, 0, 2.783, 0, 2, 0, -2.296, 0, 0.00485717, 1.70812, 0.0687716, -7.71483)
+
+[node name="laptop" parent="." instance=ExtResource("4_cy6an")]
+transform = Transform3D(0.0468601, 0, 2.99963, 0, 3, 0, -2.99963, 0, 0.0468601, 1.34355, 0.864129, -8.08605)
