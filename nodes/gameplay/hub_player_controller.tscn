@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://obeioy5h55j1"]
+[gd_scene load_steps=6 format=3 uid="uid://obeioy5h55j1"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/hub_player_controller.gd" id="1_gkli1"]
+[ext_resource type="PackedScene" uid="uid://cmwv1b2bxaorw" path="res://nodes/gameplay/player_interactor.tscn" id="2_jr0kq"]
 [ext_resource type="PackedScene" uid="uid://b20jd6nyae4di" path="res://graphics/models/gameplay/player/maincharacter_model.glb" id="2_tiprf"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_l64bl"]
 radius = 0.55
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vbmsp"]
+size = Vector3(1, 1.46631, 1.6588)
 
 [node name="hub_player_controller" type="CharacterBody3D" node_paths=PackedStringArray("model")]
 script = ExtResource("1_gkli1")
@@ -13,7 +17,16 @@ model = NodePath("model_anchor/maincharacter_model")
 [node name="collider" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_l64bl")
 
+[node name="PlayerInteractor" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_jr0kq")]
+player = NodePath("..")
+
+[node name="CollisionShape3D" parent="PlayerInteractor" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.233154, 0.838391)
+shape = SubResource("BoxShape3D_vbmsp")
+
 [node name="model_anchor" type="Node3D" parent="."]
 
 [node name="maincharacter_model" parent="model_anchor" instance=ExtResource("2_tiprf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.548828, 0)
+
+[editable path="PlayerInteractor"]

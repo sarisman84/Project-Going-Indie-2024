@@ -1,12 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://dw0jpsnjan0sq"]
+[gd_scene load_steps=23 format=3 uid="uid://dw0jpsnjan0sq"]
 
 [ext_resource type="PackedScene" uid="uid://obeioy5h55j1" path="res://nodes/gameplay/hub_player_controller.tscn" id="1_gdrjm"]
 [ext_resource type="PackedScene" uid="uid://b4tws824n037u" path="res://graphics/models/kenney/furniture/floorHalf.glb" id="1_i7tss"]
 [ext_resource type="Script" path="res://scripts/utility/states/state.gd" id="2_4tqaw"]
 [ext_resource type="PackedScene" uid="uid://colyarv2d5sxb" path="res://graphics/models/kenney/furniture/desk.glb" id="3_iyuqn"]
 [ext_resource type="PackedScene" uid="uid://bv841bys2domq" path="res://graphics/models/kenney/furniture/laptop.glb" id="4_cy6an"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/laptop.gd" id="6_lw1yg"]
 [ext_resource type="PackedScene" uid="uid://bd76cv5bp7i8i" path="res://graphics/models/kenney/furniture/doorwayFront.glb" id="6_ypiao"]
 [ext_resource type="PackedScene" uid="uid://bvts8fua72hjo" path="res://graphics/models/kenney/furniture/wall.glb" id="7_1bn0q"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/doorway_front.gd" id="7_lrtba"]
+[ext_resource type="PackedScene" uid="uid://5npf5iqu3dqq" path="res://nodes/gameplay/Interactable.tscn" id="7_rbxf8"]
 [ext_resource type="PackedScene" uid="uid://bgugknv3w4h3w" path="res://graphics/models/kenney/furniture/wallCorner.glb" id="8_ooti1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_18x1f"]
@@ -14,6 +17,14 @@ size = Vector3(0.503, 0.23, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o4w6h"]
 size = Vector3(1.535, 0.781167, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mo8yy"]
+size = Vector3(0.654297, 0.45607, 0.466858)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ty27"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_660vl"]
+size = Vector3(0.545898, 1.03885, 0.11792)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mlrd4"]
 size = Vector3(0.487183, 1.2661, 0.0977783)
@@ -50,7 +61,6 @@ script = ExtResource("2_4tqaw")
 
 [node name="Roof" parent="Geometry" instance=ExtResource("1_i7tss")]
 transform = Transform3D(245.811, 0, 0, 0, 1, 0, 0, 0, 255.432, -87.8061, 23.8683, 94.7369)
-visible = false
 
 [node name="floorHalf" parent="Geometry" instance=ExtResource("1_i7tss")]
 transform = Transform3D(16.8303, 0, 0, 0, 1, 0, 0, 0, 15.9822, 0.0208706, 0, -0.00555354)
@@ -72,15 +82,32 @@ shape = SubResource("BoxShape3D_o4w6h")
 
 [node name="laptop" parent="Geometry" instance=ExtResource("4_cy6an")]
 transform = Transform3D(0.0468601, 0, 2.99963, 0, 3, 0, -2.99963, 0, 0.0468601, 1.34355, 0.847116, -8.08605)
+script = ExtResource("6_lw1yg")
+
+[node name="Interactable" parent="Geometry/laptop" instance=ExtResource("7_rbxf8")]
+
+[node name="CollisionShape3D" parent="Geometry/laptop/Interactable" index="0"]
+transform = Transform3D(0.999962, 0, 3.1013e-07, 0, 1, 0, -3.1013e-07, 0, 0.999962, 0.146924, -0.0408789, -0.0742771)
+shape = SubResource("BoxShape3D_mo8yy")
 
 [node name="doorwayFront" parent="Geometry" instance=ExtResource("6_ypiao")]
 transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 8.5499, 0.0499692, -7.95604)
+script = ExtResource("7_lrtba")
+highlight_material = SubResource("StandardMaterial3D_0ty27")
+
+[node name="Interactable" parent="Geometry/doorwayFront" instance=ExtResource("7_rbxf8")]
+
+[node name="CollisionShape3D" parent="Geometry/doorwayFront/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.227052, 0.512375, -0.038208)
+shape = SubResource("BoxShape3D_660vl")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Geometry/doorwayFront"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/doorwayFront/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243348, 0.622551, -0.0445523)
 shape = SubResource("BoxShape3D_mlrd4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/doorwayFront"]
 
 [node name="Walls" type="Node" parent="Geometry"]
 
@@ -140,3 +167,13 @@ transform = Transform3D(2, 0, 0, 0, 0.763235, 0, 0, 0, 2, 7.42538, 0.0114905, 0.
 
 [node name="wallCorner4" parent="Geometry/Walls" instance=ExtResource("8_ooti1")]
 transform = Transform3D(-8.75539e-08, 0, 2.003, 0, 0.762, 0, -2.003, 0, -8.75539e-08, 8.52003, 0.0178316, -14.9951)
+
+[connection signal="focused" from="Geometry/laptop/Interactable" to="Geometry/laptop" method="_on_interactable_focused"]
+[connection signal="interacted" from="Geometry/laptop/Interactable" to="Geometry/laptop" method="_on_interactable_interacted"]
+[connection signal="unfocused" from="Geometry/laptop/Interactable" to="Geometry/laptop" method="_on_interactable_unfocused"]
+[connection signal="focused" from="Geometry/doorwayFront/Interactable" to="Geometry/doorwayFront" method="_on_interactable_focused"]
+[connection signal="interacted" from="Geometry/doorwayFront/Interactable" to="Geometry/doorwayFront" method="_on_interactable_interacted"]
+[connection signal="unfocused" from="Geometry/doorwayFront/Interactable" to="Geometry/doorwayFront" method="_on_interactable_unfocused"]
+
+[editable path="Geometry/laptop/Interactable"]
+[editable path="Geometry/doorwayFront/Interactable"]

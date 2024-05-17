@@ -15,6 +15,7 @@ func rotate_model_towards(forwardDir : Vector3):
 		return
 	model.look_at(forwardDir)
 	collider.look_at(forwardDir)
+	get_node("PlayerInteractor").look_at(forwardDir)
 
 func _physics_process(delta):
 	# Add the gravity.
