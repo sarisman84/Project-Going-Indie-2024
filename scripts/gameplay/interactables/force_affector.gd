@@ -1,10 +1,10 @@
 class_name ForceAffector
 extends Area3D
 
-@export var forceDirection : Vector3
 @export var forceAmount : float
 @export var canBeAttacked : bool
 @export var snapToMiddle: bool
+@export var durationInSeconds : float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,7 +26,7 @@ func reset_player(player: PlayerController):
 	ha.set_bounce_override(false)
 
 func push_player(player : PlayerController):
-	player.state_machine.transition_to("moved_by_external_force", {external_velocity = forceDirection.normalized() * forceAmount, snapPos = global_position + forceDirection.normalized(), canSnap = snapToMiddle})
+	player.state_machine.transition_to("moved_by_external_force", {external_velocity = basis.z * forceAmount, snapPos = global_position + basis.z.normalized(), canSnap = snapToMiddle, duration = durationInSeconds})
 
 func _on_body_exited(body):
 	reset_player(body as PlayerController)
