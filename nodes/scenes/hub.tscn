@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dw0jpsnjan0sq"]
+[gd_scene load_steps=17 format=3 uid="uid://dw0jpsnjan0sq"]
 
 [ext_resource type="PackedScene" uid="uid://obeioy5h55j1" path="res://nodes/gameplay/hub_player_controller.tscn" id="1_gdrjm"]
 [ext_resource type="PackedScene" uid="uid://b4tws824n037u" path="res://graphics/models/kenney/furniture/floorHalf.glb" id="1_i7tss"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://colyarv2d5sxb" path="res://graphics/models/kenney/furniture/desk.glb" id="3_iyuqn"]
 [ext_resource type="PackedScene" uid="uid://bv841bys2domq" path="res://graphics/models/kenney/furniture/laptop.glb" id="4_cy6an"]
 [ext_resource type="PackedScene" uid="uid://bd76cv5bp7i8i" path="res://graphics/models/kenney/furniture/doorwayFront.glb" id="6_ypiao"]
+[ext_resource type="PackedScene" uid="uid://bvts8fua72hjo" path="res://graphics/models/kenney/furniture/wall.glb" id="7_1bn0q"]
+[ext_resource type="PackedScene" uid="uid://bgugknv3w4h3w" path="res://graphics/models/kenney/furniture/wallCorner.glb" id="8_ooti1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_18x1f"]
 size = Vector3(0.503, 0.23, 1)
@@ -14,7 +16,22 @@ size = Vector3(0.503, 0.23, 1)
 size = Vector3(1.535, 0.781167, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mlrd4"]
-size = Vector3(0.487183, 1.02362, 0.0977783)
+size = Vector3(0.487183, 1.2661, 0.0977783)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0fbxb"]
+size = Vector3(1.1485, 1.46133, 0.133522)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ejgko"]
+size = Vector3(1.20505, 1.29593, 0.056015)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kbr6i"]
+size = Vector3(1.15209, 1.2804, 0.0819092)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kjrrs"]
+size = Vector3(1.15137, 3.33199, 0.100052)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ysfs4"]
+size = Vector3(1.15533, 3.34796, 0.0958862)
 
 [node name="Hub" type="Node"]
 
@@ -57,10 +74,69 @@ shape = SubResource("BoxShape3D_o4w6h")
 transform = Transform3D(0.0468601, 0, 2.99963, 0, 3, 0, -2.99963, 0, 0.0468601, 1.34355, 0.847116, -8.08605)
 
 [node name="doorwayFront" parent="Geometry" instance=ExtResource("6_ypiao")]
-transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 8.43448, 0.0499692, -7.95604)
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 8.5499, 0.0499692, -7.95604)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Geometry/doorwayFront"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/doorwayFront/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243348, 0.501312, -0.0445523)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243348, 0.622551, -0.0445523)
 shape = SubResource("BoxShape3D_mlrd4")
+
+[node name="Walls" type="Node" parent="Geometry"]
+
+[node name="wall" parent="Geometry/Walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(-6.12841e-07, 0, -2, 0, 1.98545, 0, 14.0202, 0, -8.74227e-08, -0.0633546, 0.0181201, -14.9915)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Walls/wall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Walls/wall/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 1.9952e-11, 0, 1, 0.493838, 0.650986, -0.0591623)
+shape = SubResource("BoxShape3D_0fbxb")
+
+[node name="wall2" parent="Geometry/Walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(7.09995, 0, 0, 0, 1.98545, 0, 0, 0, 2, 1.02583, 0.0181201, 0.0857835)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Walls/wall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Walls/wall2/StaticBody3D"]
+transform = Transform3D(0.999941, 0, 0, 0, 0.999956, 0, 0, 0, 0.999961, 0.45182, 0.643131, -0.0260114)
+shape = SubResource("BoxShape3D_ejgko")
+
+[node name="wall3" parent="Geometry/Walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(-7.4389, 0, -1.74845e-07, 0, 1.98545, 0, 6.50329e-07, 0, -2, 8.34982, 0.0181201, -16.0864)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Walls/wall3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Walls/wall3/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.999974, 0, -1.13118e-11, 0, 1, 0.548299, 0.651854, -0.0317993)
+shape = SubResource("BoxShape3D_kbr6i")
+
+[node name="wall4" parent="Geometry/Walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(-3.04477e-07, 0, 2, 0, 0.762202, 0, -6.96561, 0, -8.74227e-08, 8.523, 0.0122725, -0.991)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Walls/wall4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Walls/wall4/StaticBody3D"]
+transform = Transform3D(0.999925, 0, 0, 0, 1, 0, -5.86908e-12, 0, 1, 0.423321, 1.67466, -0.0261302)
+shape = SubResource("BoxShape3D_kjrrs")
+
+[node name="wall5" parent="Geometry/Walls" instance=ExtResource("7_1bn0q")]
+transform = Transform3D(-2.72252e-07, 0, 2, 0, 0.762202, 0, -6.2284, 0, -8.74227e-08, 8.523, 0.018, -8.929)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Walls/wall5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Walls/wall5/StaticBody3D"]
+transform = Transform3D(1, 0, 2.66454e-15, 0, 1, 0, -5.7554e-12, 0, 1, 0.577518, 1.66983, -0.0316973)
+shape = SubResource("BoxShape3D_ysfs4")
+
+[node name="wallCorner" parent="Geometry/Walls" instance=ExtResource("8_ooti1")]
+transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 1.02973, 0, -16.0873)
+
+[node name="wallCorner2" parent="Geometry/Walls" instance=ExtResource("8_ooti1")]
+transform = Transform3D(2.38498e-08, 0, -2, 0, 2, 0, 2, 0, 2.38498e-08, -0.0745896, 0, -1.01081)
+
+[node name="wallCorner3" parent="Geometry/Walls" instance=ExtResource("8_ooti1")]
+transform = Transform3D(2, 0, 0, 0, 0.763235, 0, 0, 0, 2, 7.42538, 0.0114905, 0.0921661)
+
+[node name="wallCorner4" parent="Geometry/Walls" instance=ExtResource("8_ooti1")]
+transform = Transform3D(-8.75539e-08, 0, 2.003, 0, 0.762, 0, -2.003, 0, -8.75539e-08, 8.52003, 0.0178316, -14.9951)
