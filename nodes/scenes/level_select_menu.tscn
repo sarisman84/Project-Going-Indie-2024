@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://drj1h676k5ev3"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/menus/level_select_menu.gd" id="1_gdl0v"]
+[ext_resource type="PackedScene" uid="uid://c5ev46060wwjc" path="res://nodes/gameplay/level_button.tscn" id="1_ovqqh"]
+
+[node name="LevelSelectMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gdl0v")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.552941, 0.192157, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Select Level"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="LevelButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("1_ovqqh")]
+layout_mode = 2
+text = "Test Level"
+level_path = "res://nodes/scenes/test_level.tscn"
+
+[node name="LevelButton2" parent="MarginContainer/VBoxContainer" instance=ExtResource("1_ovqqh")]
+layout_mode = 2
+text = "Tutorial"
+level_path = "res://nodes/levels/tutorial.tscn"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
