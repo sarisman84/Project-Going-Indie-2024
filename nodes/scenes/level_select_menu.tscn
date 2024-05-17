@@ -51,6 +51,7 @@ level_path = "res://nodes/scenes/test_level.tscn"
 
 [node name="LevelButton2" parent="MarginContainer/VBoxContainer" instance=ExtResource("1_ovqqh")]
 layout_mode = 2
-level_path = "res://nodes/scenes/test_level.tscn"
+text = "Tutorial"
+level_path = "res://nodes/levels/tutorial.tscn"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
