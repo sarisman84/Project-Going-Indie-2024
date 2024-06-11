@@ -8,8 +8,9 @@ func enter(_msg := {}) -> void:
 	player.currentJumpCount = player.jumpCount
 	player.animation_player.play("run")
 
-func exit() -> void:
+func exit() -> bool:
 	move_sfx.stop()
+	return true
 
 func update(delta : float ) -> void:
 	move_sfx.adv_play()

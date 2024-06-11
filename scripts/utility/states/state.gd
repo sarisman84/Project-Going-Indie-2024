@@ -28,5 +28,5 @@ func enter(_msg:={}) -> void:
 
 # Virtual function. Called by the state machine before changing the active state. Use this function
 # to clean up the state.
-func exit() -> void:
-	pass
+func exit() -> bool:
+	return true

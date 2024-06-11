@@ -56,7 +56,7 @@ func _process(_delta):
 		
 
 func track_target(_delta : float ) -> void:
-	var offset = ExtendedUtilities.get_closest_offset(target.global_position, trackPath)
+	var offset = Path3DUtilities.get_closest_offset(target.global_position, trackPath)
 	DebugDraw2D.set_text("offset ", offset,0, Color.YELLOW)
 	DebugDraw2D.set_text("target global pos ", target.global_position,0, Color.YELLOW)
 	var pos = (trackPath.basis.get_rotation_quaternion() * trackPath.curve.sample_baked(offset, true)) + trackPath.global_position

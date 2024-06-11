@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://uofgpycygd4w"]
+[gd_scene load_steps=29 format=3 uid="uid://uofgpycygd4w"]
 
 [ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="1_3ukm0"]
 [ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="2_1tknf"]
@@ -43,12 +43,18 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_g2m66"]
+size = Vector3(4.83301, 3.15338, 49.2713)
+
 [sub_resource type="Curve3D" id="Curve3D_ejc8b"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.574888, -0.559923, 13.3962, -1.37766, -0.0785546, 1.27245, 0, 0, 0, 0.555966, -0.717272, -1.76501, -5.38765, -3.10126, 3.32678, 5.38765, 3.10126, -3.32678, 15.2274, 1.91451, -11.5149),
 "tilts": PackedFloat32Array(0, 0.135, -0.135)
 }
 point_count = 3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83bon"]
+size = Vector3(2.18628, 4.34546, 20.3244)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4yoq"]
 
@@ -243,12 +249,21 @@ curve = SubResource("Curve3D_o80ws")
 [node name="rail2" parent="affectors/rails" instance=ExtResource("3_ittsu")]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 8.96469, 30.5403, -153.684)
 curve = SubResource("Curve3D_idj1k")
-hitboxAABB = AABB(-13.585, 0, -25.235, 50, 15, 50)
+
+[node name="hitbox_collider" parent="affectors/rails/rail2/hitbox" index="0"]
+transform = Transform3D(0.888249, 0, 0.459363, 0, 1, 0, -0.459363, 0, 0.888249, -15.4451, -0.308502, -30.8902)
+shape = SubResource("BoxShape3D_g2m66")
 
 [node name="rail" parent="affectors/rails" instance=ExtResource("3_ittsu")]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 3.74624, 5.8393, -60.645)
 curve = SubResource("Curve3D_ejc8b")
-hitboxAABB = AABB(4.72, 0, 2.18, 23.69, 5, 28.335)
+
+[node name="hitbox_collider" parent="affectors/rails/rail/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0488281, -0.768188, 5.64394)
+
+[node name="hitbox_collider2" type="CollisionShape3D" parent="affectors/rails/rail/hitbox" index="1"]
+transform = Transform3D(0.580717, 0, -0.814105, 0, 1, 0, 0.814105, 0, 0.580717, 7.82379, 0.136353, -6.65067)
+shape = SubResource("BoxShape3D_83bon")
 
 [node name="hazards" type="Node" parent="affectors"]
 
@@ -458,3 +473,5 @@ bus = &"Music"
 
 [editable path="player_controller"]
 [editable path="player_controller/model_anchor/skater_mc"]
+[editable path="affectors/rails/rail2"]
+[editable path="affectors/rails/rail"]

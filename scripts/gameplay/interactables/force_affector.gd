@@ -14,6 +14,8 @@ func _ready():
 
 # Assumes that the incoming body is the Player
 func _on_body_entered(body):
+	if not body is PlayerController:
+		return
 	var p = body as PlayerController
 	prep_player(p)
 	push_player(p)
@@ -32,4 +34,6 @@ func push_player(player : PlayerController):
 	player.state_machine.transition_to("moved_by_external_force", {external_velocity = basis.z * forceAmount, snapPos = global_position + basis.z.normalized(), canSnap = snapToMiddle, duration = durationInSeconds})
 
 func _on_body_exited(body):
+	if not body is PlayerController:
+		return
 	reset_player(body as PlayerController)

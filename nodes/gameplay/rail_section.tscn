@@ -1,14 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bn30aiuttyy0d"]
+[gd_scene load_steps=3 format=3 uid="uid://bn30aiuttyy0d"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/rail_section.gd" id="1_7qqmb"]
-[ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/rail_section_debug.gd" id="2_add08"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_36t3v"]
+size = Vector3(3.2749, 2.53638, 15.7854)
 
 [node name="rail" type="Path3D"]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
 script = ExtResource("1_7qqmb")
-hitboxAABB = AABB(0, 0, 0, 1, 1, 1)
 
 [node name="model" type="CSGPolygon3D" parent="."]
 polygon = PackedVector2Array(-0.05, -1, -0.05, 0, 0.05, 0, 0.05, -1)
@@ -29,5 +28,5 @@ collision_mask = 2
 [node name="hitbox_collider" type="CollisionShape3D" parent="hitbox"]
 shape = SubResource("BoxShape3D_36t3v")
 
-[node name="debug" type="Node" parent="."]
-script = ExtResource("2_add08")
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]

@@ -64,5 +64,6 @@ func move_player(delta : float) -> void:
 	# Apply calculations
 	player.move_and_slide()
 
-func exit() -> void:
+func exit() -> bool:
 	move_sfx.stop()
+	return true

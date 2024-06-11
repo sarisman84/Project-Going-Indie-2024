@@ -10,7 +10,7 @@ var jumpFlag : bool
 @onready var defaultControls : bool = true
 @onready var homing_attack_ref : HomingAttack = $homing_attack
 @onready var camera = $camera_anchor
-@onready var state_machine := $state_machine
+@onready var state_machine : StateMachine = $state_machine
 @onready var collider = $collider
 @onready var magnet = $magnet
 @onready var animation_player = $model_anchor/skater_mc/AnimationPlayer
