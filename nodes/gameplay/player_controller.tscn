@@ -75,7 +75,6 @@ camera_smoothing = 5.0
 [node name="camera" type="Camera3D" parent="camera_anchor/arm"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27164.9, 0)
 environment = ExtResource("3_r5ncu")
-current = true
 
 [node name="homing_attack" type="Node3D" parent="."]
 script = ExtResource("4_6iksq")
@@ -236,7 +235,6 @@ max_polyphony = 10
 bus = &"SFX"
 
 [node name="AudioListener3D" type="AudioListener3D" parent="."]
-current = true
 
 [connection signal="body_entered" from="magnet" to="." method="_magnet_on_body_entered"]
 [connection signal="body_exited" from="magnet" to="." method="_magnet_on_body_exited"]

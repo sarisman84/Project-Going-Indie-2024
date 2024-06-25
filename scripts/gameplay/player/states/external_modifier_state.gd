@@ -31,5 +31,5 @@ func update(delta: float) -> void:
 	if curDelay <= 0:
 		state_machine.transition_to("airborne")
 
-func exit() -> void:
-	pass
+func exit() -> bool:
+	return true

@@ -13,7 +13,7 @@ func enter(_msg:={}) -> void:
 		initMaxAngle = player.floor_max_angle
 		player.floor_max_angle = deg_to_rad(360)
 		
-		var offset = ExtendedUtilities.get_closest_offset(player.global_position, currentRoad)
+		var offset = Path3DUtilities.get_closest_offset(player.global_position, currentRoad)
 		var pos = (currentRoad.basis.get_rotation_quaternion() * currentRoad.curve.sample_baked(offset, true)) + currentRoad.position
 		
 		playerPositionOffset = player.position - pos
@@ -24,25 +24,25 @@ func enter(_msg:={}) -> void:
 func snap_to_road(currentRoad : Path3D) -> void:
 	var curve = currentRoad.curve
 	# Figure out the closest position of the curve
-	var offset = ExtendedUtilities.get_closest_offset(player.global_position, currentRoad)
+	var offset = Path3DUtilities.get_closest_offset(player.global_position, currentRoad)
 	var position = (currentRoad.basis * curve.sample_baked(offset, true)) + currentRoad.position
 	player.position = position
 	
 	
 
-func exit() -> void:
+func exit() -> bool:
 	currentRoad = null
 	player.up_direction = Vector3.UP
 	player.floor_max_angle = initMaxAngle
 	move_sfx.stop()
-	pass
+	return true
 	
 func update(_delta : float) -> void:
 	if currentRoad == null:
 		return
 	var curve = currentRoad.curve
 	
-	var targetIndx = ExtendedUtilities.get_next_closest_point_index(player.global_position, currentRoad)
+	var targetIndx = Path3DUtilities.get_next_closest_point_index(player.global_position, currentRoad)
 	var targetPos = (currentRoad.basis.get_rotation_quaternion() * curve.get_point_position(targetIndx)) + currentRoad.global_position
 	DebugDraw3D.draw_sphere(targetPos, 0.15, Color.RED)
 	move_sfx.adv_play()
@@ -54,10 +54,10 @@ func physics_update(_delta: float) -> void:
 	
 	var curve = currentRoad.curve
 	
-	var offset = ExtendedUtilities.get_closest_offset(player.global_position, currentRoad)
-	var nextOffset = ExtendedUtilities.get_closest_offset(player.global_position + player.model.basis.z, currentRoad)
+	var offset = Path3DUtilities.get_closest_offset(player.global_position, currentRoad)
+	var nextOffset = Path3DUtilities.get_closest_offset(player.global_position + player.model.basis.z, currentRoad)
 	
-	var pos = (currentRoad.basis.get_rotation_quaternion() * curve.sample_baked(offset, true)) + currentRoad.global_position
+	# var pos = (currentRoad.basis.get_rotation_quaternion() * curve.sample_baked(offset, true)) + currentRoad.global_position
 	var nextPos = (currentRoad.basis.get_rotation_quaternion() * curve.sample_baked(nextOffset, true)) + currentRoad.global_position
 	
 	var normal = currentRoad.basis.get_rotation_quaternion() *  curve.sample_baked_up_vector(offset, true)

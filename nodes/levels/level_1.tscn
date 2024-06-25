@@ -1,0 +1,266 @@
+[gd_scene load_steps=11 format=3 uid="uid://8tblsutic4jv"]
+
+[ext_resource type="PackedScene" uid="uid://bn30aiuttyy0d" path="res://nodes/gameplay/rail_section.tscn" id="1_58rj3"]
+[ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="1_aut45"]
+[ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="2_xmktp"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/camera_modifier.gd" id="3_lhxkl"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/utility/align_node.gd" id="4_0rjq5"]
+[ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="4_qwqpg"]
+[ext_resource type="Material" uid="uid://do0c4gpoknvbh" path="res://graphics/materials/world_grid_1m1_orange.tres" id="5_ogves"]
+
+[sub_resource type="Curve3D" id="Curve3D_roflb"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.23228, 4.29153e-05, 2.27904, -9.35488, -11.6517, -9.35487, 9.35488, 11.6517, 9.35487, 19.22, 10.9465, 19.2822),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lo884"]
+size = Vector3(15.3516, 14.2502, 136.887)
+
+[sub_resource type="BoxMesh" id="BoxMesh_unfhu"]
+
+[node name="level 1" type="Node"]
+
+[node name="affectors" type="Node" parent="."]
+
+[node name="rails" type="Node" parent="affectors"]
+
+[node name="rail" parent="affectors/rails" instance=ExtResource("1_58rj3")]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 21.4823, -16.3221, 163.657)
+curve = SubResource("Curve3D_roflb")
+
+[node name="camera" type="Node" parent="affectors"]
+
+[node name="start_camera_mod" type="Area3D" parent="affectors/camera" node_paths=PackedStringArray("childNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9457, 0)
+collision_mask = 2
+script = ExtResource("3_lhxkl")
+childNode = NodePath("AlignNode3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="affectors/camera/start_camera_mod"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 59.2072)
+shape = SubResource("BoxShape3D_lo884")
+
+[node name="AlignNode3D" type="Node3D" parent="affectors/camera/start_camera_mod"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2.68757, -5.08833)
+script = ExtResource("4_0rjq5")
+
+[node name="camera_mod2" type="Area3D" parent="affectors/camera" node_paths=PackedStringArray("childNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 137.832, -10.1182, 284.081)
+collision_mask = 2
+script = ExtResource("3_lhxkl")
+childNode = NodePath("AlignNode3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="affectors/camera/camera_mod2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 59.2072)
+shape = SubResource("BoxShape3D_lo884")
+
+[node name="AlignNode3D" type="Node3D" parent="affectors/camera/camera_mod2"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2.68757, -5.08833)
+script = ExtResource("4_0rjq5")
+
+[node name="camera_mod" type="Area3D" parent="affectors/camera" node_paths=PackedStringArray("childNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.80325, -11.4743, 145.351)
+collision_mask = 2
+script = ExtResource("3_lhxkl")
+childNode = NodePath("AlignNode3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="affectors/camera/camera_mod"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 43.4224, 0, 45.4062)
+shape = SubResource("BoxShape3D_lo884")
+
+[node name="AlignNode3D" type="Node3D" parent="affectors/camera/camera_mod"]
+transform = Transform3D(-0.707106, 0, -0.707106, 0, 1, 0, 0.707106, 0, -0.707106, -2.88015, 2.68757, -3.88434)
+script = ExtResource("4_0rjq5")
+
+[node name="bounce pads" type="Node" parent="affectors"]
+
+[node name="force_affector" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 4.59982, 59.5437)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="force_affector3" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(0.707107, -0.183013, 0.683013, 0, 0.965926, 0.258819, -0.707107, -0.183013, 0.683013, 50.8064, 5.27951, 193.551)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector3"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="force_affector4" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(0.842752, -0.487372, -0.228553, 0.25, 0.73038, -0.635645, 0.476727, 0.478553, 0.737372, 139.598, 33.0587, 282.343)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector4"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="force_affector5" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(0.715732, -0.338806, 0.610687, 0.0480374, 0.896252, 0.440935, -0.696721, -0.286256, 0.657752, 94.7578, -17.2884, 454.637)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector5"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="force_affector6" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(-0.395607, -0.745671, 0.536163, -0.0480044, 0.599779, 0.798725, -0.917164, 0.290243, -0.273072, 103.918, -10.6743, 464.504)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector6"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="force_affector7" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(-0.395607, -0.710887, -0.581493, -0.0480044, -0.616275, 0.786067, -0.917165, 0.338888, 0.209677, 109.28, -2.68708, 461.773)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector7"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="force_affector8" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(-0.395607, 0.148145, -0.906393, -0.0480044, -0.988891, -0.140676, -0.917165, -0.0121416, 0.398324, 101.139, 8.31785, 464.708)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector8"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="force_affector9" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(-0.395607, 0.859032, -0.3249, -0.0480044, -0.372616, -0.926743, -0.917165, -0.351029, 0.188647, 89.3558, 6.48906, 469.887)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector9"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="force_affector2" parent="affectors/bounce pads" instance=ExtResource("4_qwqpg")]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, -9.25658, 67.5437)
+forceAmount = 60.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="model" type="MeshInstance3D" parent="affectors/bounce pads/force_affector2"]
+material_override = ExtResource("5_ogves")
+mesh = SubResource("BoxMesh_unfhu")
+
+[node name="layout" type="Node" parent="."]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="layout"]
+material_override = ExtResource("1_aut45")
+use_collision = true
+
+[node name="floor" type="CSGCombiner3D" parent="layout/CSGCombiner3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="layout/CSGCombiner3D/floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.157837, 0, 20.1046)
+size = Vector3(12.0811, 1, 65.3645)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="layout/CSGCombiner3D/floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.157837, -11.8071, 48.7393)
+size = Vector3(12.0811, 22.2793, 7.91922)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="layout/CSGCombiner3D/floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.157837, -20.5037, 98.3415)
+size = Vector3(12.0811, 4.88623, 92.0708)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="layout/CSGCombiner3D/floor"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 68.4113, -20.5037, 209.906)
+size = Vector3(12.0811, 4.88623, 198.492)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="layout/CSGCombiner3D/floor"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 137.17, -20.5037, 383.345)
+size = Vector3(12.0811, 4.88623, 214.956)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="layout/CSGCombiner3D/floor"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 106.774, -20.5037, 542.94)
+size = Vector3(72.0488, 4.88623, 129.562)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="layout/CSGCombiner3D/floor"]
+transform = Transform3D(0.717932, 0, -0.696113, 0, 1, 0, 0.696113, 0, 0.717932, 146.397, -20.5037, 452.632)
+size = Vector3(72.0488, 4.88623, 144.638)
+
+[node name="wall" type="CSGCombiner3D" parent="layout/CSGCombiner3D"]
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 8.62717, 6.08471, 65.0496)
+size = Vector3(5.51294, 85.2541, 153.883)
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0.375036, 6.08471, -13.6534)
+size = Vector3(22.0172, 85.2541, 7.24813)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, -8.04146, 6.08471, 72.1951)
+size = Vector3(5.51294, 85.2541, 168.174)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 57.2204, 6.08471, 211.673)
+size = Vector3(5.51294, 85.2541, 201.7)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 78.8799, 6.08471, 200.984)
+size = Vector3(17.407, 85.2541, 193.311)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, 1, 150.012, 6.08471, 447.527)
+size = Vector3(17.407, 85.2541, 355.588)
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, 1, 122.112, 6.08471, 347.946)
+size = Vector3(18.1688, 85.2541, 135.859)
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, 1, 62.9022, 6.08471, 538.79)
+size = Vector3(18.1688, 85.2541, 142.069)
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 91.7121, 6.08471, 443.771)
+size = Vector3(18.1688, 85.2541, 95.1623)
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, 1, 122.629, 6.08471, 502.318)
+size = Vector3(37.6916, 85.2541, 56.0341)
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 103.854, -12.1556, 474.292)
+size = Vector3(13.5408, 27.4871, 56.0341)
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="layout/CSGCombiner3D/wall"]
+transform = Transform3D(4.56956e-08, 0, 1, 0, 1, 0, -1, 0, 4.56956e-08, 83.523, -18.169, 701.653)
+size = Vector3(188.896, 36.7467, 150.431)
+
+[node name="player_controller" parent="." instance=ExtResource("2_xmktp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.101546, 1.44873, -1.08324)
+
+[editable path="affectors/bounce pads/force_affector"]
+[editable path="affectors/bounce pads/force_affector3"]
+[editable path="affectors/bounce pads/force_affector4"]
+[editable path="affectors/bounce pads/force_affector5"]
+[editable path="affectors/bounce pads/force_affector6"]
+[editable path="affectors/bounce pads/force_affector7"]
+[editable path="affectors/bounce pads/force_affector8"]
+[editable path="affectors/bounce pads/force_affector9"]
+[editable path="affectors/bounce pads/force_affector2"]

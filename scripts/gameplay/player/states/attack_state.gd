@@ -38,6 +38,6 @@ func physics_update(_delta: float) -> void:
 	player.velocity = dir * speed
 	player.move_and_slide()
 	
-func exit() -> void:
-	pass
+func exit() -> bool:
+	return true
 

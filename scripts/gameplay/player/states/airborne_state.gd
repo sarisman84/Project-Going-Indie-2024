@@ -18,8 +18,9 @@ func enter(msg: = {}) -> void:
 	isStomping = false
 	wind_sfx.play()
 
-func exit() -> void:
+func exit() -> bool:
 	wind_sfx.stop()
+	return true
 
 func update(delta : float) -> void:
 	countdown -= delta

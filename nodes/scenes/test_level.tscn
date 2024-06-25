@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=29 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://b7jthsh36ssaw" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
@@ -35,6 +35,9 @@ _data = {
 }
 point_count = 4
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_eptp7"]
+size = Vector3(5.65103, 2.53638, 7.44906)
+
 [sub_resource type="Curve3D" id="Curve3D_bvghl"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, -1.53057, -0.427818, -1.42992, -0.677328, -0.444506, -0.758417, 0.677328, 0.444506, 0.758417, -1.45466, -0.449743, 3.0913, -2.08299, -0.730588, 0.811706, 2.08299, 0.730588, -0.811706, 3.18705, -0.444878, 3.05566, 0, 0, 0, 0, 0, 0, 3.07809, -0.447587, -3.76182),
@@ -42,12 +45,28 @@ _data = {
 }
 point_count = 4
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_llc6j"]
+size = Vector3(6.58624, 2.69586, 8.56279)
+
 [sub_resource type="Curve3D" id="Curve3D_cj3sk"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.72845, -0.623806, -1.62453, 1.90581, -0.0385251, 0.0166559, -1.90581, 0.0385251, -0.0166559, -3.16284, -0.430769, -1.49476, -3.66048, 0.0351038, 0.313532, 3.66048, -0.0351038, -0.313532, -2.85104, 3.72721, -3.60511, 1.51745, 0.109295, 0.0521932, -1.51745, -0.109295, -0.0521932, -1.87137, -0.424332, -5.07136, 0, 0, 0, 0, 0, 0, -7.82103, -0.595058, -5.11212),
 "tilts": PackedFloat32Array(0, 0, 1.1, 1.6, 1.6)
 }
 point_count = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8mq3"]
+size = Vector3(9.56158, 6.62579, 6.29424)
+
+[sub_resource type="Curve3D" id="Curve3D_ru088"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 7.57497, 2.18153e-05, -3.31268, 1.70354, -0.0589654, 1.04904e-05, -1.70354, 0.0589654, -1.04904e-05, -0.203411, 2.18153e-05, -3.31268, -1.45022, 0, 0, 1.45022, 0, 0, -0.222016, 5.08482, -3.31267, 0, 0, 0, 0, 0, 0, 7.5956, 5.08482, -3.31267),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o7iuo"]
+size = Vector3(10.0875, 8.03009, 2.99902)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2lb5t"]
 size = Vector3(25.009, 28.0249, 22.2008)
@@ -109,8 +128,6 @@ hitboxAABB = AABB(21.91, 0, -29.83, 83.81, 50, 87.895)
 
 [node name="bounce_pad" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, -0.614692, 32.9422)
-collision_layer = 7
-collision_mask = 7
 forceAmount = 30.0
 canBeAttacked = true
 snapToMiddle = true
@@ -119,7 +136,6 @@ snapToMiddle = true
 
 [node name="boost_pad" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0674, -0.992207, 32.9991)
-collision_layer = 7
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad"]
@@ -128,7 +144,6 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_pad4" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.6156, -0.948879, -7.95889)
-collision_layer = 7
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad4"]
@@ -137,7 +152,6 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_pad5" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.158, -0.886486, 21.3927)
-collision_layer = 7
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad5"]
@@ -146,7 +160,6 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_pad2" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7634, -0.992207, 32.9991)
-collision_layer = 7
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad2"]
@@ -155,7 +168,6 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_pad3" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7916, -0.992206, -8.99173)
-collision_layer = 7
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad3"]
@@ -166,8 +178,6 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_ring" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, 4.70403, 32.9422)
-collision_layer = 7
-collision_mask = 7
 forceAmount = 30.0
 snapToMiddle = true
 
@@ -175,8 +185,6 @@ snapToMiddle = true
 
 [node name="boost_ring2" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, 4.70403, 38.1454)
-collision_layer = 7
-collision_mask = 7
 forceAmount = 30.0
 snapToMiddle = true
 
@@ -184,8 +192,6 @@ snapToMiddle = true
 
 [node name="boost_ring3" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.41735, 4.70403, 41.8592)
-collision_layer = 7
-collision_mask = 7
 forceAmount = 30.0
 snapToMiddle = true
 
@@ -242,21 +248,34 @@ mesh = SubResource("BoxMesh_qlevy")
 [node name="rail" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.06285, 0, 0)
 curve = SubResource("Curve3D_wkkha")
-hitboxAABB = AABB(0.88, 0, -0.56, 5.475, 2, 7.91)
+
+[node name="hitbox_collider" parent="external_affectors/rails/rail/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.866196, 0, -0.384356)
+shape = SubResource("BoxShape3D_eptp7")
 
 [node name="rail2" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.64059, 0, 0)
 curve = SubResource("Curve3D_bvghl")
-hitboxAABB = AABB(1.02, 0.445, 0, 7.72, 2.825, 8.245)
+
+[node name="hitbox_collider" parent="external_affectors/rails/rail2/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.44699, -0.0797424, -0.000544548)
+shape = SubResource("BoxShape3D_llc6j")
 
 [node name="rail3" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -4.40631, 0, -8.86003)
 curve = SubResource("Curve3D_cj3sk")
-hitboxAABB = AABB(-3.255, 0, -3.195, 11.99, 9.835, 5.4)
+
+[node name="hitbox_collider" parent="external_affectors/rails/rail3/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96768, 1.99863, -3.8937)
+shape = SubResource("BoxShape3D_u8mq3")
 
 [node name="rail4" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 5.12271, 0.402444, -8.9626)
-hitboxAABB = AABB(0, 2.385, 0, 10.155, 7.66, 2.525)
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 5.12271, -0.243917, -8.9626)
+curve = SubResource("Curve3D_ru088")
+
+[node name="hitbox_collider" parent="external_affectors/rails/rail4/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.76336, 2.5004, -3.25956)
+shape = SubResource("BoxShape3D_o7iuo")
 
 [node name="camera affectors" type="Node" parent="external_affectors"]
 
@@ -306,7 +325,7 @@ script = ExtResource("7_7v0nc")
 [node name="camera_modifier3" type="Area3D" parent="external_affectors/camera affectors" node_paths=PackedStringArray("childNode")]
 collision_mask = 2
 script = ExtResource("6_ktxpf")
-trackMode = 1
+trackMode = 2
 childNode = NodePath("mod")
 
 [node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier3"]
@@ -360,3 +379,8 @@ transform = Transform3D(18.3961, 0, -21.2993, 0, 28.1438, 0, 21.2993, 0, 18.3961
 shape = SubResource("BoxShape3D_0efcr")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="geometry/block3"]
+
+[editable path="external_affectors/rails/rail"]
+[editable path="external_affectors/rails/rail2"]
+[editable path="external_affectors/rails/rail3"]
+[editable path="external_affectors/rails/rail4"]
