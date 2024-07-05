@@ -10,14 +10,14 @@ func enter(_msg:= {}) -> void:
 	pass
 
 func update(_delta: float) -> void:
-	# If you have platforms that break when standing on them, you need that check for 
+	# If you have platforms that break when standing on them, you need that check for
 	# the character to fall.
 	if not player.is_on_floor():
 		state_machine.transition_to("airborne")
 		return
-	
+
 	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0 and player.canJump:
-		# As we'll only have one air state for both jump and fall, we use the `msg` dictionary 
+		# As we'll only have one air state for both jump and fall, we use the `msg` dictionary
 		# to tell the next state that we want to jump.
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif directionalInput.length() > 0:

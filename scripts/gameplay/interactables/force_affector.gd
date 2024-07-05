@@ -20,7 +20,7 @@ func _on_body_entered(body):
 	prep_player(p)
 	push_player(p)
 	affector_sfx.play()
-	
+
 
 func prep_player(player : PlayerController):
 	var ha = player.homing_attack_ref as HomingAttack

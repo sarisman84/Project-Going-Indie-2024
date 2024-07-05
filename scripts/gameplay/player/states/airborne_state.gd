@@ -24,9 +24,9 @@ func exit() -> bool:
 
 func update(delta : float) -> void:
 	countdown -= delta
-	
-	
-		
+
+
+
 func physics_update(delta: float) -> void:
 	# Apply gravity
 	player.velocity += player.calculate_dynamic_gravity(delta)
@@ -45,16 +45,16 @@ func physics_update(delta: float) -> void:
 				player.canAirBoost = false
 			elif Input.is_action_just_pressed("jump") and player.currentJumpCount > 0:
 				state_machine.transition_to("airborne", {do_jump = true})
-		
+
 		if Input.is_action_just_pressed("slide"):
 			isStomping = true
 			player.velocity = Vector3.ZERO
-	
-	if !isStomping:	
+
+	if !isStomping:
 		# Calculate Movement
 		PlayerController.calculate_movement(player, player.movementSpeed, player.airDelta.y, player.airDelta.x, delta)
 	else:
 		player.velocity -= Vector3.UP * player.stompSpeed * delta
-	
+
 	# Apply calculations
 	player.move_and_slide()

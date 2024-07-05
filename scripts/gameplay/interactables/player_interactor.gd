@@ -20,7 +20,7 @@ func _physics_process(_delta):
 			unfocus(cached_closest)
 		if new_closest:
 			focus(new_closest)
-			
+
 			cached_closest = new_closest
 
 func _input(event: InputEvent):

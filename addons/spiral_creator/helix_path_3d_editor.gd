@@ -10,7 +10,7 @@ func _parse_category(object, category):
 	b.text = "Generate Helix"
 	add_custom_control(b)
 	var hp = object as HelixPath3D
-	
+
 	b.connect("pressed", hp.generate_helix) #.connect(hp.generate_helix())
 
 func _parse_property(object, type, name, hint_type, hint_string, usage_flags, wide):

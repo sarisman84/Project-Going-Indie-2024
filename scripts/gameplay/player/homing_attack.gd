@@ -34,29 +34,29 @@ func detect_homing_targets():
 	indicator.visible = false
 	if player_state_machine != null and player_state_machine.state is AttackingState:
 		return
-	
+
 	var copy = detection_area.get_overlapping_bodies() as Array[Node3D]
 	copy.append_array(detection_area.get_overlapping_areas() as Array[Node3D])
 	for i in range(0, copy.size()):
-		
+
 		var entry = copy[i] as Node3D
-		
+
 		var dir = (entry.global_position - global_position).normalized()
 		var forwardDir  = -camera_anchor.basis.z.normalized()
-		
+
 		var dot = dir.dot(forwardDir)
-		
+
 		DebugDraw3D.draw_arrow_ray(global_position, dir,1.0, Color.BLUE,0.15)
 		DebugDraw3D.draw_arrow_ray(global_position,forwardDir,1.0, Color.CYAN,0.15)
-		
+
 		if dot < detectionAngle:
 			continue
-		
+
 		# DebugDraw3D.draw_sphere(entry.global_position, 1.15, Color.YELLOW)
 
 		var space_state = get_world_3d().direct_space_state
 		var query = PhysicsRayQueryParameters3D.create(global_position, global_position + dir * 1000)
-		
+
 		if entry is ForceAffector:
 			var fa = entry as ForceAffector
 			query.collide_with_areas = fa.canBeAttacked
@@ -66,26 +66,26 @@ func detect_homing_targets():
 		if result.is_empty():
 			continue
 		var col = result["collider"] as Node3D
-		
+
 		if col == null or col != entry:
 			continue
-		
+
 		var cam3D = get_viewport().get_camera_3d()
 		indicator.global_position = cam3D.unproject_position(entry.global_position) - indicator.size / 2.0
-		indicator.visible = true	
+		indicator.visible = true
 		if not Input.is_action_just_pressed("attack") or player.is_on_floor():
 			return
-			
-		currentHomingTarget = col	
+
+		currentHomingTarget = col
 		# DebugDraw3D.draw_sphere(col.global_position, 1.0, Color.RED, 2.0)
 		player.state_machine.transition_to("attacking", {
-			_target = col, 
-			_bounceHeight = bounceHeight, 
-			_speed = speed, 
+			_target = col,
+			_bounceHeight = bounceHeight,
+			_speed = speed,
 			_bounceOverrideState = bounceOverrideState
 			})
 		player_state_machine = player.state_machine
 
 func _physics_process(_delta):
 	detect_homing_targets()
-	
+

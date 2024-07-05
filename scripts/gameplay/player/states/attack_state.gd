@@ -14,19 +14,19 @@ func enter(msg := {}) -> void:
 	player.animation_player.play("fly")
 	player.rotate_model_towards_adv((currentHomingTarget.global_position - player.global_position).normalized(), player.up_direction)
 	pass
-	
+
 func physics_update(_delta: float) -> void:
 	if bounceOverrideState:
 		player.state_machine.transition_to("airborne")
 		return
-	
+
 	if currentHomingTarget == null:
 		player.state_machine.transition_to("airborne")
 		return
-	
+
 	var dir = (currentHomingTarget.global_position - player.global_position).normalized()
 	var dist = (currentHomingTarget.global_position - player.global_position).length()
-	
+
 	if dist <= 0.5:
 		player.state_machine.transition_to("airborne")
 		player.rotate_model_towards_adv(Vector3.UP, player.up_direction)
@@ -34,10 +34,10 @@ func physics_update(_delta: float) -> void:
 		player.move_and_slide()
 		currentHomingTarget = null
 		return
-		
+
 	player.velocity = dir * speed
 	player.move_and_slide()
-	
+
 func exit() -> bool:
 	return true
 

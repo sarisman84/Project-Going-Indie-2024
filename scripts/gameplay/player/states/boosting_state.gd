@@ -31,28 +31,28 @@ func physics_update(delta : float) -> void:
 			state_machine.transition_to("idle")
 		else:
 			state_machine.transition_to("moving")
-		return 
+		return
 	if not player.is_on_floor():
 		state_machine.transition_to("airborne")
 		return
-	
+
 	var can_step = (left_step or right_step) and countdown <= 0
-	
+
 	if can_step:
 		var direction : float
 		if left_step:
 			direction = 1.0
 		else:
 			direction = -1.0
-		
+
 		var globalRight = player.model.transform.basis.x
 		var stepDir = globalRight.normalized() * direction * player.sideStepDistance
 		player.global_position += stepDir
 		countdown = player.sideStepCooldown
-		 
-	
+
+
 	move_player(delta)
-	
+
 	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0:
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif is_equal_approx(player.velocity.length(), 0):

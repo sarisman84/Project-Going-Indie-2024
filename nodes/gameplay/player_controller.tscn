@@ -1,7 +1,7 @@
-[gd_scene load_steps=33 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=37 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
-[ext_resource type="Script" path="res://scripts/gameplay/player/camera_controller.gd" id="2_hw33h"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/camera/camera_controller.gd" id="2_hw33h"]
 [ext_resource type="Environment" uid="uid://o2vcq2mgwaoy" path="res://settings/default_pp_we.tres" id="3_r5ncu"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/homing_attack.gd" id="4_6iksq"]
 [ext_resource type="Shader" path="res://graphics/shaders/hud/homing_indicator.gdshader" id="5_uhm43"]
@@ -28,6 +28,10 @@
 [ext_resource type="AudioStream" uid="uid://7bwgf7g4b7yi" path="res://audio/sfx/player/moving/Rolling steps 6.wav" id="21_vqp1t"]
 [ext_resource type="AudioStream" uid="uid://bsuobaq7yobru" path="res://audio/sfx/player/moving/Rolling steps 7.wav" id="22_6ao5c"]
 [ext_resource type="AudioStream" uid="uid://8dh7moh61sm2" path="res://audio/sfx/player/moving/Rolling steps 8.wav" id="23_qppke"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/camera/states/camera_control_state.gd" id="29_syhrt"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/camera/states/camera_follow_state.gd" id="30_xhdw5"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/camera/states/camera_look_at_state.gd" id="31_gk5e1"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/camera/states/camera_track_state.gd" id="32_ryyj7"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ax2wc"]
 radius = 0.55
@@ -67,10 +71,26 @@ model = NodePath("model_anchor")
 shape = SubResource("SphereShape3D_ax2wc")
 
 [node name="camera_anchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.507813, 0)
 script = ExtResource("2_hw33h")
-camera_smoothing = 5.0
+
+[node name="state_machine_camera" type="Node" parent="camera_anchor"]
+script = ExtResource("6_fb0co")
+
+[node name="camera_manual" type="Node" parent="camera_anchor/state_machine_camera"]
+script = ExtResource("29_syhrt")
+
+[node name="camera_follow" type="Node" parent="camera_anchor/state_machine_camera"]
+script = ExtResource("30_xhdw5")
+
+[node name="camera_look" type="Node" parent="camera_anchor/state_machine_camera"]
+script = ExtResource("31_gk5e1")
+
+[node name="camera_track" type="Node" parent="camera_anchor/state_machine_camera"]
+script = ExtResource("32_ryyj7")
 
 [node name="arm" type="SpringArm3D" parent="camera_anchor"]
+spring_length = 5.0
 
 [node name="camera" type="Camera3D" parent="camera_anchor/arm"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27164.9, 0)

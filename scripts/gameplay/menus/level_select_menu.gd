@@ -18,7 +18,7 @@ func pause_menu():
 		get_tree().paused = true
 		self.show()
 		$MarginContainer/VBoxContainer/BackButton.grab_focus()
-	
+
 	paused = !paused
 
 func _input(event: InputEvent):

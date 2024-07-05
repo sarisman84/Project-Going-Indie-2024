@@ -19,7 +19,7 @@ func get_closest_interactable() -> Interactable:
 	var distance: float
 	var closest_distance: float = INF
 	var closest: Interactable = null
-	
+
 	for interactable in list:
 		distance = interactable.global_position.distance_to(global_position)
 
@@ -27,5 +27,5 @@ func get_closest_interactable() -> Interactable:
 		if distance < closest_distance:
 			closest = interactable as Interactable
 			closest_distance = distance
-	
+
 	return closest

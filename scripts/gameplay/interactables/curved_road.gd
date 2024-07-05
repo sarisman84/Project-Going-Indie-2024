@@ -15,7 +15,7 @@ func _ready():
 	var box_shape := BoxShape3D.new()
 	box_shape.size = hitboxAABB.size
 	detection_collider.shape = box_shape
-	
+
 	detection_area.connect("body_entered", on_body_entered)
 	detection_area.connect("body_exited", on_body_exited)
 
@@ -27,13 +27,13 @@ func on_body_entered(body) -> void:
 func _physics_process(_delta : float) -> void:
 	if player == null:
 		return
-	
+
 	if is_player_on_road():
 		if not player.state_machine.state is AutoMoveState:
 			player.state_machine.transition_to("auto_move", {curved_road = self})
 	else:
 		try_stop_auto_moving()
-		
+
 func try_stop_auto_moving():
 	if player != null and player.state_machine.state is AutoMoveState:
 		player.state_machine.transition_to("moving")
@@ -53,7 +53,7 @@ func is_player_on_road() -> bool:
 	var result = world_state.intersect_ray(query)
 	if result.is_empty():
 		return false
-		
+
 	var pos = result["position"]
 	var dist = (pos - player.position).length()
 	var dur = 0.0
@@ -61,4 +61,4 @@ func is_player_on_road() -> bool:
 	DebugDraw3D.draw_sphere(player.position, 0.15, Color.AQUAMARINE,dur)
 	DebugDraw3D.draw_lines([pos, player.position],Color.AQUAMARINE,dur)
 	return dist <= 1
-	
+

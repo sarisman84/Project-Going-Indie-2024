@@ -16,7 +16,7 @@ func update(delta : float ) -> void:
 	move_sfx.adv_play()
 	DebugDraw2D.set_text("player velocity: ", player.velocity,0, Color.RED)
 	DebugDraw2D.set_text("player velocity length: ", player.velocity.length(),0, Color.RED)
-	
+
 
 func physics_update(delta: float) -> void:
 	# Notice how we have some code duplication between states. That's inherent to the pattern,
@@ -28,15 +28,15 @@ func physics_update(delta: float) -> void:
 	if not player.is_on_floor():
 		state_machine.transition_to("airborne")
 		return
-		
+
 	move_player(delta)
-	
+
 	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0 and player.canJump:
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif player.velocity.length() <= 1.5 and is_equal_approx(directionalInput.length(), 0):
 		state_machine.transition_to("idle")
-	
-	
+
+
 func move_player(_delta : float) -> void:
 	# Calculate movement
 	PlayerController.calculate_movement(player, player.movementSpeed,player.groundDelta.y, player.groundDelta.x, _delta)

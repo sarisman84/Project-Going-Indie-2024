@@ -43,7 +43,7 @@ func physics_update(_delta: float) -> void:
 	if forward == Vector3.ZERO:
 		state_machine.transition_to("airborne")
 		return
-	
+
 	player.up_direction = up
 	player.velocity = forward * player.get_current_speed()
 	player.rotate_model_towards_adv(forward, up)
@@ -65,7 +65,7 @@ func on_grind_start() -> void:
 
 	DebugDraw3D.draw_arrow_ray(player.position, playerVelDir, 1.0, Color.BLUE, 0.15, false, 10.0)
 	DebugDraw3D.draw_arrow_ray(player.position, dirToEnd, 1.0, Color.RED, 0.15, false, 10.0)
-	
+
 	if playerVelDir.dot(dirToEnd) > 0.0:
 		playerDirection = 0.1
 	else:

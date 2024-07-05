@@ -99,7 +99,7 @@ size = Vector3(1, 5, 30)
 visible = false
 
 [node name="player_controller" parent="." instance=ExtResource("1_xom8x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05669, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.501122, 0)
 velocity = Vector3(0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -322,17 +322,17 @@ shape = SubResource("BoxShape3D_jy0ja")
 transform = Transform3D(0.67416, 0, -0.738584, 0, 1, 0, 0.738584, 0, 0.67416, -5.91633, 3.37792, 6.0433)
 script = ExtResource("7_7v0nc")
 
-[node name="camera_modifier3" type="Area3D" parent="external_affectors/camera affectors" node_paths=PackedStringArray("childNode")]
+[node name="spawn_camera_modifier3" type="Area3D" parent="external_affectors/camera affectors" node_paths=PackedStringArray("childNode")]
 collision_mask = 2
 script = ExtResource("6_ktxpf")
-trackMode = 2
+trackMode = 3
 childNode = NodePath("mod")
 
-[node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier3"]
+[node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/spawn_camera_modifier3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.54633, 5.54633, 1.08146)
 shape = SubResource("BoxShape3D_ghlll")
 
-[node name="mod" type="Node3D" parent="external_affectors/camera affectors/camera_modifier3"]
+[node name="mod" type="Node3D" parent="external_affectors/camera affectors/spawn_camera_modifier3"]
 transform = Transform3D(-0.00392693, 0, -0.999992, 0, 1, 0, 0.999992, 0, -0.00392693, 0, 10.222, 0)
 script = ExtResource("7_7v0nc")
 
@@ -380,6 +380,8 @@ shape = SubResource("BoxShape3D_0efcr")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="geometry/block3"]
 
+[editable path="player_controller"]
+[editable path="player_controller/model_anchor/skater_mc"]
 [editable path="external_affectors/rails/rail"]
 [editable path="external_affectors/rails/rail2"]
 [editable path="external_affectors/rails/rail3"]
