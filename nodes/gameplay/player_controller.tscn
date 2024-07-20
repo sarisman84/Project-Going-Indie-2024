@@ -1,9 +1,8 @@
-[gd_scene load_steps=37 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=38 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/player_controller.gd" id="1_jpyvr"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera/camera_controller.gd" id="2_hw33h"]
 [ext_resource type="Environment" uid="uid://o2vcq2mgwaoy" path="res://settings/default_pp_we.tres" id="3_r5ncu"]
-[ext_resource type="Script" path="res://scripts/gameplay/player/homing_attack.gd" id="4_6iksq"]
 [ext_resource type="Shader" path="res://graphics/shaders/hud/homing_indicator.gdshader" id="5_uhm43"]
 [ext_resource type="Script" path="res://scripts/utility/states/state_machine.gd" id="6_fb0co"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/states/idle_state.gd" id="7_cpnvc"]
@@ -31,7 +30,10 @@
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera/states/camera_control_state.gd" id="29_syhrt"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera/states/camera_follow_state.gd" id="30_xhdw5"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera/states/camera_look_at_state.gd" id="31_gk5e1"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/homing attack/attack_manager.gd" id="32_mdy7j"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera/states/camera_track_state.gd" id="32_ryyj7"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/homing attack/attack_indicator.gd" id="33_b7wgu"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/homing attack/debug_indicator.gd" id="35_gnwjb"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ax2wc"]
 radius = 0.55
@@ -43,9 +45,6 @@ radius = 12.0
 shader = ExtResource("5_uhm43")
 shader_parameter/scale = 0.5
 shader_parameter/color = Color(0, 1, 1, 1)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_a2oux"]
-radius = 1.99137
 
 [node name="player_controller" type="CharacterBody3D" node_paths=PackedStringArray("model")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
@@ -96,40 +95,6 @@ spring_length = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27164.9, 0)
 environment = ExtResource("3_r5ncu")
 
-[node name="homing_attack" type="Node3D" parent="."]
-script = ExtResource("4_6iksq")
-detectionAngle = 0.7
-speed = 50.0
-bounceHeight = 3.0
-
-[node name="detection_area" type="Area3D" parent="homing_attack"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.541748, 0)
-collision_layer = 4
-collision_mask = 4
-
-[node name="shape" type="CollisionShape3D" parent="homing_attack/detection_area"]
-shape = SubResource("SphereShape3D_wxerh")
-
-[node name="indicator" type="CenterContainer" parent="homing_attack"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="sprite" type="ColorRect" parent="homing_attack/indicator"]
-material = SubResource("ShaderMaterial_nsb2v")
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-color = Color(0.843137, 0.870588, 0.858824, 0)
-
 [node name="state_machine" type="Node" parent="."]
 script = ExtResource("6_fb0co")
 initial_state = NodePath("idle")
@@ -160,11 +125,6 @@ script = ExtResource("14_r254s")
 
 [node name="debug_printer" type="Node" parent="."]
 script = ExtResource("14_1e1w2")
-
-[node name="magnet" type="Area3D" parent="."]
-
-[node name="collider" type="CollisionShape3D" parent="magnet"]
-shape = SubResource("SphereShape3D_a2oux")
 
 [node name="model_anchor" type="Node3D" parent="."]
 
@@ -256,7 +216,43 @@ bus = &"SFX"
 
 [node name="AudioListener3D" type="AudioListener3D" parent="."]
 
-[connection signal="body_entered" from="magnet" to="." method="_magnet_on_body_entered"]
-[connection signal="body_exited" from="magnet" to="." method="_magnet_on_body_exited"]
+[node name="attack_manager" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("32_mdy7j")
+speed = 20.0
+
+[node name="shape" type="CollisionShape3D" parent="attack_manager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_wxerh")
+
+[node name="attack_indicator" type="Node" parent="attack_manager"]
+script = ExtResource("33_b7wgu")
+
+[node name="indicator" type="CenterContainer" parent="attack_manager/attack_indicator"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="sprite" type="ColorRect" parent="attack_manager/attack_indicator/indicator"]
+material = SubResource("ShaderMaterial_nsb2v")
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+color = Color(0.843137, 0.870588, 0.858824, 0)
+
+[node name="debug_indicator" type="Node" parent="attack_manager"]
+script = ExtResource("35_gnwjb")
+
+[connection signal="body_entered" from="attack_manager" to="attack_manager" method="_on_body_entered"]
+[connection signal="body_exited" from="attack_manager" to="attack_manager" method="_on_body_exited"]
 
 [editable path="model_anchor/skater_mc"]

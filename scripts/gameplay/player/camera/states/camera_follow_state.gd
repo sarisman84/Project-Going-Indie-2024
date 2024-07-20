@@ -11,8 +11,8 @@ func enter(msg:={}) -> void:
 
 
 func update(_delta: float) -> void:
-	var newPos = lerp(controller.camera_anchor.position, get_target_pos() + offset, _delta * smoothing)
-	move_camera_focus(newPos)
+	# var newPos = lerp(controller.camera_anchor.position, get_target_pos() + offset, _delta * smoothing)
+	move_camera_focus(get_target_pos() + offset)
 
 	var newDir = controller.camera_anchor.basis.z.slerp(target_dir.normalized(), 4.0 * _delta)
 	rotate_camera_towards(newDir)
