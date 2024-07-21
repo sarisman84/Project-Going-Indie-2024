@@ -220,7 +220,9 @@ bus = &"SFX"
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("32_mdy7j")
-speed = 20.0
+detectionAngle = 0.8
+speed = 40.0
+bounceHeight = 2.0
 
 [node name="shape" type="CollisionShape3D" parent="attack_manager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -230,7 +232,6 @@ shape = SubResource("SphereShape3D_wxerh")
 script = ExtResource("33_b7wgu")
 
 [node name="indicator" type="CenterContainer" parent="attack_manager/attack_indicator"]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -242,6 +243,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="sprite" type="ColorRect" parent="attack_manager/attack_indicator/indicator"]
 material = SubResource("ShaderMaterial_nsb2v")
@@ -251,6 +253,7 @@ color = Color(0.843137, 0.870588, 0.858824, 0)
 
 [node name="debug_indicator" type="Node" parent="attack_manager"]
 script = ExtResource("35_gnwjb")
+toggle_debug = true
 
 [connection signal="body_entered" from="attack_manager" to="attack_manager" method="_on_body_entered"]
 [connection signal="body_exited" from="attack_manager" to="attack_manager" method="_on_body_exited"]

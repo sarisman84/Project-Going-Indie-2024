@@ -2,7 +2,7 @@ class_name AttackingState
 extends PlayerState
 
 var bounceOverrideState : bool
-var currentHomingTarget : Node3D
+var currentHomingTarget : AttackableNode
 var bounceHeight : float
 var speed : float
 
@@ -30,9 +30,10 @@ func physics_update(_delta: float) -> void:
 	if dist <= 0.5:
 		player.state_machine.transition_to("airborne")
 		player.rotate_model_towards_adv(Vector3.UP, player.up_direction)
-		player.velocity = Vector3.UP * PlayerController.get_jump_velocity(bounceHeight, player.gravity)
-		player.move_and_slide()
-		currentHomingTarget = null
+		currentHomingTarget.on_homing_attack.emit()
+		#player.velocity = Vector3.UP * PlayerController.get_jump_velocity(bounceHeight, player.gravity)
+		#player.move_and_slide()
+		#currentHomingTarget = null
 		return
 
 	player.velocity = dir * speed

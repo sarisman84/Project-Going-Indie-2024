@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=30 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://b7jthsh36ssaw" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
@@ -25,7 +25,11 @@ _data = {
 }
 point_count = 6
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_bp3nh"]
+size = Vector3(0.25, 0.25, 0.25)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_s1rpc"]
+size = Vector3(0.25, 0.25, 0.25)
 
 [sub_resource type="Curve3D" id="Curve3D_wkkha"]
 _data = {
@@ -127,18 +131,26 @@ hitboxAABB = AABB(21.91, 0, -29.83, 83.81, 50, 87.895)
 
 [node name="bounce_pad" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.702, -0.614692, 32.9422)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 canBeAttacked = true
 snapToMiddle = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/bounce_pad"]
 
-[node name="boost_pad" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.0674, -0.992207, 32.9991)
+[node name="AttackableNode" type="StaticBody3D" parent="external_affectors/boost pads/bounce_pad"]
 collision_layer = 4
 collision_mask = 4
+script = ExtResource("5_0igg1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/boost pads/bounce_pad/AttackableNode"]
+shape = SubResource("BoxShape3D_bp3nh")
+
+[node name="boost_pad" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.0674, -0.992207, 32.9991)
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad"]
@@ -147,8 +159,8 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_pad4" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.6156, -0.948879, -7.95889)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad4"]
@@ -157,8 +169,8 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_pad5" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.158, -0.886486, 21.3927)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad5"]
@@ -167,8 +179,8 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_pad2" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14.7634, -0.992207, 32.9991)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad2"]
@@ -177,8 +189,8 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_pad3" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7916, -0.992206, -8.99173)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad3"]
@@ -189,8 +201,8 @@ size = Vector3(1, 0.15, 1)
 
 [node name="boost_ring" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, 4.70403, 32.9422)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 snapToMiddle = true
 
@@ -198,8 +210,8 @@ snapToMiddle = true
 
 [node name="boost_ring2" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 5.702, 4.70403, 38.1454)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 snapToMiddle = true
 
@@ -207,8 +219,8 @@ snapToMiddle = true
 
 [node name="boost_ring3" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.41735, 4.70403, 41.8592)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 2
 forceAmount = 30.0
 snapToMiddle = true
 

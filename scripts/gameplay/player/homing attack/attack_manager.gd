@@ -16,6 +16,7 @@ extends Area3D
 
 
 var aquired_targets : Array
+var focused_target : AttackableNode
 
 func _on_body_entered(body):
 	if not body is AttackableNode:
@@ -33,12 +34,35 @@ func _on_body_exited(body):
 	#cur_index = _manager.aquired_targets.size()
 	DebugDraw2D.set_text("HA: target lost! ",body.name, 0, Color.GREEN,3.0)
 
+	if aquired_targets.is_empty():
+		focused_target = null
+		attack_indicator.disable_indicator()
+
 func _process(_delta : float) -> void:
 	debug_indicator.display_attack_radius(self)
+	debug_indicator.display_view_angle(self)
+
+	if focused_target == null:
+		attack_indicator.disable_indicator()
+		return
+
+	if not Input.is_action_just_pressed("attack") or player.state_machine.state.name == "attacking":
+		return
+	player.state_machine.transition_to("attacking", {
+ 		_target = focused_target,
+ 		_bounceHeight = bounceHeight,
+ 		_speed = speed,
+ 		_bounceOverrideState = bounceOverrideState
+ 		})
+	#aquired_targets.erase(target)
+	focused_target = null
+	attack_indicator.disable_indicator()
+	return
 
 func _physics_process(_delta : float) -> void:
-	#if player.is_on_floor():
-		#return
+	if player.is_on_floor():
+		attack_indicator.disable_indicator()
+		return
 
 	for i in range(aquired_targets.size()):
 		var target = aquired_targets[i]
@@ -49,23 +73,14 @@ func _physics_process(_delta : float) -> void:
 
 		if not (viewCheck and losCheck):
 			continue
+
+		focused_target = target
 		#var target = aquired_targets[i]
 		#if not (is_in_camera_view(target) and is_in_line_of_sight(target)):
 			#return
 		attack_indicator.display_indicator_at(target)
-
 		debug_indicator.draw_attackable_target(target)
 
-		if not Input.is_action_just_pressed("attack"):
-			return
-		player.state_machine.transition_to("attacking", {
- 			_target = target,
- 			_bounceHeight = bounceHeight,
- 			_speed = speed,
- 			_bounceOverrideState = bounceOverrideState
- 			})
-		#aquired_targets.erase(target)
-		return
 
 func is_in_camera_view(target : AttackableNode) -> bool:
 	var dir = (target.global_position - player.global_position).normalized()
