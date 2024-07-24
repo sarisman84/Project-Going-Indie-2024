@@ -258,6 +258,9 @@ shape = SubResource("BoxShape3D_s1rpc")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/homing targets/test3"]
 
+[node name="CSGBox3D2" type="CSGBox3D" parent="external_affectors/homing targets/test3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.67611)
+
 [node name="rails" type="Node" parent="external_affectors"]
 
 [node name="rail" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
