@@ -5,7 +5,7 @@ var smoothing : float
 var target_dir : Vector3
 
 func enter(msg:={}) -> void:
-	offset = msg["anchor_point"]
+	offset = msg["local_anchor_point"]
 	smoothing = get_variable("smoothing", 1.0, msg) as float
 	target_dir = msg["target_dir"] as Vector3
 

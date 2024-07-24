@@ -116,16 +116,13 @@ shadow_enabled = true
 [node name="curved_road" parent="external_affectors/roads" instance=ExtResource("4_2yc46")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 59.7865, -1.09386, 46.5627)
 curve = SubResource("Curve3D_ep65j")
-hitboxAABB = AABB(0, 11.745, 0, 42.335, 30.41, 44.84)
 
 [node name="curved_road2" parent="external_affectors/roads" instance=ExtResource("4_2yc46")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.608, 0, -18.2591)
 curve = SubResource("Curve3D_0n76q")
-hitboxAABB = AABB(11.07, 6, 1.16, 24.245, 16.475, 25.985)
 
 [node name="curved_road3" parent="external_affectors/roads" instance=ExtResource("4_2yc46")]
 transform = Transform3D(0.723148, 0, -0.690693, 0, 1, 0, 0.690693, 0, 0.723148, 36.1893, 4.94693, -57.3887)
-hitboxAABB = AABB(21.91, 0, -29.83, 83.81, 50, 87.895)
 
 [node name="boost pads" type="Node" parent="external_affectors"]
 
@@ -315,7 +312,7 @@ script = ExtResource("7_7v0nc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4707, -1.90735e-06, -25.1263)
 collision_mask = 2
 script = ExtResource("6_ktxpf")
-trackMode = 1
+trackMode = 2
 childNode = NodePath("mod")
 
 [node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier2"]

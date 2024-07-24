@@ -42,3 +42,4 @@ func move_player(_delta : float) -> void:
 	PlayerController.calculate_movement(player, player.movementSpeed,player.groundDelta.y, player.groundDelta.x, _delta)
 	# Apply calculations
 	player.move_and_slide()
+	player.apply_floor_snap()

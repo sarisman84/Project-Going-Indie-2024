@@ -26,7 +26,12 @@ func on_camera_enter(body) -> void:
 	var player = body as PlayerController
 	var cam = player.camera_controller
 
-	cam.set_state(trackMode, {anchor_point = childNode.position, path = trackPath, target_dir = childNode.basis.z})
+	cam.set_state(trackMode, {
+		anchor_point = childNode.global_position,
+		local_anchor_point = childNode.position,
+		path = trackPath,
+		target_dir = childNode.basis.z
+		})
 	cam.physical_camera.projection = newProjection
 	cam.physical_camera.fov = newFieldOfView
 	cam.physical_camera.size = newSize

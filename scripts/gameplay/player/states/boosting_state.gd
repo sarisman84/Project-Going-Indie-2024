@@ -63,6 +63,7 @@ func move_player(delta : float) -> void:
 	PlayerController.calculate_boost_movement(player, player.boostSpeed,player.turningSpeed, delta)
 	# Apply calculations
 	player.move_and_slide()
+	player.apply_floor_snap()
 
 func exit() -> bool:
 	move_sfx.stop()

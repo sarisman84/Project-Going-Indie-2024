@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://0rohomqoalx5"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/curved_road.gd" id="1_ugbpu"]
-[ext_resource type="Script" path="res://scripts/gameplay/interactables/debug/curved_road_debug.gd" id="2_nlrhs"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/affectors/gravity_affector.gd" id="2_iy2u0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xq3lh"]
 
@@ -25,11 +25,12 @@ path_u_distance = 1.0
 path_joined = false
 smooth_faces = true
 
-[node name="debug" type="Node" parent="."]
-script = ExtResource("2_nlrhs")
-
 [node name="hitbox" type="Area3D" parent="."]
 collision_mask = 2
+script = ExtResource("2_iy2u0")
 
 [node name="collider" type="CollisionShape3D" parent="hitbox"]
 shape = SubResource("BoxShape3D_xq3lh")
+
+[connection signal="body_entered" from="hitbox" to="hitbox" method="_on_body_entered"]
+[connection signal="body_exited" from="hitbox" to="hitbox" method="_on_body_exited"]

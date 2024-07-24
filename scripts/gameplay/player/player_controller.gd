@@ -14,6 +14,7 @@ var jumpFlag : bool
 @onready var collider = $collider
 @onready var animation_player = $model_anchor/skater_mc/AnimationPlayer
 
+
 @export var movementSpeed : float = 5.0
 
 @export_category("Jump Settings")
@@ -48,6 +49,7 @@ var jumpFlag : bool
 @export var model : Node3D
 @export var externalModifierCooldown : float
 @export var curvedTerrainSnapDistance : float = 5.0
+@export var modelAnimationTree : AnimationTree
 
 
 var currentJumpCount : int = 0
@@ -55,8 +57,10 @@ var canAirBoost : bool = true
 var forwardDirection : Vector3 = Vector3.ZERO
 var useCameraForward : bool = true
 
-func _process(_delta):
-	pass
+
+func _ready() -> void:
+	floor_snap_length = 100.0
+	floor_max_angle = 180.0
 	# camera_controller.position = position + cameraOffset
 
 
@@ -90,14 +94,7 @@ func rotate_model_towards_adv(forwardDir : Vector3, up_dir : Vector3):
 	model.look_at(transform.origin - forwardDir, up_dir)
 	collider.look_at(transform.origin - forwardDir, up_dir)
 
-func try_get_ground() -> Dictionary:
-	var state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(position,position - up_direction)
-	query.collide_with_areas = false
-	query.collide_with_bodies = true
-	query.exclude = [self]
 
-	return state.intersect_ray(query)
 
 func get_directional_input() -> Vector3:
 	var localInputDir : Vector3
@@ -112,16 +109,20 @@ func get_directional_input() -> Vector3:
 
 	if useCameraForward:
 		forward = camera_controller.camera_anchor.transform.basis.z
-		forward.y = 0
+		forward.y = forwardDirection.y
 
-	if forwardDirection.length() > 0:
-		forward += forwardDirection
-	forward = forward.normalized()
+	DebugDraw3D.draw_arrow_ray(position + up_direction * 1.5,-forward, 2.0, Color.MAGENTA, 0.25, true)
+	DebugDraw3D.draw_arrow_ray(position, -forwardDirection, 1.0, Color.BLUE, 0.25, true)
 
-	return right * localInputDir.x + forward * localInputDir.z
+	return (right * localInputDir.x + forward * localInputDir.z)
 
-func try_rotate_model_towards_forward_direction() -> void:
-	pass
+
+
+
+
+
+
+
 
 static func calculate_auto_movement(player : PlayerController, speed : float, targetDirection : Vector3, _delta : float) -> void:
 	if not player.model:
@@ -139,7 +140,7 @@ static func calculate_boost_movement(player : PlayerController, speed : float, t
 
 	var vy = player.velocity.y
 	# Apply the model's forward direction.
-	player.velocity = player.model.global_transform.basis.z * speed
+	player.velocity = (player.model.global_transform.basis.z - player.forwardDirection).normalized() * speed
 
 
 	# If the model exists, rotate it based of the turn input
@@ -163,12 +164,14 @@ static func calculate_movement(player : PlayerController,speed : float, accelera
 
 	player.velocity.y = vy
 
-
-
 	# If the model exists and the velocity is high enough, rotate it towards the velocity
 	if player.model and dir.length() > 0.2:
 		var newDir = player.model.basis.z.slerp(dir.normalized(), 4.0 * delta)
 		player.rotate_model_towards_adv(newDir, Vector3.UP)
+
+	#var at = player.modelAnimationTree
+
+	#print(at.tree_root.get_parameter("state_machine/isBoosting"))
 
 
 

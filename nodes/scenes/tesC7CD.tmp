@@ -1,0 +1,413 @@
+[gd_scene load_steps=30 format=3 uid="uid://clsa3y2ji2ae0"]
+
+[ext_resource type="PackedScene" uid="uid://b7jthsh36ssaw" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
+[ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
+[ext_resource type="PackedScene" uid="uid://bn30aiuttyy0d" path="res://nodes/gameplay/rail_section.tscn" id="3_ne3qf"]
+[ext_resource type="PackedScene" uid="uid://0rohomqoalx5" path="res://nodes/gameplay/curved_road.tscn" id="4_2yc46"]
+[ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="4_ojlsg"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/attackable_node.gd" id="5_0igg1"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/camera_modifier.gd" id="6_ktxpf"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/utility/align_node.gd" id="7_7v0nc"]
+[ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="9_tcstn"]
+
+[sub_resource type="Curve3D" id="Curve3D_ep65j"]
+_data = {
+"points": PackedVector3Array(0, 0.0973444, -22.1949, 0, -0.0973444, 22.1949, -0.597595, 0.124588, -22.0419, 0, 0.0973473, -20.9781, 0, -0.0973473, 20.9781, -0.506432, 26.2698, 22.4617),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_0n76q"]
+bake_interval = 2.69
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 22.2579, -1.26611, 9.85694, 0, 0, 0, 0, 0, 0, 17.082, -0.894775, 9.85694, 6.78608, 0.117599, 0.259789, -6.78608, -0.117599, -0.259789, 7.95964, -0.878852, 9.71115, -13.6133, 0.296996, 2.30392, 13.6133, -0.296996, -2.30392, 11.9791, 13.4992, -1.46938, 7.24103, 0, 0.0987549, -7.24103, 0, -0.0987549, 15.9886, -0.66272, -6.83695, 0, 0, 0, 0, 0, 0, -1.50722, -1.26611, -7.05564),
+"tilts": PackedFloat32Array(0, 0, 0, 1.345, 1.98, 1.985)
+}
+point_count = 6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bp3nh"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s1rpc"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="Curve3D" id="Curve3D_wkkha"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -1.53057, -0.427818, -1.42992, 0, 0, 0, 0, 0, 0, -1.45466, -0.449743, 3.0913, 0, 0, 0, 0, 0, 0, 3.18705, -0.444878, 3.05566, 0, 0, 0, 0, 0, 0, 3.07809, -0.447587, -3.76182),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eptp7"]
+size = Vector3(5.65103, 2.53638, 7.44906)
+
+[sub_resource type="Curve3D" id="Curve3D_bvghl"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -1.53057, -0.427818, -1.42992, -0.677328, -0.444506, -0.758417, 0.677328, 0.444506, 0.758417, -1.45466, -0.449743, 3.0913, -2.08299, -0.730588, 0.811706, 2.08299, 0.730588, -0.811706, 3.18705, -0.444878, 3.05566, 0, 0, 0, 0, 0, 0, 3.07809, -0.447587, -3.76182),
+"tilts": PackedFloat32Array(-0.512051, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_llc6j"]
+size = Vector3(6.58624, 2.69586, 8.56279)
+
+[sub_resource type="Curve3D" id="Curve3D_cj3sk"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.72845, -0.623806, -1.62453, 1.90581, -0.0385251, 0.0166559, -1.90581, 0.0385251, -0.0166559, -3.16284, -0.430769, -1.49476, -3.66048, 0.0351038, 0.313532, 3.66048, -0.0351038, -0.313532, -2.85104, 3.72721, -3.60511, 1.51745, 0.109295, 0.0521932, -1.51745, -0.109295, -0.0521932, -1.87137, -0.424332, -5.07136, 0, 0, 0, 0, 0, 0, -7.82103, -0.595058, -5.11212),
+"tilts": PackedFloat32Array(0, 0, 1.1, 1.6, 1.6)
+}
+point_count = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8mq3"]
+size = Vector3(9.56158, 6.62579, 6.29424)
+
+[sub_resource type="Curve3D" id="Curve3D_ru088"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 7.57497, 2.18153e-05, -3.31268, 1.70354, -0.0589654, 1.04904e-05, -1.70354, 0.0589654, -1.04904e-05, -0.203411, 2.18153e-05, -3.31268, -1.45022, 0, 0, 1.45022, 0, 0, -0.222016, 5.08482, -3.31267, 0, 0, 0, 0, 0, 0, 7.5956, 5.08482, -3.31267),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o7iuo"]
+size = Vector3(10.0875, 8.03009, 2.99902)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2lb5t"]
+size = Vector3(25.009, 28.0249, 22.2008)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jy0ja"]
+size = Vector3(65.1233, 33.7955, 70.4004)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ghlll"]
+size = Vector3(57.0927, 21.0927, 58.9899)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_011b5"]
+size = Vector3(10000, 1, 10000)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i15pk"]
+material = ExtResource("9_tcstn")
+size = Vector2(10000, 10000)
+center_offset = Vector3(0, 0.5, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ye05c"]
+size = Vector3(1, 5, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b1wsf"]
+size = Vector3(1, 5, 30)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0efcr"]
+
+[node name="TestLevel" type="Node"]
+
+[node name="PauseMenu" parent="." instance=ExtResource("1_ra04v")]
+visible = false
+
+[node name="player_controller" parent="." instance=ExtResource("1_xom8x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.501122, 0)
+velocity = Vector3(0, 0, 0)
+jumpCount = 2
+canJump = true
+sideStepDistance = 10.0
+canBoost = true
+fallThreshold = 0.0
+slideDecceleration = 0.8
+railGrindCooldownInSeconds = 0.25
+externalModifierCooldown = 0.0
+curvedTerrainSnapDistance = 5.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.386936, 0.922106, 0, -0.922106, 0.386936, 0, 3.71197, 0)
+shadow_enabled = true
+
+[node name="external_affectors" type="Node" parent="."]
+
+[node name="roads" type="Node" parent="external_affectors"]
+
+[node name="curved_road" parent="external_affectors/roads" instance=ExtResource("4_2yc46")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 59.7865, -1.09386, 46.5627)
+curve = SubResource("Curve3D_ep65j")
+hitboxAABB = AABB(0, 11.745, 0, 42.335, 30.41, 44.84)
+
+[node name="curved_road2" parent="external_affectors/roads" instance=ExtResource("4_2yc46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.608, 0, -18.2591)
+curve = SubResource("Curve3D_0n76q")
+hitboxAABB = AABB(11.07, 6, 1.16, 24.245, 16.475, 25.985)
+
+[node name="curved_road3" parent="external_affectors/roads" instance=ExtResource("4_2yc46")]
+transform = Transform3D(0.723148, 0, -0.690693, 0, 1, 0, 0.690693, 0, 0.723148, 36.1893, 4.94693, -57.3887)
+hitboxAABB = AABB(21.91, 0, -29.83, 83.81, 50, 87.895)
+
+[node name="boost pads" type="Node" parent="external_affectors"]
+
+[node name="bounce_pad" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.702, -0.614692, 32.9422)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+canBeAttacked = true
+snapToMiddle = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/bounce_pad"]
+
+[node name="AttackableNode" type="StaticBody3D" parent="external_affectors/boost pads/bounce_pad"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("5_0igg1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/boost pads/bounce_pad/AttackableNode"]
+shape = SubResource("BoxShape3D_bp3nh")
+
+[node name="boost_pad" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.0674, -0.992207, 32.9991)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
+[node name="boost_pad4" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.6156, -0.948879, -7.95889)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
+[node name="boost_pad5" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.158, -0.886486, 21.3927)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad5"]
+transform = Transform3D(0.844861, 0, 0.534987, 0, 1, 0, -0.534987, 0, 0.844861, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
+[node name="boost_pad2" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14.7634, -0.992207, 32.9991)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
+[node name="boost_pad3" parent="external_affectors/boost pads" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7916, -0.992206, -8.99173)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/boost pads/boost_pad3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+size = Vector3(1, 0.15, 1)
+
+[node name="boost rings" type="Node" parent="external_affectors"]
+
+[node name="boost_ring" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.702, 4.70403, 32.9422)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+snapToMiddle = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="external_affectors/boost rings/boost_ring"]
+
+[node name="boost_ring2" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 5.702, 4.70403, 38.1454)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+snapToMiddle = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="external_affectors/boost rings/boost_ring2"]
+
+[node name="boost_ring3" parent="external_affectors/boost rings" instance=ExtResource("4_ojlsg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.41735, 4.70403, 41.8592)
+collision_layer = 2
+collision_mask = 2
+forceAmount = 30.0
+snapToMiddle = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="external_affectors/boost rings/boost_ring3"]
+
+[node name="homing targets" type="Node" parent="external_affectors"]
+
+[node name="test" type="StaticBody3D" parent="external_affectors/homing targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.865304, 0, 5.62748)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("5_0igg1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/homing targets/test"]
+shape = SubResource("BoxShape3D_s1rpc")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/homing targets/test"]
+
+[node name="test2" type="StaticBody3D" parent="external_affectors/homing targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.865304, 0, 10.3818)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("5_0igg1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/homing targets/test2"]
+shape = SubResource("BoxShape3D_s1rpc")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/homing targets/test2"]
+
+[node name="test3" type="StaticBody3D" parent="external_affectors/homing targets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.865304, 0, 15.1888)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("5_0igg1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/homing targets/test3"]
+shape = SubResource("BoxShape3D_s1rpc")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/homing targets/test3"]
+
+[node name="rails" type="Node" parent="external_affectors"]
+
+[node name="rail" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.06285, 0, 0)
+curve = SubResource("Curve3D_wkkha")
+
+[node name="hitbox_collider" parent="external_affectors/rails/rail/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.866196, 0, -0.384356)
+shape = SubResource("BoxShape3D_eptp7")
+
+[node name="rail2" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.64059, 0, 0)
+curve = SubResource("Curve3D_bvghl")
+
+[node name="hitbox_collider" parent="external_affectors/rails/rail2/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.44699, -0.0797424, -0.000544548)
+shape = SubResource("BoxShape3D_llc6j")
+
+[node name="rail3" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -4.40631, 0, -8.86003)
+curve = SubResource("Curve3D_cj3sk")
+
+[node name="hitbox_collider" parent="external_affectors/rails/rail3/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96768, 1.99863, -3.8937)
+shape = SubResource("BoxShape3D_u8mq3")
+
+[node name="rail4" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 5.12271, -0.243917, -8.9626)
+curve = SubResource("Curve3D_ru088")
+
+[node name="hitbox_collider" parent="external_affectors/rails/rail4/hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.76336, 2.5004, -3.25956)
+shape = SubResource("BoxShape3D_o7iuo")
+
+[node name="camera affectors" type="Node" parent="external_affectors"]
+
+[node name="camera_modifier" type="Area3D" parent="external_affectors/camera affectors" node_paths=PackedStringArray("childNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.255, 0, 24.08)
+collision_mask = 2
+script = ExtResource("6_ktxpf")
+childNode = NodePath("mod")
+
+[node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier"]
+transform = Transform3D(0.882127, 0, 0.471012, 0, 1, 0, -0.471012, 0, 0.882127, 0, 0, 0)
+shape = SubResource("BoxShape3D_2lb5t")
+
+[node name="mod" type="Node3D" parent="external_affectors/camera affectors/camera_modifier"]
+transform = Transform3D(-0.830984, 0, -0.556296, 0, 1, 0, 0.556296, 0, -0.830984, -4.86841, 2.02, -6.53113)
+script = ExtResource("7_7v0nc")
+
+[node name="camera_modifier2" type="Area3D" parent="external_affectors/camera affectors" node_paths=PackedStringArray("childNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4707, -1.90735e-06, -25.1263)
+collision_mask = 2
+script = ExtResource("6_ktxpf")
+trackMode = 1
+childNode = NodePath("mod")
+
+[node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier2"]
+transform = Transform3D(-0.0223209, 0, 0.999751, 0, 1, 0, -0.999751, 0, -0.0223209, 13.852, 4.66992, 7.43174)
+shape = SubResource("BoxShape3D_2lb5t")
+
+[node name="mod" type="Node3D" parent="external_affectors/camera affectors/camera_modifier2"]
+transform = Transform3D(-0.00392693, 0, -0.999992, 0, 1, 0, 0.999992, 0, -0.00392693, 13.34, 2.02, 8.01493)
+script = ExtResource("7_7v0nc")
+
+[node name="camera_modifier4" type="Area3D" parent="external_affectors/camera affectors" node_paths=PackedStringArray("childNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5789, -5.72205e-06, -82.3356)
+collision_mask = 2
+script = ExtResource("6_ktxpf")
+childNode = NodePath("mod")
+
+[node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/camera_modifier4"]
+transform = Transform3D(-0.0223209, 0, 0.999751, 0, 1, 0, -0.999751, 0, -0.0223209, 16.2521, 11.8978, 6.60127)
+shape = SubResource("BoxShape3D_jy0ja")
+
+[node name="mod" type="Node3D" parent="external_affectors/camera affectors/camera_modifier4"]
+transform = Transform3D(0.67416, 0, -0.738584, 0, 1, 0, 0.738584, 0, 0.67416, -5.91633, 3.37792, 6.0433)
+script = ExtResource("7_7v0nc")
+
+[node name="spawn_camera_modifier3" type="Area3D" parent="external_affectors/camera affectors" node_paths=PackedStringArray("childNode")]
+collision_mask = 2
+script = ExtResource("6_ktxpf")
+trackMode = 3
+childNode = NodePath("mod")
+
+[node name="shape" type="CollisionShape3D" parent="external_affectors/camera affectors/spawn_camera_modifier3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.54633, 5.54633, 1.08146)
+shape = SubResource("BoxShape3D_ghlll")
+
+[node name="mod" type="Node3D" parent="external_affectors/camera affectors/spawn_camera_modifier3"]
+transform = Transform3D(-0.00392693, 0, -0.999992, 0, 1, 0, 0.999992, 0, -0.00392693, 0, 10.222, 0)
+script = ExtResource("7_7v0nc")
+
+[node name="geometry" type="Node" parent="."]
+
+[node name="floor" type="StaticBody3D" parent="geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.61541, 0)
+
+[node name="plane_collider" type="CollisionShape3D" parent="geometry/floor"]
+shape = SubResource("BoxShape3D_011b5")
+
+[node name="plane_model" type="MeshInstance3D" parent="geometry/floor"]
+mesh = SubResource("PlaneMesh_i15pk")
+
+[node name="wall" type="StaticBody3D" parent="geometry"]
+transform = Transform3D(0.286675, 0, 0.958028, 0, 1, 0, -0.958028, 0, 0.286675, -6.45388, 1.26467, 20.5002)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/wall"]
+shape = SubResource("BoxShape3D_ye05c")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="geometry/wall"]
+mesh = SubResource("BoxMesh_b1wsf")
+
+[node name="block" type="StaticBody3D" parent="geometry"]
+transform = Transform3D(24.3733, 0, 14.0719, 0, 28.1438, 0, -14.0719, 0, 24.3733, 75.0684, 11.0812, 79.8375)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/block"]
+shape = SubResource("BoxShape3D_0efcr")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="geometry/block"]
+
+[node name="block2" type="StaticBody3D" parent="geometry"]
+transform = Transform3D(24.3733, 0, 14.0719, 0, 28.1438, 0, -14.0719, 0, 24.3733, -62.8451, 10.3894, -19.6873)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/block2"]
+shape = SubResource("BoxShape3D_0efcr")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="geometry/block2"]
+
+[node name="block3" type="StaticBody3D" parent="geometry"]
+transform = Transform3D(18.3961, 0, -21.2993, 0, 28.1438, 0, 21.2993, 0, 18.3961, 114.609, 10.3894, -72.6673)
+
+[node name="shape" type="CollisionShape3D" parent="geometry/block3"]
+shape = SubResource("BoxShape3D_0efcr")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="geometry/block3"]
+
+[editable path="external_affectors/rails/rail"]
+[editable path="external_affectors/rails/rail2"]
+[editable path="external_affectors/rails/rail3"]
+[editable path="external_affectors/rails/rail4"]
