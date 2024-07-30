@@ -25,3 +25,6 @@ static func rotate_towards(a : Vector3, b : Vector3, maxInDegrees : float) -> Ve
 
 	# and now you can rotate your original
 	return a.rotated(cross, angle)
+
+static func convert_height_to_velocity(inputHeight : float, _gravity : float):
+	return sqrt(2.0 * _gravity * inputHeight)

@@ -3,8 +3,14 @@ extends BaseCameraState
 var mouseInput: Vector2
 var controllerInput: Vector2
 
+func enter(_msg = {}) -> void:
+	pass
+	#if player:
+		#player.forward_mode = PlayerController.ForwardMode.Camera
 
 func update(_delta: float) -> void:
+
+
 	var input: Vector2
 	# Calculate controller input
 	controllerInput = Vector2(
@@ -27,4 +33,9 @@ func update(_delta: float) -> void:
 func handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouseInput = event.relative
+
+func exit() -> bool:
+	#if player:
+		#player.forward_mode = PlayerController.ForwardMode.World
+	return true
 

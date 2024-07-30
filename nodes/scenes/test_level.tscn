@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=31 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://b7jthsh36ssaw" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
@@ -95,6 +95,9 @@ size = Vector3(1, 5, 30)
 size = Vector3(1, 5, 30)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0efcr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y1tkf"]
+size = Vector3(29.9241, 1, 7.99237)
 
 [node name="TestLevel" type="Node"]
 
@@ -226,7 +229,7 @@ snapToMiddle = true
 [node name="homing targets" type="Node" parent="external_affectors"]
 
 [node name="test" type="StaticBody3D" parent="external_affectors/homing targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.865304, 0, 5.62748)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6638, 0, 18.9175)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("5_0igg1")
@@ -237,7 +240,7 @@ shape = SubResource("BoxShape3D_s1rpc")
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/homing targets/test"]
 
 [node name="test2" type="StaticBody3D" parent="external_affectors/homing targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.865304, 0, 10.3818)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6638, 0, 23.6718)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("5_0igg1")
@@ -248,7 +251,7 @@ shape = SubResource("BoxShape3D_s1rpc")
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/homing targets/test2"]
 
 [node name="test3" type="StaticBody3D" parent="external_affectors/homing targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.865304, 0, 15.1888)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6638, 0, 28.4788)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("5_0igg1")
@@ -258,13 +261,10 @@ shape = SubResource("BoxShape3D_s1rpc")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/homing targets/test3"]
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="external_affectors/homing targets/test3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.67611)
-
 [node name="rails" type="Node" parent="external_affectors"]
 
 [node name="rail" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.06285, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.06285, 0, -30.8046)
 curve = SubResource("Curve3D_wkkha")
 
 [node name="hitbox_collider" parent="external_affectors/rails/rail/hitbox" index="0"]
@@ -272,7 +272,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.866196, 0, -0.384356)
 shape = SubResource("BoxShape3D_eptp7")
 
 [node name="rail2" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.64059, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.64059, 0, -30.8046)
 curve = SubResource("Curve3D_bvghl")
 
 [node name="hitbox_collider" parent="external_affectors/rails/rail2/hitbox" index="0"]
@@ -280,7 +280,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.44699, -0.0797424, -0.00054
 shape = SubResource("BoxShape3D_llc6j")
 
 [node name="rail3" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -4.40631, 0, -8.86003)
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -4.40631, 0, -39.6646)
 curve = SubResource("Curve3D_cj3sk")
 
 [node name="hitbox_collider" parent="external_affectors/rails/rail3/hitbox" index="0"]
@@ -288,7 +288,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96768, 1.99863, -3.8937)
 shape = SubResource("BoxShape3D_u8mq3")
 
 [node name="rail4" parent="external_affectors/rails" instance=ExtResource("3_ne3qf")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 5.12271, -0.243917, -8.9626)
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 5.12271, -0.243917, -39.7672)
 curve = SubResource("Curve3D_ru088")
 
 [node name="hitbox_collider" parent="external_affectors/rails/rail4/hitbox" index="0"]
@@ -397,6 +397,17 @@ transform = Transform3D(18.3961, 0, -21.2993, 0, 28.1438, 0, 21.2993, 0, 18.3961
 shape = SubResource("BoxShape3D_0efcr")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="geometry/block3"]
+
+[node name="slope" type="StaticBody3D" parent="geometry"]
+transform = Transform3D(0.972557, 0.120641, -0.198944, 0, 0.855066, 0.51852, 0.232665, -0.50429, 0.8316, -4.13434, 0, 17.5476)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="geometry/slope"]
+transform = Transform3D(0.998256, 1.04308e-07, -0.059028, -5.21541e-07, 0.999999, -5.96046e-08, 0.0590272, 3.57628e-07, 0.998256, -1.34118, 0, -0.0921125)
+size = Vector3(29.995, 1, 8.30023)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/slope"]
+transform = Transform3D(0.997682, 1.04308e-07, -0.0680331, -1.59442e-06, 0.999999, -5.96046e-08, 0.0680312, 3.57628e-07, 0.997683, -1.32886, -2.86102e-06, 0.0334949)
+shape = SubResource("BoxShape3D_y1tkf")
 
 [editable path="external_affectors/rails/rail"]
 [editable path="external_affectors/rails/rail2"]

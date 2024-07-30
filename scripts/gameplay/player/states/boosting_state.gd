@@ -10,10 +10,10 @@ var right_step : bool
 var countdown : float
 
 func enter(_msg := {}) -> void:
-	player.rotate_model_towards_adv(player.velocity.normalized(), Vector3.UP)
+	#player.rotate_model_towards_adv(player.velocity.normalized(), Vector3.UP)
 	countdown = 0
 	player.canAirBoost = true
-	player.currentJumpCount = player.jumpCount
+	player.currentJumpCount = player.player_settings.jumpCount
 
 func update(_delta : float) -> void:
 	left_step = Input.is_action_pressed("left_step")
@@ -50,20 +50,20 @@ func physics_update(delta : float) -> void:
 		player.global_position += stepDir
 		countdown = player.sideStepCooldown
 
-
-	move_player(delta)
+	player.boost_move(delta)
+	# move_player(delta)
 
 	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0:
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif is_equal_approx(player.velocity.length(), 0):
 		state_machine.transition_to("idle")
 
-func move_player(delta : float) -> void:
+# func move_player(delta : float) -> void:
 	# Calculate movement
-	PlayerController.calculate_boost_movement(player, player.boostSpeed,player.turningSpeed, delta)
+	# PlayerController.calculate_boost_movement(player, player.boostSpeed,player.turningSpeed, delta)
 	# Apply calculations
-	player.move_and_slide()
-	player.apply_floor_snap()
+	# player.move_and_slide()
+	# player.apply_floor_snap()
 
 func exit() -> bool:
 	move_sfx.stop()
