@@ -3,6 +3,7 @@ extends Resource
 
 @export_group("Default")
 @export var movement_speed: float = 5.0
+@export var turningSpeed: float = 5.0
 
 @export_group("Jump Settings")
 @export var jumpHeight: float = 1.0
@@ -10,7 +11,7 @@ extends Resource
 @export var canJump: bool = true
 
 @export_group("Boost Settings")
-@export var turningSpeed: float = 1.0
+
 @export var sideStepCooldown: float = 0.1
 @export var sideStepDistance: float = 10.0
 @export var boost_speed: float = 10.0

@@ -15,11 +15,11 @@ enum ForwardMode {Camera, World}
 @onready var state_machine: StateMachine = $state_machine
 @onready var collider = $collider
 @onready var animation_player = $model_anchor/skater_mc/AnimationPlayer
-@onready var model_anchor : ModelController = $model_anchor
+@onready var model_anchor: ModelController = $model_anchor
+@onready var ground_detector: GroundDetector = $ground_detector
 
 
-
-@export var player_settings : PlayerSettings
+@export var player_settings: PlayerSettings
 
 @export_category("Other")
 @export var cameraOffset: Vector3
@@ -46,14 +46,14 @@ func m_get_input() -> Vector3:
 	return input_dir
 
 # Fetches user input and aligns it with the player depending on the forward mode
-func m_calculate_global_movement(_delta : float) -> Vector3:
+func m_calculate_global_movement(_delta: float) -> Vector3:
 	var input_dir = m_get_input()
 
 	var cam_basis = camera_controller.camera_anchor.basis
 	return (input_dir.x * cam_basis.x + input_dir.z * cam_basis.z).normalized()
 
 
-func m_calculate_movement(_delta: float, normal : Vector3) -> Vector3:
+func m_calculate_movement(_delta: float, normal: Vector3) -> Vector3:
 	var input_dir = m_get_input()
 
 	var cam_basis = camera_controller.camera_anchor.basis
@@ -69,7 +69,7 @@ func m_calculate_dynamic_gravity(delta: float) -> Vector3:
 		finalForce = gravity * delta
 	else:
 		finalForce = gravity * (player_settings.fallMultiplier - 1) * delta
-	return - up_direction * finalForce
+	return -up_direction * finalForce
 
 # Applies acceleration or decceleration depending on the current target velocity.
 func m_apply_acceleration(input_vel: Vector3, target_vel: Vector3, m_acceleration: float, m_decceleration: float, delta: float) -> Vector3:
@@ -80,23 +80,21 @@ func m_apply_acceleration(input_vel: Vector3, target_vel: Vector3, m_acceleratio
 
 # Normal movement
 func move(_delta: float) -> void:
-	var normal : Vector3 = Vector3.UP
+	var normal: Vector3 = Vector3.UP
 	#Calculate movement with tests
-	var dir = m_calculate_global_movement(_delta)
+	var ray = ground_detector.get_collided_ray()
 
-	var col_info = move_and_collide(dir * _delta,true)
-	if col_info:
-		normal = col_info.get_normal()
-		dir = m_calculate_movement(_delta, normal)
-		dir = dir.slide(normal)
+	if ray:
+		normal = ray.get_collision_normal()
 
-
+	var dir = m_calculate_movement(_delta, normal)
+	dir = dir.slide(normal)
 
 
 	#Apply Settings
-	var speed : float
-	var acceleration : float
-	var decceleration : float
+	var speed: float
+	var acceleration: float
+	var decceleration: float
 
 	var is_boosting = Input.is_action_pressed("boost")
 
@@ -113,7 +111,8 @@ func move(_delta: float) -> void:
 	#Apply velocity
 	velocity = m_apply_acceleration(velocity, dir * speed, acceleration, decceleration, _delta)
 	#Apply model rotation
-	model_anchor.rotate_towards(velocity.normalized(), normal)
+	if dir.length() > 0.1:
+		model_anchor.rotate_towards(_delta, dir.normalized(), player_settings.turningSpeed, normal)
 	move_and_slide()
 	apply_floor_snap()
 
@@ -134,14 +133,12 @@ func move(_delta: float) -> void:
 # 	apply_floor_snap()
 # 	pass
 
-func air_move(_delta : float) -> void:
+func air_move(_delta: float) -> void:
 	var dir = m_calculate_global_movement(_delta)
 
 	velocity = m_apply_acceleration(velocity, dir * player_settings.movement_speed, player_settings.air_acceleration, player_settings.air_decceleration, _delta)
 	velocity -= -up_direction * m_calculate_dynamic_gravity(_delta)
 	move_and_slide()
-
-
 
 
 #func _ready() -> void:
@@ -152,12 +149,12 @@ func air_move(_delta : float) -> void:
 #
 
 #
-#func get_current_speed():
-	#var speed := movement_speed
-	#if Input.is_action_pressed("boost"):
-		#speed = boostSpeed
-	#return speed
-#
+func get_current_speed():
+	var speed := player_settings.movement_speed
+	if Input.is_action_pressed("boost"):
+		speed = player_settings.boost_speed
+	return speed
+
 #func rotate_model_towards(forwardDir : Vector3):
 	#if is_equal_approx(forwardDir.length(), 0):
 		#return
