@@ -21,7 +21,7 @@ func draw_debug() -> void:
 		cachedYPos = player_controller.global_position.y
 
 	var pos = Vector3(player_controller.global_position.x,cachedYPos, player_controller.global_position.z)
-	DebugDraw3D.draw_arrow_ray(pos, player_controller.up_direction, player_controller.player_settings.jumpHeight, Color.DARK_SEA_GREEN, 0.15, false)
+	DebugDraw3D.draw_arrow_ray(pos, player_controller.up_direction, player_controller.player_settings.jump_height, Color.DARK_SEA_GREEN, 0.15, false)
 
 
 
@@ -31,7 +31,7 @@ func print_messages() -> void:
 		return
 	print_out("FPS: ", Engine.get_frames_per_second())
 	print_out("current state: ",  state_machine.state.name)
-	print_out("jump count: ", player_controller.currentJumpCount)
+	print_out("jump count: ", player_controller.current_jump_count)
 
 func print_out(msg : String, value : Variant = null):
 	DebugDraw2D.set_text(msg, value, 0, Color.WHITE, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=33 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://b7jthsh36ssaw" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/attackable_node.gd" id="5_0igg1"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/camera_modifier.gd" id="6_ktxpf"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/utility/align_node.gd" id="7_7v0nc"]
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/collectable.gd" id="9_3011y"]
 [ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="9_tcstn"]
 
 [sub_resource type="Curve3D" id="Curve3D_ep65j"]
@@ -79,6 +80,9 @@ size = Vector3(65.1233, 33.7955, 70.4004)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ghlll"]
 size = Vector3(57.0927, 21.0927, 58.9899)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qehey"]
+size = Vector3(0.25, 0.25, 0.25)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_011b5"]
 size = Vector3(10000, 1, 10000)
@@ -353,6 +357,164 @@ shape = SubResource("BoxShape3D_ghlll")
 [node name="mod" type="Node3D" parent="external_affectors/camera affectors/spawn_camera_modifier3"]
 transform = Transform3D(-0.00392693, 0, -0.999992, 0, 1, 0, 0.999992, 0, -0.00392693, 0, 10.222, 0)
 script = ExtResource("7_7v0nc")
+
+[node name="collectables" type="Node" parent="external_affectors"]
+
+[node name="ring" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29817, -9.53674e-07, 11.3236)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring2" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.63182, -9.53674e-07, 13.1079)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring2"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring2"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring3" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36282, -9.53674e-07, 14.8576)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring3"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring3"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring4" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.14024, -9.53674e-07, 9.74583)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring4"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring4"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring5" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1849, -9.53674e-07, 8.07561)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring5"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring5"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring6" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2105, -9.53674e-07, 7.29221)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring6"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring6"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring7" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3262, -9.53674e-07, 8.80474)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring7"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring7"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring8" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3788, -9.53674e-07, 11.5425)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring8"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring8"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring9" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.5055, -9.53674e-07, 14.6051)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring9"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring9"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring10" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0688, -9.53674e-07, 16.3851)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring10"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring10"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring11" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7528, -9.53674e-07, 20.5841)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring11"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring11"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring12" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2902, -9.53674e-07, 24.5353)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring12"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring12"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="ring13" type="StaticBody3D" parent="external_affectors/collectables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.9412, -9.53674e-07, 27.7283)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("9_3011y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="external_affectors/collectables/ring13"]
+shape = SubResource("BoxShape3D_qehey")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/collectables/ring13"]
+size = Vector3(0.25, 0.25, 0.25)
 
 [node name="geometry" type="Node" parent="."]
 
