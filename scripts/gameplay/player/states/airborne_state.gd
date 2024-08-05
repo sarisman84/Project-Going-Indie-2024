@@ -51,4 +51,4 @@ func physics_update(delta: float) -> void:
 		# PlayerController.calculate_movement(player, player.movement_speed, player.airDelta.y, player.airDelta.x, delta)
 		player.air_move(delta)
 	else:
-		player.velocity -= Vector3.UP * player.stompSpeed * delta
+		player.velocity -= Vector3.UP * player.player_settings.stomp_speed * delta

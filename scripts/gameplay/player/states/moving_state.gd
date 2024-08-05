@@ -22,9 +22,9 @@ func physics_update(delta: float) -> void:
 	# Notice how we have some code duplication between states. That's inherent to the pattern,
 	# although in production, your states will tend to be more complex and duplicate code
 	# much more rare.
-	# if Input.is_action_pressed("boost") and player.player_settings.canBoost:
-	# 	state_machine.transition_to("boosting")
-	# 	return
+	if Input.is_action_pressed("boost") and player.player_settings.can_boost:
+		state_machine.transition_to("boosting")
+		return
 	if not player.is_on_floor():
 		state_machine.transition_to("airborne")
 		return
@@ -32,7 +32,7 @@ func physics_update(delta: float) -> void:
 	#move_player(delta)
 	player.move(delta)
 
-	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0 and player.player_settings.canJump:
+	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0 and player.player_settings.can_jump:
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif player.velocity.length() <= 1.5 and is_equal_approx(directionalInput.length(), 0):
 		state_machine.transition_to("idle")

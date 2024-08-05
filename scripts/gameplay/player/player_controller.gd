@@ -31,6 +31,7 @@ enum ForwardMode {Camera, World}
 var currentJumpCount: int = 0
 var canAirBoost: bool = true
 var worldForward: Vector3 = Vector3.ZERO
+var currentForward : Vector3
 
 
 func _ready() -> void:
@@ -65,10 +66,10 @@ func m_calculate_movement(_delta: float, normal: Vector3) -> Vector3:
 # Calculates the gravity based of the current velocity
 func m_calculate_dynamic_gravity(delta: float) -> Vector3:
 	var finalForce: float
-	if velocity.y > player_settings.fallThreshold:
+	if velocity.y > player_settings.fall_threshold:
 		finalForce = gravity * delta
 	else:
-		finalForce = gravity * (player_settings.fallMultiplier - 1) * delta
+		finalForce = gravity * (player_settings.fall_multiplier - 1) * delta
 	return -up_direction * finalForce
 
 # Applies acceleration or decceleration depending on the current target velocity.
@@ -92,46 +93,51 @@ func move(_delta: float) -> void:
 
 
 	#Apply Settings
-	var speed: float
-	var acceleration: float
-	var decceleration: float
-
-	var is_boosting = Input.is_action_pressed("boost")
-
-	if is_boosting:
-		speed = player_settings.boost_speed
-		acceleration = player_settings.boost_acceleration
-		decceleration = 0
-	else:
-		speed = player_settings.movement_speed
-		acceleration = player_settings.acceleration
-		decceleration = player_settings.decceleration
+	var speed = player_settings.movement_speed
+	var acceleration = player_settings.acceleration
+	var decceleration = player_settings.decceleration
 
 
 	#Apply velocity
 	velocity = m_apply_acceleration(velocity, dir * speed, acceleration, decceleration, _delta)
 	#Apply model rotation
 	if dir.length() > 0.1:
-		model_anchor.rotate_towards(_delta, dir.normalized(), player_settings.turningSpeed, normal)
+		model_anchor.rotate_towards(_delta, dir.normalized(), player_settings.visual_turning_speed, normal)
+	move_and_slide()
+	apply_floor_snap()
+
+	currentForward = velocity.normalized()
+
+	pass
+
+ # Boost movement
+func boost_move(_delta: float) -> void:
+	var normal: Vector3 = Vector3.UP
+	#Calculate movement with tests
+	var ray = ground_detector.get_collided_ray()
+
+	if ray:
+		normal = ray.get_collision_normal()
+
+	var dir = m_calculate_movement(_delta, normal)
+	dir = dir.slide(normal)
+
+	var speed := player_settings.boost_speed
+	var turn_speed := player_settings.boost_turn_speed
+	var visual_turn_speed := player_settings.visual_turning_speed
+
+	velocity = m_apply_acceleration(velocity, currentForward * speed, 100.0, 0.0, _delta)
+
+	if velocity.length() > 0.2:
+		var newDir = currentForward.slerp(dir, turn_speed * _delta)
+		newDir.y = dir.y
+		model_anchor.rotate_towards(_delta, newDir, visual_turn_speed, normal)
+		currentForward = newDir
+
 	move_and_slide()
 	apply_floor_snap()
 
 	pass
-
-# # Boost movement
-# func boost_move(_delta: float) -> void:
-# 	var dir = m_calculate_global_movement(_delta)
-
-# 	var col_info = move_and_collide(dir * _delta)
-# 	if col_info:
-# 		var normal = col_info.get_normal()
-# 		dir = dir.slide(normal)
-
-# 	velocity = m_apply_acceleration(velocity, dir * player_settings.boostSpeed, player_settings.boostAcceleration, 0, _delta)
-
-# 	move_and_slide()
-# 	apply_floor_snap()
-# 	pass
 
 func air_move(_delta: float) -> void:
 	var dir = m_calculate_global_movement(_delta)

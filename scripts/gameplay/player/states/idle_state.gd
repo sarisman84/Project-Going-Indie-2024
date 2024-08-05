@@ -16,7 +16,7 @@ func update(_delta: float) -> void:
 		state_machine.transition_to("airborne")
 		return
 
-	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0 and player.player_settings.canJump:
+	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0 and player.player_settings.can_jump:
 		# As we'll only have one air state for both jump and fall, we use the `msg` dictionary
 		# to tell the next state that we want to jump.
 		state_machine.transition_to("airborne", {do_jump = true})
