@@ -5,7 +5,7 @@ static func get_global_aabb_center(aabb : AABB, owner : Node3D) -> Vector3:
 
 static func get_global_aabb_start(aabb : AABB, owner : Node3D) -> Vector3:
 	return aabb.position + owner.position - (aabb.size / 2.0)
-	
+
 static func get_global_aabb_end(aabb : AABB, owner : Node3D) -> Vector3:
 	return aabb.end + owner.position - (aabb.size / 2.0)
 
@@ -23,5 +23,8 @@ static func rotate_towards(a : Vector3, b : Vector3, maxInDegrees : float) -> Ve
 	# acos(dot) gives you the angle (in radians) between the two vectors which you'll want to clamp to your maximum rotation (convert it to radians)
 	var angle = clamp(acos(dot), -maxR, maxR)
 
-	# and now you can rotate your original 
+	# and now you can rotate your original
 	return a.rotated(cross, angle)
+
+static func convert_height_to_velocity(inputHeight : float, _gravity : float):
+	return sqrt(2.0 * _gravity * inputHeight)

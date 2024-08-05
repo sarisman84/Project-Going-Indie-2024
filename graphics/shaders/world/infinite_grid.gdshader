@@ -40,7 +40,7 @@ void fragment() {
     vec2 scaledUV = UV * grid_scale;
 
     // Adjust line width as needed
-    vec2 lineWidth = vec2(line_width); 
+    vec2 lineWidth = vec2(line_width);
 
     // Generate the grid pattern
     float gridValue = pristineGrid(scaledUV, lineWidth);

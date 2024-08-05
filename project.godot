@@ -23,9 +23,14 @@ buses/default_bus_layout="res://audio/default_bus_layout.tres"
 
 InputCheck="*res://nodes/scenes/input_check.tscn"
 
+[debug]
+
+settings/stdout/print_fps=true
+settings/stdout/print_gpu_profile=true
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/filesystem_drawer/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/spiral_creator/plugin.cfg")
+enabled=PackedStringArray("res://addons/script-ide/plugin.cfg")
 
 [input]
 
@@ -171,7 +176,15 @@ interact={
 
 [layer_names]
 
+3d_physics/layer_1="Default"
+3d_physics/layer_2="External Interactables"
+3d_physics/layer_3="Attackable Interactables"
 3d_physics/layer_10="interactable"
+
+[physics]
+
+3d/physics_engine="JoltPhysics3D"
+jolt_3d/collisions/areas_detect_static_bodies=true
 
 [rendering]
 

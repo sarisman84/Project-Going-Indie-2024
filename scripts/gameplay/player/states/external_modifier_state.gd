@@ -17,10 +17,10 @@ func enter(msg := {}) -> void:
 			player.global_position = msg["snapPos"]
 	if msg.has("duration"):
 		exitDelayInSeconds = msg["duration"]
-	player.rotate_model_towards_adv(externalVelocity, Vector3.UP)
+	#player.rotate_model_towards_adv(externalVelocity, Vector3.UP)
 	player.animation_player.play("fly")
-	
-		
+
+
 
 func physics_update(_delta: float) -> void:
 	player.velocity = externalVelocity

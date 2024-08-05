@@ -17,32 +17,25 @@ extends Area3D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	body_entered.connect(on_camera_enter)
-	
+
 
 # Fetches the player to get the camera
 func on_camera_enter(body) -> void:
 	if not body is PlayerController:
 		return
 	var player = body as PlayerController
-	var cam = player.camera
-	# mod.camera = cam
-	apply_cam_settings(cam, player)
-	
+	var cam = player.camera_controller
+
+	cam.set_state(trackMode, {
+		anchor_point = childNode.global_position,
+		local_anchor_point = childNode.position,
+		path = trackPath,
+		target_dir = childNode.basis.z
+		})
+	cam.physical_camera.projection = newProjection
+	cam.physical_camera.fov = newFieldOfView
+	cam.physical_camera.size = newSize
+
 	pass
 
-func apply_cam_settings(camera : CameraController, player : PlayerController) -> void:
-	camera.trackerForwardDirection = childNode.global_basis.z
-	camera.target = player
-	camera.targetFollowOffset = childNode.position
-	camera.trackMode = trackMode
-	camera.trackPivot = childNode.global_position
-	camera.trackPath = trackPath
-	camera.physical_camera.projection = newProjection
-	camera.physical_camera.fov = newFieldOfView
-	camera.physical_camera.size = newSize
-	
-	DebugDraw3D.draw_arrow_ray(player.global_position, camera.trackerForwardDirection	, 1.0, Color.BLUE, 0.15, false, 10.0)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

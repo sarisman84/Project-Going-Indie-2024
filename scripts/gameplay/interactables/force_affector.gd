@@ -20,15 +20,17 @@ func _on_body_entered(body):
 	prep_player(p)
 	push_player(p)
 	affector_sfx.play()
-	
+
 
 func prep_player(player : PlayerController):
-	var ha = player.homing_attack_ref as HomingAttack
-	ha.set_bounce_override(true)
+	#var ha = player.homing_attack_ref as HomingAttack
+	#ha.set_bounce_override(true)
+	pass
 
 func reset_player(player: PlayerController):
-	var ha = player.homing_attack_ref as HomingAttack
-	ha.set_bounce_override(false)
+	#var ha = player.homing_attack_ref as HomingAttack
+	#ha.set_bounce_override(false)
+	pass
 
 func push_player(player : PlayerController):
 	player.state_machine.transition_to("moved_by_external_force", {external_velocity = basis.z * forceAmount, snapPos = global_position + basis.z.normalized(), canSnap = snapToMiddle, duration = durationInSeconds})

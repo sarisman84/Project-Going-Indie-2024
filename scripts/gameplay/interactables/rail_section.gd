@@ -7,7 +7,7 @@ var detectedPlayer : PlayerController
 func _on_hitbox_body_entered(body):
 	if not body is PlayerController:
 		return
-	
+
 	detectedPlayer = body as PlayerController
 
 func _on_hitbox_body_exited(_body):
@@ -27,8 +27,8 @@ func is_player_close_to_curve():
 	var playerPosition = detectedPlayer.position + closestUp * detectedPlayer.collider.shape.radius
 
 	var dist = (closestPosition - playerPosition).length()
-	DebugDraw3D.draw_sphere(playerPosition , detectedPlayer.railDetectionRadius, Color.MAGENTA)
-	return dist < detectedPlayer.railDetectionRadius
+	DebugDraw3D.draw_sphere(playerPosition , detectedPlayer.player_settings.railDetectionRadius, Color.MAGENTA)
+	return dist < detectedPlayer.player_settings.railDetectionRadius
 
 func _process(_delta):
 	if detectedPlayer == null:
@@ -132,7 +132,7 @@ func _process(_delta):
 	#
 ## Assuming the player is masked to layer 2,
 ## it should only detect the player
-#func _on_hitbox_body_entered(body):		
+#func _on_hitbox_body_entered(body):
 	#player = body as PlayerController
 	#isPlayerDetected = true
 #
@@ -167,7 +167,7 @@ func _process(_delta):
 	#DebugDraw3D.draw_sphere(result,0.15, Color.CHARTREUSE, 5.0)
 
 
-	
+
 
 
 
