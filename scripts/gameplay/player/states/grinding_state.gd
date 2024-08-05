@@ -47,7 +47,7 @@ func physics_update(_delta: float) -> void:
 	player.up_direction = up
 	player.velocity = forward * player.get_current_speed()
 	#player.rotate_model_towards_adv(forward, up)
-	player.model_anchor.rotate_towards(_delta, forward,100, up)
+	player.model_anchor.rotate_towards_with_interpolation(_delta, forward,100, up)
 	player.global_position = (rail.position + pos + (player.up_direction * player.collider.shape.radius)) + (forward * player.get_current_speed() * _delta)
 
 	DebugDraw3D.draw_sphere(pos + rail.position, 0.15, Color.YELLOW)

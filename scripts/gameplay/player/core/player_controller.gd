@@ -115,7 +115,7 @@ func move(_delta: float) -> void:
 	velocity = m_apply_acceleration(velocity, dir * speed, acceleration, decceleration, _delta)
 	#Apply model rotation
 	if dir.length() > 0.1:
-		model_anchor.rotate_towards(_delta, dir.normalized(), player_settings.visual_turning_speed, normal)
+		model_anchor.rotate_towards_with_interpolation(_delta, dir.normalized(), player_settings.visual_turning_speed, normal)
 	move_and_slide()
 	apply_floor_snap()
 
@@ -144,7 +144,7 @@ func boost_move(_delta: float) -> void:
 	if velocity.length() > 0.2:
 		var newDir = currentForward.slerp(dir, turn_speed * _delta)
 		newDir.y = dir.y
-		model_anchor.rotate_towards(_delta, newDir, visual_turn_speed, normal)
+		model_anchor.rotate_towards_with_interpolation(_delta, newDir, visual_turn_speed, normal)
 		currentForward = newDir
 
 	move_and_slide()
