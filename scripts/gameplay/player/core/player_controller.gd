@@ -17,6 +17,7 @@ enum ForwardMode {Camera, World}
 @onready var animation_player = $model_anchor/skater_mc/AnimationPlayer
 @onready var model_anchor: ModelController = $model_anchor
 @onready var ground_detector: GroundDetector = $ground_detector
+@onready var boost_indicator : BoostBar = $boost_indicator
 
 
 @export var player_settings: PlayerSettings
@@ -31,7 +32,7 @@ enum ForwardMode {Camera, World}
 var current_jump_count: int = 0
 var can_air_boost: bool = true
 var worldForward: Vector3 = Vector3.ZERO
-var currentForward: Vector3
+var current_forward: Vector3
 var boost_energy: float
 
 
@@ -40,6 +41,7 @@ func _ready() -> void:
 	floor_max_angle = 180
 	Collectables.on_data_increment_entry.connect(m_on_collecting_rings)
 	Collectables.set_to_database(0,0)
+	boost_indicator.init_bar(boost_energy, player_settings.max_ring_energy)
 	pass
 
 func m_on_collecting_rings(id: int) -> void:
@@ -49,6 +51,7 @@ func m_on_collecting_rings(id: int) -> void:
 	boost_energy += player_settings.ring_energy_gain
 	if boost_energy > player_settings.max_ring_energy:
 		boost_energy = player_settings.max_ring_energy
+	boost_indicator.local_boost_val = boost_energy
 	pass
 
 # Get raw user input
@@ -119,7 +122,7 @@ func move(_delta: float) -> void:
 	move_and_slide()
 	apply_floor_snap()
 
-	currentForward = velocity.normalized()
+	current_forward = velocity.normalized()
 
 	pass
 
@@ -139,13 +142,13 @@ func boost_move(_delta: float) -> void:
 	var turn_speed := player_settings.boost_turn_speed
 	var visual_turn_speed := player_settings.visual_turning_speed
 
-	velocity = m_apply_acceleration(velocity, currentForward * speed, 100.0, 0.0, _delta)
+	velocity = m_apply_acceleration(velocity, current_forward * speed, 100.0, 0.0, _delta)
 
 	if velocity.length() > 0.2:
-		var newDir = currentForward.slerp(dir, turn_speed * _delta)
+		var newDir = current_forward.slerp(dir, turn_speed * _delta)
 		newDir.y = dir.y
 		model_anchor.rotate_towards_with_interpolation(_delta, newDir, visual_turn_speed, normal)
-		currentForward = newDir
+		current_forward = newDir
 
 	move_and_slide()
 	apply_floor_snap()
@@ -168,6 +171,7 @@ func get_current_speed():
 
 func decrement_boost_energy(_delta: float) -> void:
 	boost_energy -= player_settings.ring_energy_use * _delta
+	boost_indicator.local_boost_val = boost_energy
 
 func _process(_delta) -> void:
 	var cur_energy := String.num(boost_energy)
