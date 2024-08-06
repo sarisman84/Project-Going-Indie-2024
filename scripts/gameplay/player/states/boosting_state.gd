@@ -12,21 +12,22 @@ var countdown : float
 func enter(_msg := {}) -> void:
 	#player.rotate_model_towards_adv(player.velocity.normalized(), Vector3.UP)
 	countdown = 0
-	player.canAirBoost = true
-	player.currentJumpCount = player.player_settings.jumpCount
+	player.can_air_boost = true
+	player.current_jump_count = player.player_settings.jump_count
 
 func update(_delta : float) -> void:
 	left_step = Input.is_action_pressed("left_step")
 	right_step = Input.is_action_pressed("right_step")
 	countdown -= _delta
 	move_sfx.adv_play()
+	player.decrement_boost_energy(_delta)
 
 
 func physics_update(delta : float) -> void:
 	# Notice how we have some code duplication between states. That's inherent to the pattern,
 	# although in production, your states will tend to be more complex and duplicate code
 	# much more rare.
-	if not Input.is_action_pressed("boost"):
+	if not Input.is_action_pressed("boost") or player.boost_energy <= 0:
 		if is_equal_approx(player.velocity.length(), 0):
 			state_machine.transition_to("idle")
 		else:
@@ -53,7 +54,7 @@ func physics_update(delta : float) -> void:
 	player.boost_move(delta)
 	# move_player(delta)
 
-	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0:
+	if Input.is_action_just_pressed("jump") and player.current_jump_count > 0:
 		state_machine.transition_to("airborne", {do_jump = true})
 	elif is_equal_approx(player.velocity.length(), 0):
 		state_machine.transition_to("idle")

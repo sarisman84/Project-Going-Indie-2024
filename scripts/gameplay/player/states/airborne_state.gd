@@ -11,8 +11,8 @@ var countdown : float
 
 func enter(msg: = {}) -> void:
 	if msg.has("do_jump"):
-		player.velocity.y = ExtendedUtilities.convert_height_to_velocity(player.player_settings.jumpHeight, player.gravity)
-		player.currentJumpCount -= 1
+		player.velocity.y = ExtendedUtilities.convert_height_to_velocity(player.player_settings.jump_height, player.gravity)
+		player.current_jump_count -= 1
 		countdown = onJumpTransitionDelay
 		jump_sfx.play()
 	isStomping = false
@@ -39,7 +39,7 @@ func physics_update(delta: float) -> void:
 			# if Input.is_action_just_pressed("boost") and player.canAirBoost:
 			# 	player.velocity = player.model.transform.basis.z * player.boostSpeed
 			# 	player.canAirBoost = false
-			if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0:
+			if Input.is_action_just_pressed("jump") and player.current_jump_count > 0:
 				state_machine.transition_to("airborne", {do_jump = true})
 
 		if Input.is_action_just_pressed("slide"):
@@ -51,4 +51,4 @@ func physics_update(delta: float) -> void:
 		# PlayerController.calculate_movement(player, player.movement_speed, player.airDelta.y, player.airDelta.x, delta)
 		player.air_move(delta)
 	else:
-		player.velocity -= Vector3.UP * player.stompSpeed * delta
+		player.velocity -= Vector3.UP * player.player_settings.stomp_speed * delta

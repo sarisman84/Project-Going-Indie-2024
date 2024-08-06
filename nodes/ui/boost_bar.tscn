@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://bb8kmjhcvjcv6"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/player/ui/boost_bar.gd" id="1_x5hd8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gm5xb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fskuy"]
+bg_color = Color(0.435294, 0.760784, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbus8"]
+bg_color = Color(0.117647, 0.0784314, 0, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.27451)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig67g"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="boost_bar" type="ProgressBar"]
+z_index = 1
+offset_right = 240.0
+offset_bottom = 10.0
+theme_override_styles/background = SubResource("StyleBoxTexture_gm5xb")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fskuy")
+value = 60.0
+show_percentage = false
+script = ExtResource("1_x5hd8")
+smoothing = 0.5
+
+[node name="ghost_bar" type="ProgressBar" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_xbus8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ig67g")
+value = 80.0
+show_percentage = false
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dshuopenh5kv8"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/systems/collectable_manager.gd" id="1_xp3kw"]
+
+[node name="Collectables" type="Node"]
+script = ExtResource("1_xp3kw")

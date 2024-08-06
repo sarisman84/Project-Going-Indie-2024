@@ -3,10 +3,10 @@ extends PlayerState
 # Upon entering the state, we set the Player node's velocity to zero.
 func enter(_msg:= {}) -> void:
 	player.velocity = Vector3.ZERO
-	player.canAirBoost = true
-	player.currentJumpCount = player.player_settings.jumpCount
-	var animation_player = $"../../model_anchor/skater_mc/AnimationPlayer"
-	animation_player.play("idle_v2")
+	player.can_air_boost = true
+	player.current_jump_count = player.player_settings.jump_count
+	# var animation_player = $"../../model_anchor/skater_mc/AnimationPlayer"
+	# animation_player.play("idle_v2")
 	pass
 
 func update(_delta: float) -> void:
@@ -16,7 +16,7 @@ func update(_delta: float) -> void:
 		state_machine.transition_to("airborne")
 		return
 
-	if Input.is_action_just_pressed("jump") and player.currentJumpCount > 0 and player.player_settings.canJump:
+	if Input.is_action_just_pressed("jump") and player.current_jump_count > 0 and player.player_settings.can_jump:
 		# As we'll only have one air state for both jump and fall, we use the `msg` dictionary
 		# to tell the next state that we want to jump.
 		state_machine.transition_to("airborne", {do_jump = true})

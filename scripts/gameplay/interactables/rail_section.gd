@@ -27,8 +27,8 @@ func is_player_close_to_curve():
 	var playerPosition = detectedPlayer.position + closestUp * detectedPlayer.collider.shape.radius
 
 	var dist = (closestPosition - playerPosition).length()
-	DebugDraw3D.draw_sphere(playerPosition , detectedPlayer.player_settings.railDetectionRadius, Color.MAGENTA)
-	return dist < detectedPlayer.player_settings.railDetectionRadius
+	DebugDraw3D.draw_sphere(playerPosition , detectedPlayer.player_settings.rail_detection_radius, Color.MAGENTA)
+	return dist < detectedPlayer.player_settings.rail_detection_radius
 
 func _process(_delta):
 	if detectedPlayer == null:
