@@ -3,7 +3,7 @@
 [ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="1_3ukm0"]
 [ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="2_1tknf"]
 [ext_resource type="Material" uid="uid://do0c4gpoknvbh" path="res://graphics/materials/world_grid_1m1_orange.tres" id="3_3w6bd"]
-[ext_resource type="PackedScene" uid="uid://bn30aiuttyy0d" path="res://nodes/gameplay/rail_section.tscn" id="3_ittsu"]
+[ext_resource type="PackedScene" uid="uid://bn30aiuttyy0d" path="res://nodes/gameplay/rail.tscn" id="3_ittsu"]
 [ext_resource type="PackedScene" uid="uid://0rohomqoalx5" path="res://nodes/gameplay/curved_road.tscn" id="4_usejj"]
 [ext_resource type="Curve3D" uid="uid://dqhxbg6hb4582" path="res://nodes/gameplay/paths/tutorial.tres" id="5_q16an"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/camera_modifier.gd" id="6_dua2h"]

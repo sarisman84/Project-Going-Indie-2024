@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://8tblsutic4jv"]
 
-[ext_resource type="PackedScene" uid="uid://bn30aiuttyy0d" path="res://nodes/gameplay/rail_section.tscn" id="1_58rj3"]
+[ext_resource type="PackedScene" uid="uid://bn30aiuttyy0d" path="res://nodes/gameplay/rail.tscn" id="1_58rj3"]
 [ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="1_aut45"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="2_xmktp"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/camera_modifier.gd" id="3_lhxkl"]

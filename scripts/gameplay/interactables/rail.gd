@@ -1,41 +1,71 @@
 class_name Rail
 extends Path3D
 
+@export var hitbox : Area3D
 @onready var model = $model
-var detectedPlayer : PlayerController
 
-func _on_hitbox_body_entered(body):
+var detected_player : PlayerController
+
+func _ready() -> void:
+	hitbox.body_entered.connect(_on_hitbox_body_entered)
+	hitbox.body_exited.connect(_on_hitbox_body_exited)
+
+func _on_hitbox_body_entered(body) -> void:
 	if not body is PlayerController:
 		return
 
-	detectedPlayer = body as PlayerController
+	detected_player = body as PlayerController
 
-func _on_hitbox_body_exited(_body):
-	detectedPlayer.state_machine.transition_to("airborne")
-	detectedPlayer = null
+func _on_hitbox_body_exited(_body) -> void:
+	detected_player.state_machine.transition_to("airborne")
+	detected_player = null
 
 
 # Checks if the player is close enough to the rail
-func is_player_close_to_curve():
+func is_player_close_to_curve() -> bool:
 	if curve == null:
 		return false
-	var offset = Path3DUtilities.get_closest_offset(detectedPlayer.position, self)
 
-	var closestUp = curve.sample_baked_up_vector(offset, true)
-	var closestPosition = curve.sample_baked(offset,true) + position
-	DebugDraw3D.draw_sphere(closestPosition, 0.15, Color.CHARTREUSE)
-	var playerPosition = detectedPlayer.position + closestUp * detectedPlayer.collider.shape.radius
+	#Get rail offset value based of the player's position
+	var offset = Path3DUtilities.get_closest_offset(detected_player.position, self)
 
-	var dist = (closestPosition - playerPosition).length()
-	DebugDraw3D.draw_sphere(playerPosition , detectedPlayer.player_settings.rail_detection_radius, Color.MAGENTA)
-	return dist < detectedPlayer.player_settings.rail_detection_radius
+	#Get the closest global position from the rail offset.
+	var closest_pos = Path3DUtilities.sample_baked_global(offset,true, self)
+	#var closest_up = Path3DUtilities.sample_baked_up_vector_global(offset,true, self)
+
+
+	var detection_radius = detected_player.player_settings.rail_detection_radius
+	var player_pos = detected_player.global_position
+
+	var dist = (closest_pos - player_pos).length()
+	var result = dist < detection_radius
+
+	var debug_color := Color.YELLOW
+	if result:
+		debug_color = Color.GREEN
+
+	DebugDraw3D.draw_sphere(player_pos, detection_radius, Color.CYAN)
+	DebugDraw3D.draw_position(Transform3D(basis, closest_pos), debug_color)
+
+	return result
+
+	# var offset = Path3DUtilities.get_closest_offset(detected_player.position, self)
+
+	# var closestUp = curve.sample_baked_up_vector(offset, true)
+	# var closestPosition = curve.sample_baked(offset,true) + position
+	# DebugDraw3D.draw_sphere(closestPosition, 0.15, Color.CHARTREUSE)
+	# var playerPosition = detected_player.position + closestUp * detected_player.collider.shape.radius
+
+	# var dist = (closestPosition - playerPosition).length()
+	# DebugDraw3D.draw_sphere(playerPosition , detected_player.player_settings.rail_detection_radius, Color.MAGENTA)
+	# return dist < detected_player.player_settings.rail_detection_radius
 
 func _process(_delta):
-	if detectedPlayer == null:
+	if detected_player == null:
 		return
 
-	if is_player_close_to_curve() and not detectedPlayer.state_machine.state is GrindState:
-		detectedPlayer.state_machine.transition_to("grinding", {rail = self})
+	if is_player_close_to_curve() and not detected_player.state_machine.state is GrindState:
+		detected_player.state_machine.transition_to("grinding", {rail = self})
 
 #@onready var hitbox_collider = $hitbox/hitbox_collider
 #@onready var hitbox = $hitbox

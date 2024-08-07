@@ -122,8 +122,6 @@ func move(_delta: float) -> void:
 
 	current_forward = velocity.normalized()
 
-	pass
-
  # Boost movement
 func boost_move(_delta: float) -> void:
 	var normal: Vector3 = Vector3.UP
@@ -138,7 +136,7 @@ func boost_move(_delta: float) -> void:
 
 	var speed := player_settings.boost_speed
 	var turn_speed := player_settings.boost_turn_speed
-	var visual_turn_speed := player_settings.visual_turning_speed
+	var visual_turn_speed := 16
 
 	velocity = m_apply_acceleration(velocity, current_forward * speed, 100.0, 0.0, _delta)
 
@@ -150,8 +148,6 @@ func boost_move(_delta: float) -> void:
 
 	move_and_slide()
 	apply_floor_snap()
-
-	pass
 
 func air_move(_delta: float) -> void:
 	var dir = m_calculate_global_movement(_delta)
