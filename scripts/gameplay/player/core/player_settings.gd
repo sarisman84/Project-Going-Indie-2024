@@ -3,7 +3,6 @@ extends Resource
 
 @export_group("Default")
 @export var movement_speed: float = 5.0
-@export var visual_turning_speed: float = 5.0
 
 @export_group("Jump Settings")
 @export var jump_height: float = 1.0
