@@ -110,15 +110,13 @@ func move(_delta: float) -> void:
 
 	#Apply Settings
 	var speed = player_settings.movement_speed
-	var acceleration = player_settings.acceleration
-	var decceleration = player_settings.decceleration
-
+	var visual_turn_speed := 16
 
 	#Apply velocity
-	velocity = m_apply_acceleration(velocity, dir * speed, acceleration, decceleration, _delta)
+	velocity = dir * speed
 	#Apply model rotation
 	if dir.length() > 0.1:
-		model_anchor.rotate_towards_with_interpolation(_delta, dir.normalized(), player_settings.visual_turning_speed, normal)
+		model_anchor.rotate_towards_with_interpolation(_delta, dir.normalized(), visual_turn_speed, normal)
 	move_and_slide()
 	apply_floor_snap()
 
@@ -173,14 +171,6 @@ func decrement_boost_energy(_delta: float) -> void:
 	boost_energy -= player_settings.ring_energy_use * _delta
 	boost_indicator.local_boost_val = boost_energy
 
-func _process(_delta) -> void:
-	var cur_energy := String.num(boost_energy)
-	var max_energy := String.num(player_settings.max_ring_energy)
-
-	var display = "Ring Energy: " + cur_energy + "/" + max_energy
-
-	DebugDraw2D.set_text(display, null, 0, Color.WHITE, 0)
-	DebugDraw2D.set_text("Rings: ", await Collectables.get_data(0), 0, Color.WHITE, 0)
 
 
 #func rotate_model_towards(forwardDir : Vector3):
