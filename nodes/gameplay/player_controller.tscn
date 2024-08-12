@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=3 uid="uid://ma1xn4prj1e7"]
+[gd_scene load_steps=141 format=3 uid="uid://ma1xn4prj1e7"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/player/core/player_controller.gd" id="1_fyfs6"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/camera/camera_controller.gd" id="2_hw33h"]
@@ -39,6 +39,7 @@
 [ext_resource type="Script" path="res://scripts/gameplay/player/core/ground_detector.gd" id="36_32v5i"]
 [ext_resource type="Script" path="res://scripts/gameplay/player/core/collectable_magnet_controller.gd" id="37_kdifp"]
 [ext_resource type="PackedScene" uid="uid://bb8kmjhcvjcv6" path="res://nodes/ui/boost_bar.tscn" id="39_4n0if"]
+[ext_resource type="Script" path="res://scripts/gameplay/player/core/rail_detector.gd" id="40_e7fh6"]
 
 [sub_resource type="Resource" id="Resource_7uv1u"]
 script = ExtResource("2_k2sj3")
@@ -144331,8 +144332,10 @@ shader_parameter/color = Color(0, 1, 1, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_2ijr6"]
 radius = 1.70369
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_u8m38"]
+radius = 5.572
+
 [node name="player_controller" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
 collision_layer = 2
 velocity = Vector3(0, -729.596, 0)
 floor_stop_on_slope = false
@@ -144365,7 +144368,6 @@ script = ExtResource("32_ryyj7")
 spring_length = 5.0
 
 [node name="camera" type="Camera3D" parent="camera_anchor/arm"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27164.9, 0)
 environment = ExtResource("3_r5ncu")
 
 [node name="state_machine" type="Node" parent="."]
@@ -144591,7 +144593,6 @@ parameters/StateMachine/conditions/isMoving = false
 [node name="sfx" type="Node" parent="."]
 
 [node name="move_sfx" type="AudioStreamPlayer3D" parent="sfx"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
 attenuation_model = 3
 max_polyphony = 10
 bus = &"SFX"
@@ -144600,7 +144601,6 @@ playmode = 1
 clipPlaylist = Array[AudioStreamWAV]([ExtResource("17_8shmh"), ExtResource("18_exkgj"), ExtResource("19_qdvv1"), ExtResource("20_xbgaf"), ExtResource("21_vqp1t"), ExtResource("22_6ao5c"), ExtResource("23_qppke")])
 
 [node name="jump_sfx" type="AudioStreamPlayer3D" parent="sfx"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
 stream = ExtResource("20_smy0f")
 attenuation_model = 3
 max_polyphony = 10
@@ -144609,14 +144609,12 @@ bus = &"SFX"
 [node name="boost" type="Node" parent="sfx"]
 
 [node name="boost_sfx" type="AudioStreamPlayer3D" parent="sfx/boost"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
 stream = ExtResource("17_mgwu2")
 attenuation_model = 3
 max_polyphony = 10
 bus = &"SFX"
 
 [node name="wind_sfx" type="AudioStreamPlayer3D" parent="sfx/boost"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27165.4, 0)
 stream = ExtResource("18_safyh")
 attenuation_model = 3
 max_polyphony = 10
@@ -144625,14 +144623,14 @@ bus = &"SFX"
 [node name="grind" type="Node" parent="sfx"]
 
 [node name="grind_sfx" type="AudioStreamPlayer3D" parent="sfx/grind"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0570585, -27166, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0570585, 0, 0)
 stream = ExtResource("19_vnor1")
 attenuation_model = 3
 max_polyphony = 10
 bus = &"SFX"
 
 [node name="grind_start_sfx" type="AudioStreamPlayer3D" parent="sfx/grind"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0684871, -27166, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0684871, 0, 0)
 stream = ExtResource("20_smy0f")
 attenuation_model = 3
 max_polyphony = 10
@@ -144764,9 +144762,17 @@ offset_bottom = -6.99994
 grow_vertical = 0
 rotation = -0.0261799
 
+[node name="rail_detector" type="Area3D" parent="."]
+script = ExtResource("40_e7fh6")
+
+[node name="shape" type="CollisionShape3D" parent="rail_detector"]
+shape = SubResource("SphereShape3D_u8m38")
+
 [connection signal="body_entered" from="attack_manager" to="attack_manager" method="_on_body_entered"]
 [connection signal="body_exited" from="attack_manager" to="attack_manager" method="_on_body_exited"]
 [connection signal="body_entered" from="collectable_magnet_controller" to="collectable_magnet_controller" method="_on_body_entered"]
+[connection signal="body_entered" from="rail_detector" to="rail_detector" method="_on_body_entered"]
+[connection signal="body_exited" from="rail_detector" to="rail_detector" method="_on_body_exited"]
 
 [editable path="model_anchor/skater_mc"]
 [editable path="model_anchor/Sonic2"]

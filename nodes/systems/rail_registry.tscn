@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmi44vp2bjtbx"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/systems/rail_registry.gd" id="1_h2rno"]
+
+[node name="rail_registry" type="Node"]
+script = ExtResource("1_h2rno")

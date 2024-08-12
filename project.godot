@@ -23,6 +23,7 @@ buses/default_bus_layout="res://audio/default_bus_layout.tres"
 
 InputCheck="*res://nodes/scenes/input_check.tscn"
 Collectables="*res://nodes/systems/collectables.tscn"
+RailRegistry="*res://nodes/systems/rail_registry.tscn"
 
 [debug]
 
