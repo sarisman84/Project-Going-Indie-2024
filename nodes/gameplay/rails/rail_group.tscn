@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2t4ew5hod8qr"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/interactables/rails/rail.gd" id="1_jld3g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7cq4e"]
+size = Vector3(16.506, 1.90234, 4.22552)
+
+[node name="rail_group" type="StaticBody3D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_jld3g")
+
+[node name="shape" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_7cq4e")

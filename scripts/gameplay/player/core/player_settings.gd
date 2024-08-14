@@ -35,6 +35,6 @@ extends Resource
 @export var boost_acceleration: float = 1.0
 @export var slide_decceleration: float = 0.8
 
-@export_group("Rail Grind Settings")
+@export_group("RailGroup Grind Settings")
 @export var rail_detection_radius: float = 0.5
 @export var rail_grind_cooldown_in_seconds: float = 0.25

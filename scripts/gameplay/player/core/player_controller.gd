@@ -18,6 +18,7 @@ enum ForwardMode {Camera, World}
 @onready var model_anchor: ModelController = $model_anchor
 @onready var ground_detector: GroundDetector = $ground_detector
 @onready var boost_indicator : BoostBar = $boost_indicator
+@onready var rail_detector = $"rail_detector"
 
 
 @export var player_settings: PlayerSettings
@@ -37,6 +38,7 @@ var boost_energy: float
 
 
 func _ready() -> void:
+	rail_detector.init_detector(self)
 	floor_snap_length = 100
 	floor_max_angle = 180
 	Collectables.on_data_increment_entry.connect(m_on_collecting_rings)

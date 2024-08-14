@@ -1,11 +1,13 @@
-[gd_scene load_steps=23 format=3 uid="uid://clsa3y2ji2ae0"]
+[gd_scene load_steps=26 format=3 uid="uid://clsa3y2ji2ae0"]
 
 [ext_resource type="PackedScene" uid="uid://b7jthsh36ssaw" path="res://nodes/scenes/pause_menu.tscn" id="1_ra04v"]
 [ext_resource type="PackedScene" uid="uid://ma1xn4prj1e7" path="res://nodes/gameplay/player_controller.tscn" id="1_xom8x"]
 [ext_resource type="PackedScene" uid="uid://0rohomqoalx5" path="res://nodes/gameplay/curved_road.tscn" id="4_2yc46"]
 [ext_resource type="PackedScene" uid="uid://cqb2amsr3xfjt" path="res://nodes/gameplay/force_affector.tscn" id="4_ojlsg"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/attackable_node.gd" id="5_0igg1"]
+[ext_resource type="PackedScene" uid="uid://d2t4ew5hod8qr" path="res://nodes/gameplay/rails/rail_group.tscn" id="6_6pbvy"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/camera_modifier.gd" id="6_ktxpf"]
+[ext_resource type="PackedScene" uid="uid://dxpah1tfwrbeq" path="res://nodes/gameplay/rails/rail.tscn" id="6_vf8ew"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/utility/align_node.gd" id="7_7v0nc"]
 [ext_resource type="Script" path="res://scripts/gameplay/interactables/collectable.gd" id="9_3011y"]
 [ext_resource type="Material" uid="uid://b7bmm37nnnok0" path="res://graphics/materials/world_grid_1m1.tres" id="9_tcstn"]
@@ -30,6 +32,13 @@ size = Vector3(0.25, 0.25, 0.25)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s1rpc"]
 size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="Curve3D" id="Curve3D_r7dmj"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4.6286, -0.0987072, 0.732904, 0, 0, 0, 0, 0, 0, 11.3159, -0.150781, 0.845537),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2lb5t"]
 size = Vector3(25.009, 28.0249, 22.2008)
@@ -222,6 +231,24 @@ shape = SubResource("BoxShape3D_s1rpc")
 [node name="CSGBox3D" type="CSGBox3D" parent="external_affectors/homing targets/test3"]
 
 [node name="rails" type="Node" parent="external_affectors"]
+
+[node name="rail_group" parent="external_affectors/rails" instance=ExtResource("6_6pbvy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.002, 0, -21.7623)
+
+[node name="shape" parent="external_affectors/rails/rail_group" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.343, -0.212614, -0.747208)
+
+[node name="rail" parent="external_affectors/rails/rail_group" instance=ExtResource("6_vf8ew")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.15535, 0, 0)
+curve = SubResource("Curve3D_r7dmj")
+
+[node name="rail2" parent="external_affectors/rails/rail_group" instance=ExtResource("6_vf8ew")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0712376, 0, 0)
+curve = SubResource("Curve3D_r7dmj")
+
+[node name="rail3" parent="external_affectors/rails/rail_group" instance=ExtResource("6_vf8ew")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.36285, 0, 0)
+curve = SubResource("Curve3D_r7dmj")
 
 [node name="camera affectors" type="Node" parent="external_affectors"]
 
@@ -480,3 +507,5 @@ size = Vector3(29.995, 1, 8.30023)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/slope"]
 transform = Transform3D(0.997682, 1.04308e-07, -0.0680331, -1.59442e-06, 0.999999, -5.96046e-08, 0.0680312, 3.57628e-07, 0.997683, -1.32886, -2.86102e-06, 0.0334949)
 shape = SubResource("BoxShape3D_y1tkf")
+
+[editable path="external_affectors/rails/rail_group"]

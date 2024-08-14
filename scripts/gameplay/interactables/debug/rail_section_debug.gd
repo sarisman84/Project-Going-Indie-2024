@@ -1,7 +1,7 @@
 @tool
 extends Node
 
-@onready var rail : Rail = $".."
+@onready var rail : RailGroup = $".."
 
 
 func _process(delta : float) -> void:

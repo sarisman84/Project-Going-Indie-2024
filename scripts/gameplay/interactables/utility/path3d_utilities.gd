@@ -13,6 +13,9 @@ static func get_closest_offset(globalPosition : Vector3, owner : Path3D, useMatr
 static func sample_baked_up_vector_global(offset : float, apply_tilt : bool, owner : Path3D) -> Vector3:
 	return owner.basis * owner.curve.sample_baked_up_vector(offset, apply_tilt)
 
+static func get_global_point_position(point_index : int, owner : Path3D) -> Vector3:
+	return (owner.basis * owner.curve.get_point_position(point_index)) + owner.position
+
 static func sample_baked_global(offset : float, cubic : bool, owner : Path3D) -> Vector3:
 	return (owner.basis * owner.curve.sample_baked(offset, cubic)) + owner.position
 
